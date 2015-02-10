@@ -1,0 +1,29 @@
+{
+  "name": "KiWi.MainFrame",
+  "version": "1.0.0",
+  "description": "Web dashboard that handles I/O from all KiWi devices",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getKiWi/KiWi.MainFrame.git"
+  },
+  "keywords": [
+    "kiwi",
+    "dashboard",
+    "mainframe"
+  ],
+  "author": "Mathew Kurian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/getKiWi/KiWi.MainFrame/issues"
+  },
+  "homepage": "https://github.com/getKiWi/KiWi.MainFrame",
+  "dependencies": {
+    "express": "^4.11.2",
+    "mongoose": "^3.8.23",
+    "scribe-js": "^2.0.4"
+  }
+}
