@@ -1,31 +1,28 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
         watch: {
             react: {
-                files: ['asr/*.jsx','asr/**/*.jsx','asr/actions/*.js','asr/stores/**/*.js'],
-                tasks: ['browserify'],
-                options : {
-                    atBegin : true
-                }
+                files: ['asr/*.jsx', 'asr/**/*.jsx', 'asr/actions/*.js', 'asr/stores/**/*.js'],
+                tasks: ['browserify']
             }
         },
 
         browserify: {
             options: {
-                transform: [ require('grunt-react').browserify ]
+                transform: [require('grunt-react').browserify]
             },
             client: {
-                src: ['asr/*.jsx','asr/**/*.jsx'],
+                src: ['asr/*.jsx', 'asr/**/*.jsx'],
                 dest: 'public/js/bundle.js'
             }
         },
         nodemon: {
             dev: {
                 script: 'bin/www',
-                options:{
-                    ext:'js,jsx,html,ejs'
+                options: {
+                    ext: 'js,jsx,html,ejs'
                 }
             }
         }

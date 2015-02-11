@@ -27,13 +27,13 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Render React on Server
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     var markup = React.renderComponentToString(App());
     res.send('<!DOCTYPE html>' + markup);
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
@@ -41,8 +41,8 @@ app.use(function(req, res, next) {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    if(app.get('env') === 'development'){
+app.use(function (err, req, res, next) {
+    if (app.get('env') === 'development') {
         console.error(err);
     }
     res.status(err.status || 500);
