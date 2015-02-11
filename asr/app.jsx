@@ -21,13 +21,10 @@ var App = React.createClass({
                     <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
                     <title>React Note app</title>
-                    <link href="css/bootstrap.css" rel="stylesheet"/>
-                    <link href="css/app.css" rel="stylesheet"/>
                 </head>
                 <body>
                     <Dashboard/>
-                    <script type="text/javascript" src="/js/browserify/bundle.js"></script>
-                    <script src="js/bootstrap.js"></script>
+                    <script type="text/javascript" src="/js/bundle.js"></script>
                 </body>
             </html>
         )

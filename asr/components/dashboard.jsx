@@ -3,33 +3,53 @@
  */
 
 var React = require('react');
+var Lock = require('./lock.jsx');
 
 var Dashboard = React.createClass({
 
     getInitialState: function () {
-        return {id: null}
+        return {
+            title: "KiWi Control",
+            logo: "hello",
+            message : "hello",
+            activeLockId : undefined
+        }
     },
 
-    onEdit: function (id) {
-        this.setState({currentlyEdited: id});
+    onLockFocus: function (id) {
+        this.setState({activeLockId: id});
     },
 
-    onAdd: function () {
-        this.setState({currentlyEdited: null});
+    onLockAdd: function (id) {
+        this.setState({activeLockId: null});
+    },
+
+    onLockRemove: function (id) {
+        this.setState({activeLockId: null});
     },
 
     render: function () {
+        var self = this;
+        var locks = [
+            {name: "Pete Hunt", _id: "10"},
+            {name: "Jordan Walke", _id: "11"}
+        ];
+
+        var lockObjects = locks.map(function (lock) {
+            return (
+                <Lock key={lock._id} name={lock.name} onLockFocus={self.onLockFocus} active={ lock._id === self.state.activeLockId }/>
+            );
+        });
+
         return (
-            <div className="container">
-                <div className="row header">
-                    <div className="page-header">
-                        <h1>React Note App</h1>
-                    </div>
-                </div>
-                <div className="row">
-                    <NoteListBox onEdit={this.onEdit} onAdd={this.onAdd}/>
-                    <NoteCreationBox id={this.state.currentlyEdited} />
-                </div>
+            <div className = "main">
+                <section className="left">
+                    <div className="title">{ this.state.title }</div>
+                    <div className="logo"></div>
+                    <div className="message">{ this.state.message }</div>
+                    <div className="locks">{ lockObjects }</div>
+                </section>
+                <section className="right"></section>
             </div>
         )
     }
