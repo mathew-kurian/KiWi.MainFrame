@@ -12,11 +12,16 @@ var Dashboard = React.createClass({
             title: "KiWi Control",
             logo: "hello",
             message : "hello",
-            activeLockId : undefined
+            activeLockId : undefined,
+            locks : [
+                {name: "Pete Hunt", _id: "10"},
+                {name: "Jordan Walke", _id: "11"}
+            ]
         }
     },
 
     onLockFocus: function (id) {
+        console.log("Detected click");
         this.setState({activeLockId: id});
     },
 
@@ -30,14 +35,10 @@ var Dashboard = React.createClass({
 
     render: function () {
         var self = this;
-        var locks = [
-            {name: "Pete Hunt", _id: "10"},
-            {name: "Jordan Walke", _id: "11"}
-        ];
 
-        var lockObjects = locks.map(function (lock) {
+        var lockObjects = this.state.locks.map(function (lock) {
             return (
-                <Lock key={lock._id} name={lock.name} onLockFocus={self.onLockFocus} active={ lock._id === self.state.activeLockId }/>
+                <Lock key={lock._id} lock={lock} onLockFocus={self.onLockFocus} active={ lock._id === self.state.activeLockId }/>
             );
         });
 

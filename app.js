@@ -4,19 +4,22 @@ var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var nodejsx = require('node-jsx');
+var scribe = require('scribe-js')();
+var logger = require('morgan');
 var app = express();
 
 nodejsx.install({
     extension: '.jsx'
 });
 
-var App = require('./asr/app.jsx');
+var reactApp = require('./asr/app.jsx');
 var React = require('react');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 //app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(scribe.express.logger()); //Log each request
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
@@ -24,9 +27,11 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
+app.use('/logs', scribe.webPanel());
+
 // Render React on Server
 app.get('/', function (req, res) {
-    var markup = React.renderComponentToString(App());
+    var markup = React.renderComponentToString(reactApp());
     res.send('<!DOCTYPE html>' + markup);
 });
 

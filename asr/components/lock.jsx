@@ -22,7 +22,7 @@ var Lock = React.createClass({
         return (
             <div className={ "device " + (this.props.active ? "active" : "")} onClick={this.onLockFocus}>
                 <div className="power">{ this.state.power }</div>
-                <div className="name">{ this.props.name }</div>
+                <div className="name">{ this.props.lock.name }</div>
             </div>
         )
     }
