@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var nodejsx = require('node-jsx');
 var scribe = require('scribe-js')();
-var logger = require('morgan');
 var app = express();
 
 nodejsx.install({
