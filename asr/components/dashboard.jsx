@@ -4,6 +4,10 @@
 
 var React = require('react');
 var Lock = require('./lock.jsx');
+var LockBanner = require('./lock-banner.jsx');
+var LockEventFlow = require('./lock-event-flow.jsx');
+var LockControlsOverview = require('./lock-controls-overview.jsx');
+var LockUsersOverview = require('./lock-users-overview.jsx');
 
 var Dashboard = React.createClass({
 
@@ -11,11 +15,12 @@ var Dashboard = React.createClass({
         return {
             title: "KiWi Control",
             logo: "hello",
-            message : "hello",
-            activeLockId : undefined,
-            locks : [
-                {name: "Pete Hunt", _id: "10"},
-                {name: "Jordan Walke", _id: "11"}
+            message: "hello",
+            flowClass: "lock-event-flow",
+            activeLockId: undefined,
+            locks: [
+                {name: "Home", _id: "10"},
+                {name: "Vacation", _id: "11"}
             ]
         }
     },
@@ -45,12 +50,29 @@ var Dashboard = React.createClass({
         return (
             <div className = "main">
                 <section className="left">
-                    <div className="title">{ this.state.title }</div>
-                    <div className="logo"></div>
-                    <div className="message">{ this.state.message }</div>
+                    <div className="header">
+                        <div className="title">{ this.state.title }</div>
+                        <div className="logo"></div>
+                        <div className="message">{ this.state.message }</div>
+                    </div>
                     <div className="locks">{ lockObjects }</div>
                 </section>
-                <section className="right"></section>
+                <section className="right">
+                    <div className="inner-sidebar">
+                        <div className="monitor"></div>
+                        <div>
+                            <div className="home"></div>
+                            <div className="users"></div>
+                            <div className="settings"></div>
+                            <div className="emergency"></div>
+                        </div>
+                    </div>
+                    <LockBanner lock={ this.state.locks[0] }/>
+                    { this.state.flowClass === "lock-event-flow" ?
+                        <LockEventFlow lock={ this.state.locks[0] }/> : null }
+                    <LockControlsOverview />
+                    <LockUsersOverview />
+                </section>
             </div>
         )
     }

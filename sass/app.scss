@@ -1,4 +1,68 @@
+@import 'fonts';
+
+body, html {
+  background: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Museo Sans";
+}
+
+section.left {
+  background: rgb(33, 37, 45);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  bottom: 0;
+  * {
+    color: rgb(151, 162, 177);
+  }
+  .header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    .title {
+      font-size: 22px;
+      position: relative;
+      left: 15px;
+      font-weight: 700;
+      color: rgb(151, 162, 177);
+    }
+    .message {
+      font-size: 12px;
+      position: relative;
+      left: 15px;
+      color: rgb(151, 162, 177);
+    }
+  }
+  .locks {
+    padding: 20px 0;
+    font-size: 16px;
+    font-weight: 300;
+    .device {
+      padding: 10px 30px;
+    }
+  }
+}
+
+section.right {
+  position: fixed;
+  left: 220px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: rgb(244, 245, 247);
+  .inner-sidebar {
+    background: rgb(45, 51, 61);
+    width: 70px;
+    height: 100%;
+  }
+}
 
 .active {
-    font-weight: bold;
+  font-weight: bold;
 }
