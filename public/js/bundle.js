@@ -61,7 +61,7 @@ if (typeof window !== 'undefined') {
  */
 
 var React = require('react');
-var Lock = require('./lock.jsx');
+var LockItem = require('./lock-item.jsx');
 var LockBanner = require('./lock-banner.jsx');
 var LockEventFlow = require('./lock-event-flow.jsx');
 var LockControlsOverview = require('./lock-controls-overview.jsx');
@@ -101,7 +101,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
 
         var lockObjects = this.state.locks.map(function (lock) {
             return (
-                Lock({key: lock._id, lock: lock, onLockFocus: self.onLockFocus, active:  lock._id === self.state.activeLockId})
+                LockItem({key: lock._id, lock: lock, onLockFocus: self.onLockFocus, active:  lock._id === self.state.activeLockId})
             );
         });
 
@@ -145,7 +145,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
 
 module.exports = Dashboard;
 
-},{"./lock-banner.jsx":4,"./lock-controls-overview.jsx":5,"./lock-event-flow.jsx":6,"./lock-users-overview.jsx":7,"./lock.jsx":8,"react":153}],4:[function(require,module,exports){
+},{"./lock-banner.jsx":4,"./lock-controls-overview.jsx":5,"./lock-event-flow.jsx":6,"./lock-item.jsx":7,"./lock-users-overview.jsx":8,"react":153}],4:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -234,36 +234,7 @@ module.exports = LockEventFlow;
 
 var React = require('react');
 
-var LockUsersOverview = React.createClass({displayName: 'LockUsersOverview',
-
-    getInitialState: function () {
-        return {
-            active: false,
-            name : "Undefined",
-            power : false
-        }
-    },
-
-    render: function () {
-        return (
-            React.DOM.div({className: "extra-content secondary"}, 
-                React.DOM.div({className: "title"},  this.state.title), 
-                React.DOM.div({className: "name"})
-            )
-        )
-    }
-});
-
-module.exports = LockUsersOverview;
-
-},{"react":153}],8:[function(require,module,exports){
-/**
- * @jsx React.DOM
- */
-
-var React = require('react');
-
-var Lock = React.createClass({displayName: 'Lock',
+var LockItem = React.createClass({displayName: 'LockItem',
 
     getInitialState: function () {
         return {
@@ -286,7 +257,36 @@ var Lock = React.createClass({displayName: 'Lock',
     }
 });
 
-module.exports = Lock;
+module.exports = LockItem;
+
+},{"react":153}],8:[function(require,module,exports){
+/**
+ * @jsx React.DOM
+ */
+
+var React = require('react');
+
+var LockUsersOverview = React.createClass({displayName: 'LockUsersOverview',
+
+    getInitialState: function () {
+        return {
+            active: false,
+            name : "Undefined",
+            power : false
+        }
+    },
+
+    render: function () {
+        return (
+            React.DOM.div({className: "extra-content secondary"}, 
+                React.DOM.div({className: "title"},  this.state.title), 
+                React.DOM.div({className: "name"})
+            )
+        )
+    }
+});
+
+module.exports = LockUsersOverview;
 
 },{"react":153}],9:[function(require,module,exports){
 // shim for using process in browser

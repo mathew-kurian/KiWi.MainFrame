@@ -4,7 +4,7 @@
 
 var React = require('react');
 
-var Lock = React.createClass({
+var LockItem = React.createClass({
 
     getInitialState: function () {
         return {
@@ -27,4 +27,4 @@ var Lock = React.createClass({
     }
 });
 
-module.exports = Lock;
+module.exports = LockItem;

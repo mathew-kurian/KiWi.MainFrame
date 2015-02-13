@@ -3,7 +3,7 @@
  */
 
 var React = require('react');
-var Lock = require('./lock.jsx');
+var LockItem = require('./lock-item.jsx');
 var LockBanner = require('./lock-banner.jsx');
 var LockEventFlow = require('./lock-event-flow.jsx');
 var LockControlsOverview = require('./lock-controls-overview.jsx');
@@ -43,7 +43,7 @@ var Dashboard = React.createClass({
 
         var lockObjects = this.state.locks.map(function (lock) {
             return (
-                <Lock key={lock._id} lock={lock} onLockFocus={self.onLockFocus} active={ lock._id === self.state.activeLockId }/>
+                <LockItem key={lock._id} lock={lock} onLockFocus={self.onLockFocus} active={ lock._id === self.state.activeLockId }/>
             );
         });
 
