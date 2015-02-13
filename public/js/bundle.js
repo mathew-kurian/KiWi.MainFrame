@@ -23,7 +23,7 @@ var App = React.createClass({displayName: 'App',
                     React.DOM.meta({name: "viewport", content: "width=device-width, initial-scale=1"}), 
                     React.DOM.link({href: "http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic", rel: "stylesheet", type: "text/css"}), 
                     React.DOM.link({href: "/css/app.css", rel: "stylesheet", type: "text/css"}), 
-                    React.DOM.title(null, "React Note app")
+                    React.DOM.title(null, "Kiwi Control - Dashboard")
                 ), 
                 React.DOM.body(null, 
                     Dashboard(null), 

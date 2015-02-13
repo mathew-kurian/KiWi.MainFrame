@@ -22,7 +22,7 @@ var App = React.createClass({
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
                     <link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic' rel='stylesheet' type='text/css'/>
                     <link href='/css/app.css' rel='stylesheet' type='text/css'/>
-                    <title>React Note app</title>
+                    <title>Kiwi Control - Dashboard</title>
                 </head>
                 <body>
                     <Dashboard/>
