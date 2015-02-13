@@ -13,14 +13,14 @@ var Dashboard = React.createClass({
 
     getInitialState: function () {
         return {
-            title: "KiWi Control",
+            title: "KiWi",
             logo: "hello",
             message: "hello",
             flowClass: "lock-event-flow",
             activeLockId: undefined,
             locks: [
-                {name: "Home", _id: "10", powerState: 0, lastUpdated: "a few seconds ago", battery:"95"},
-                {name: "Vacation", _id: "11", powerState: 1, lastUpdated: "a few seconds ago", battery:"50"}
+                {name: "Home", _id: "10", powerState: 0, lastUpdated: "a few seconds ago", battery: "95"},
+                {name: "Vacation", _id: "11", powerState: 1, lastUpdated: "a few seconds ago", battery: "50"}
             ]
         }
     },
@@ -55,7 +55,12 @@ var Dashboard = React.createClass({
                         <div className="logo"></div>
                         <div className="message">{ this.state.message }</div>
                     </div>
-                    <div className="locks">{ lockObjects }</div>
+                    <div>
+                        <div className="section-title">Active</div>
+                        <div className="locks">{ lockObjects }</div>
+                        <div className="section-title">Options</div>
+                        <div className="section-title">Inactive</div>
+                    </div>
                 </section>
                 <section className="right">
                     <div className="inner-sidebar">

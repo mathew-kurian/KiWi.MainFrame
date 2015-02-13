@@ -77,22 +77,31 @@ section.left {
   section.left * {
     color: #97a2b1; }
   section.left .header {
-    padding: 28px 20px 29px;
+    padding: 24px 20px 24px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15); }
     section.left .header .title {
-      font-size: 21px;
+      font-size: 28px;
       position: relative;
       left: 15px;
-      font-weight: 700;
+      font-weight: 900;
       color: #BAC3D0;
-      letter-spacing: -1px; }
+      letter-spacing: -1px;
+      text-transform: uppercase; }
     section.left .header .message {
       font-size: 12px;
       position: relative;
       left: 15px;
       color: #97a2b1; }
-  section.left .locks {
+  section.left .section-title {
     padding: 20px 0;
+    margin-left: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    vertical-align: middle;
+    text-transform: uppercase;
+    opacity: 0.5;
+    font-family: "Open Sans", sans-serif; }
+  section.left .locks {
     font-weight: 500; }
     section.left .locks .device {
       height: 40px;
@@ -134,7 +143,7 @@ section.right {
     height: 96px;
     top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    padding: 15px 25px; }
+    padding: 18px 25px; }
     section.right .banner .name {
       font-size: 24px;
       font-weight: 700;
@@ -177,8 +186,8 @@ section.right {
       border-bottom: 1px solid rgba(255, 255, 255, 0.15);
       position: relative; }
       section.right .inner-sidebar .monitor .light {
-        height: 26px;
-        width: 26px;
+        height: 24px;
+        width: 24px;
         border: 4px solid #62C5CF;
         position: absolute;
         top: 50%;
