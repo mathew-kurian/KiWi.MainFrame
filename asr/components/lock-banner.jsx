@@ -14,7 +14,7 @@ var LockBanner = React.createClass({
         return (
             <div className="banner">
                 <div className="name">{ this.props.lock.name }</div>
-                <div className="last-updated">{ this.props.lock.lastUpdated }</div>
+                <div className="last-updated">checked in <b>{ this.props.lock.lastUpdated }</b></div>
                 <div className="wifi-signal-strength">{ this.props.lock.wifiSignalStrength }</div>
                 <div className="battery">{ this.props.lock.battery }</div>
             </div>

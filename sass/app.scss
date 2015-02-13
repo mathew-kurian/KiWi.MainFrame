@@ -1,5 +1,7 @@
 @import 'fonts';
 
+$divider: rgba(255, 255, 255, 0.15);
+
 body, html {
   background: none;
   margin: 0;
@@ -9,7 +11,8 @@ body, html {
 
 * {
   box-sizing: border-box;
-  font-family: "Museo Sans";
+  font-family: "Museo Sans", "Open Sans", sans-serif;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 section.left {
@@ -19,18 +22,20 @@ section.left {
   left: 0;
   width: 220px;
   bottom: 0;
+  box-shadow: inset -5px 0 30px rgba(0, 0, 0, 0.3);
   * {
     color: rgb(151, 162, 177);
   }
   .header {
-    padding: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 28px 20px 29px;
+    border-bottom: 1px solid $divider;
     .title {
-      font-size: 18px;
+      font-size: 21px;
       position: relative;
       left: 15px;
-      font-weight: 900;
+      font-weight: 700;
       color: #BAC3D0;
+      letter-spacing: -1px;
     }
     .message {
       font-size: 12px;
@@ -41,10 +46,37 @@ section.left {
   }
   .locks {
     padding: 20px 0;
-    font-size: 16px;
-    font-weight: 300;
+    font-weight: 500;
     .device {
-      padding: 10px 30px;
+      height: 40px;
+      width: 100%;
+      padding: 10px 20px;
+      display: table;
+      .power {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border: 2px solid red;
+        border-radius: 100%;
+        vertical-align: middle;
+        &.red {
+          border-color: red !important;
+        }
+        &.blue {
+          border-color: rgb(110, 237, 250) !important;
+        }
+        &.green {
+          border-color: rgb(105, 180, 48) !important;
+        }
+      }
+      .name {
+        display: inline-block;
+        margin-left: 10px;
+        font-weight: 600;
+        font-size: 16px;
+        vertical-align: middle;
+        font-family: "Open Sans", sans-serif;
+      }
     }
   }
 }
@@ -56,10 +88,77 @@ section.right {
   bottom: 0;
   right: 0;
   background: rgb(244, 245, 247);
+  .banner {
+    position: absolute;
+    left: 70px;
+    right: 0;
+    height: 96px;
+    top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 15px 25px;
+    .name {
+      font-size: 24px;
+      font-weight: 700;
+      font-family: "Open Sans", sans-serif;
+      color: #5a6678;
+      letter-spacing: -1px;
+    }
+    .battery {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 150px;
+      padding: 15px;
+      font-size: 41px;
+      background: #5aa65f;
+      text-align: center;
+      color: #FFF;
+      font-weight: 300;
+      font-family: "Open Sans", sans-serif;
+      &:after{
+        content: '%';
+        font-size: 15px;
+        position: relative;
+        top: -10px;
+        opacity: 0.5;
+        left: 5px;
+        font-family: "Proxima Nova", sans-serif;
+      }
+    }
+    .last-updated {
+      color: rgb(147, 155, 169);
+      b {
+        font-weight: 900;
+      }
+    }
+  }
   .inner-sidebar {
     background: rgb(45, 51, 61);
     width: 70px;
     height: 100%;
+    .monitor {
+      height: 96px;
+      width: 100%;
+      display: table;
+      border-bottom: 1px solid $divider;
+      position: relative;
+      .light {
+        height: 26px;
+        width: 26px;
+        border: 4px solid #62C5CF;
+        position: absolute;
+        top: 50%;
+        margin: -13px auto 0;
+        left: 0;
+        right: 0;
+        border-radius: 100%;
+        &.on {
+          background: #6eedfa;
+          box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px #6eedfa;
+        }
+      }
+    }
   }
 }
 

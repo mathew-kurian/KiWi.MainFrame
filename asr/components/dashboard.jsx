@@ -19,8 +19,8 @@ var Dashboard = React.createClass({
             flowClass: "lock-event-flow",
             activeLockId: undefined,
             locks: [
-                {name: "Home", _id: "10"},
-                {name: "Vacation", _id: "11"}
+                {name: "Home", _id: "10", powerState: 0, lastUpdated: "a few seconds ago", battery:"95"},
+                {name: "Vacation", _id: "11", powerState: 1, lastUpdated: "a few seconds ago", battery:"50"}
             ]
         }
     },
@@ -59,7 +59,9 @@ var Dashboard = React.createClass({
                 </section>
                 <section className="right">
                     <div className="inner-sidebar">
-                        <div className="monitor"></div>
+                        <div className="monitor">
+                            <div className="light"></div>
+                        </div>
                         <div>
                             <div className="home"></div>
                             <div className="users"></div>

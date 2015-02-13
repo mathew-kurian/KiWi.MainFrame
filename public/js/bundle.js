@@ -77,8 +77,8 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
             flowClass: "lock-event-flow",
             activeLockId: undefined,
             locks: [
-                {name: "Home", _id: "10"},
-                {name: "Vacation", _id: "11"}
+                {name: "Home", _id: "10", powerState: 0, lastUpdated: "a few seconds ago", battery:"95"},
+                {name: "Vacation", _id: "11", powerState: 1, lastUpdated: "a few seconds ago", battery:"50"}
             ]
         }
     },
@@ -117,7 +117,9 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
                 ), 
                 React.DOM.section({className: "right"}, 
                     React.DOM.div({className: "inner-sidebar"}, 
-                        React.DOM.div({className: "monitor"}), 
+                        React.DOM.div({className: "monitor"}, 
+                            React.DOM.div({className: "light"})
+                        ), 
                         React.DOM.div(null, 
                             React.DOM.div({className: "home"}), 
                             React.DOM.div({className: "users"}), 
@@ -155,7 +157,7 @@ var LockBanner = React.createClass({displayName: 'LockBanner',
         return (
             React.DOM.div({className: "banner"}, 
                 React.DOM.div({className: "name"},  this.props.lock.name), 
-                React.DOM.div({className: "last-updated"},  this.props.lock.lastUpdated), 
+                React.DOM.div({className: "last-updated"}, "checked in ", React.DOM.b(null,  this.props.lock.lastUpdated)), 
                 React.DOM.div({className: "wifi-signal-strength"},  this.props.lock.wifiSignalStrength), 
                 React.DOM.div({className: "battery"},  this.props.lock.battery)
             )
@@ -261,8 +263,7 @@ var Lock = React.createClass({displayName: 'Lock',
     getInitialState: function () {
         return {
             active: false,
-            name : "Undefined",
-            power : false
+            name : "Undefined"
         }
     },
 
@@ -273,7 +274,7 @@ var Lock = React.createClass({displayName: 'Lock',
     render: function () {
         return (
             React.DOM.div({className:  "device " + (this.props.active ? "active" : ""), onClick: this.onLockFocus}, 
-                React.DOM.div({className: "power"},  this.state.power), 
+                React.DOM.div({className:  this.props.lock.powerState ? "power green" : "power blue"}), 
                 React.DOM.div({className: "name"},  this.props.lock.name)
             )
         )

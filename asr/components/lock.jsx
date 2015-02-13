@@ -9,8 +9,7 @@ var Lock = React.createClass({
     getInitialState: function () {
         return {
             active: false,
-            name : "Undefined",
-            power : false
+            name : "Undefined"
         }
     },
 
@@ -21,7 +20,7 @@ var Lock = React.createClass({
     render: function () {
         return (
             <div className={ "device " + (this.props.active ? "active" : "")} onClick={this.onLockFocus}>
-                <div className="power">{ this.state.power }</div>
+                <div className={ this.props.lock.powerState ? "power green" : "power blue" }></div>
                 <div className="name">{ this.props.lock.name }</div>
             </div>
         )
