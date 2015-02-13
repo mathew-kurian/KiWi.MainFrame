@@ -20,6 +20,13 @@
   font-weight: 700;
   font-style: normal; }
 
+@font-face {
+  font-family: 'Museo Sans';
+  src: url('/fonts/museo-sans-rounded-900.eot');
+  src: url('/fonts/museo-sans-rounded-900.eot?#iefix') format('embedded-opentype'), url('/fonts/museo-sans-rounded-900.woff2') format('woff2'), url('/fonts/museo-sans-rounded-900.woff') format('woff'), url('/fonts/museo-sans-rounded-900.ttf') format('truetype'), url('/fonts/museo-sans-rounded-900.svg#museo_sans_rounded500') format('svg');
+  font-weight: 900;
+  font-style: normal; }
+
 body, html {
   background: none;
   margin: 0;
@@ -46,7 +53,7 @@ section.left {
       font-size: 22px;
       position: relative;
       left: 15px;
-      font-weight: 700;
+      font-weight: 900;
       color: #97a2b1; }
     section.left .header .message {
       font-size: 12px;
