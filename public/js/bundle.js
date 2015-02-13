@@ -67,33 +67,56 @@ var LockEventFlow = require('./lock-event-flow.jsx');
 var LockControlsOverview = require('./lock-controls-overview.jsx');
 var LockUsersOverview = require('./lock-users-overview.jsx');
 
+var intervalId = 0;
+
 var Dashboard = React.createClass({displayName: 'Dashboard',
 
     getInitialState: function () {
-        return {
+        var state = {
             title: "KiWi",
             logo: "hello",
             message: "hello",
             flowClass: "lock-event-flow",
-            activeLockId: undefined,
             locks: [
                 {name: "Home", _id: "10", powerState: 0, lastUpdated: "a few seconds ago", battery: "95"},
                 {name: "Vacation", _id: "11", powerState: 1, lastUpdated: "a few seconds ago", battery: "50"}
             ]
-        }
+        };
+
+        state.activeLock = state.locks[0];
+
+        return state;
+    },
+
+    componentDidMount: function () {
+        var blink = function () {
+            var lightFocus = document.getElementsByClassName("light")[0];
+            var lightItem = document.getElementsByClassName("power")[0];
+
+            if (lightFocus.getAttribute('class').indexOf('on') > -1) {
+                lightFocus.setAttribute('class', 'light');
+                lightItem.setAttribute('class', 'power blue');
+            } else {
+                lightFocus.setAttribute('class', 'light on');
+                lightItem.setAttribute('class', 'power blue on');
+            }
+
+            intervalId = setTimeout(blink, Math.random() * 2000);
+        };
+
+        blink();
+    },
+
+    componentWillUnmount: function () {
+        clearInterval(intervalId);
     },
 
     onLockFocus: function (id) {
-        console.log("Detected click");
-        this.setState({activeLockId: id});
-    },
-
-    onLockAdd: function (id) {
-        this.setState({activeLockId: null});
-    },
-
-    onLockRemove: function (id) {
-        this.setState({activeLockId: null});
+        for (var i = 0; i < this.state.locks.length; i++) {
+            if (this.state.locks[i]._id == id) {
+                return this.setState({activeLock: this.state.locks[i]});
+            }
+        }
     },
 
     render: function () {
@@ -101,7 +124,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
 
         var lockObjects = this.state.locks.map(function (lock) {
             return (
-                LockItem({key: lock._id, lock: lock, onLockFocus: self.onLockFocus, active:  lock._id === self.state.activeLockId})
+                LockItem({key: lock._id, lock: lock, onLockFocus: self.onLockFocus, active:  lock._id === self.state.activeLock._id})
             );
         });
 
@@ -132,9 +155,9 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
                             React.DOM.div({className: "emergency"})
                         )
                     ), 
-                    LockBanner({lock:  this.state.locks[0] }), 
+                    LockBanner({lock:  this.state.activeLock}), 
                      this.state.flowClass === "lock-event-flow" ?
-                        LockEventFlow({lock:  this.state.locks[0] }) : null, 
+                        LockEventFlow({lock:  this.state.activeLock}) : null, 
                     LockControlsOverview(null), 
                     LockUsersOverview(null)
                 )

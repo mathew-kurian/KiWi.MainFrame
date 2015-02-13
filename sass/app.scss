@@ -22,7 +22,8 @@ section.left {
   left: 0;
   width: 220px;
   bottom: 0;
-  box-shadow: inset -5px 0 30px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.05);
   * {
     color: rgb(151, 162, 177);
   }
@@ -62,6 +63,10 @@ section.left {
       width: 100%;
       padding: 10px 20px;
       display: table;
+      cursor: pointer;
+      &.active {
+        background: rgba(0,0,0,0.1);
+      }
       .power {
         display: inline-block;
         width: 12px;
@@ -69,11 +74,19 @@ section.left {
         border: 2px solid red;
         border-radius: 100%;
         vertical-align: middle;
+        transition: all 250ms ease-in;
+
         &.red {
           border-color: red !important;
         }
         &.blue {
           border-color: rgb(110, 237, 250) !important;
+
+          &.on {
+            background: #6eedfa;
+            box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px #6eedfa;
+          }
+
         }
         &.green {
           border-color: rgb(105, 180, 48) !important;
@@ -156,13 +169,14 @@ section.right {
       .light {
         height: 24px;
         width: 24px;
-        border: 4px solid #62C5CF;
+        border: 3px solid #62C5CF;
         position: absolute;
         top: 50%;
         margin: -13px auto 0;
         left: 0;
         right: 0;
         border-radius: 100%;
+        transition: all 250ms ease-in;
         &.on {
           background: #6eedfa;
           box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px #6eedfa;
