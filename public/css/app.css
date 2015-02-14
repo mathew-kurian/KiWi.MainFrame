@@ -66,6 +66,18 @@ body, html {
   font-family: "Museo Sans", "Open Sans", sans-serif;
   -webkit-font-smoothing: subpixel-antialiased; }
 
+.light {
+  transition: all 250ms ease-in; }
+  .light.red {
+    border-color: red !important; }
+  .light.blue {
+    border-color: #6eedfa !important; }
+    .light.blue.on {
+      background: #6eedfa;
+      box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px #6eedfa; }
+  .light.green {
+    border-color: #69b430 !important; }
+
 section.left {
   background: #21252d;
   position: fixed;
@@ -112,23 +124,13 @@ section.left {
       cursor: pointer; }
       section.left .locks .device.active {
         background: rgba(0, 0, 0, 0.1); }
-      section.left .locks .device .power {
+      section.left .locks .device .light {
         display: inline-block;
         width: 12px;
         height: 12px;
         border: 2px solid red;
         border-radius: 100%;
-        vertical-align: middle;
-        transition: all 250ms ease-in; }
-        section.left .locks .device .power.red {
-          border-color: red !important; }
-        section.left .locks .device .power.blue {
-          border-color: #6eedfa !important; }
-          section.left .locks .device .power.blue.on {
-            background: #6eedfa;
-            box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px #6eedfa; }
-        section.left .locks .device .power.green {
-          border-color: #69b430 !important; }
+        vertical-align: middle; }
       section.left .locks .device .name {
         display: inline-block;
         margin-left: 10px;
@@ -202,11 +204,7 @@ section.right {
         margin: -13px auto 0;
         left: 0;
         right: 0;
-        border-radius: 100%;
-        transition: all 250ms ease-in; }
-        section.right .inner-sidebar .monitor .light.on {
-          background: #6eedfa;
-          box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px #6eedfa; }
+        border-radius: 100%; }
 
 .active {
   font-weight: bold; }

@@ -8,6 +8,7 @@ var LockBanner = require('./lock-banner.jsx');
 var LockEventFlow = require('./lock-event-flow.jsx');
 var LockControlsOverview = require('./lock-controls-overview.jsx');
 var LockUsersOverview = require('./lock-users-overview.jsx');
+var UIUtils = require('./../utils/ui-utils');
 
 var intervalId = 0;
 
@@ -20,8 +21,27 @@ var Dashboard = React.createClass({
             message: "hello",
             flowClass: "lock-event-flow",
             locks: [
-                {name: "Home", _id: "10", powerState: 0, lastUpdated: "a few seconds ago", battery: "95"},
-                {name: "Vacation", _id: "11", powerState: 1, lastUpdated: "a few seconds ago", battery: "50"}
+                {
+                    name: "Houston",
+                    _id: "12",
+                    powerState: 1,
+                    lastUpdated: "three hours ago",
+                    battery: 87
+                },
+                {
+                    name: "Home",
+                    _id: "10",
+                    powerState: 0,
+                    lastUpdated: "a few seconds ago",
+                    battery: 95
+                },
+                {
+                    name: "Vacation",
+                    _id: "11",
+                    powerState: 1,
+                    lastUpdated: "three months ago",
+                    battery: 99
+                }
             ]
         };
 
@@ -30,23 +50,29 @@ var Dashboard = React.createClass({
         return state;
     },
 
+    onLockNotify: function () {
+
+        var self = this;
+        var activeLock = self.state.activeLock;
+        activeLock.alert = true;
+        self.setState({activeLock: activeLock});
+
+        setTimeout(function () {
+            activeLock = self.state.activeLock;
+            activeLock.alert = false;
+            self.setState({activeLock: activeLock});
+        }, 500);
+    },
+
     componentDidMount: function () {
-        var blink = function () {
-            var lightFocus = document.getElementsByClassName("light")[0];
-            var lightItem = document.getElementsByClassName("power")[0];
+        var self = this;
 
-            if (lightFocus.getAttribute('class').indexOf('on') > -1) {
-                lightFocus.setAttribute('class', 'light');
-                lightItem.setAttribute('class', 'power blue');
-            } else {
-                lightFocus.setAttribute('class', 'light on');
-                lightItem.setAttribute('class', 'power blue on');
-            }
-
-            intervalId = setTimeout(blink, Math.random() * 2000);
+        var generateNotifications = function () {
+            self.onLockNotify();
+            intervalId = setTimeout(generateNotifications, Math.random() * 3000);
         };
 
-        blink();
+        generateNotifications();
     },
 
     componentWillUnmount: function () {
@@ -88,7 +114,7 @@ var Dashboard = React.createClass({
                 <section className="right">
                     <div className="inner-sidebar">
                         <div className="monitor">
-                            <div className="light"></div>
+                            <div className={ UIUtils.calcLightClasses(this.state.activeLock._id === this.state.activeLock._id, this.state.activeLock) }></div>
                         </div>
                         <div>
                             <div className="home"></div>

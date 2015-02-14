@@ -3,13 +3,14 @@
  */
 
 var React = require('react');
+var UIUtils = require('./../utils/ui-utils');
 
 var LockItem = React.createClass({
 
     getInitialState: function () {
         return {
             active: false,
-            name : "Undefined"
+            name: "Undefined"
         }
     },
 
@@ -20,7 +21,7 @@ var LockItem = React.createClass({
     render: function () {
         return (
             <div className={ "device " + (this.props.active ? "active" : "")} onClick={this.onLockFocus}>
-                <div className={ this.props.lock.powerState ? "power green" : "power blue" }></div>
+                <div className={ UIUtils.calcLightClasses(this.props.active, this.props.lock) }></div>
                 <div className="name">{ this.props.lock.name }</div>
             </div>
         )

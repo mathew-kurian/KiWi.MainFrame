@@ -7,7 +7,7 @@ module.exports = function (grunt) {
 
         watch: {
             react: {
-                files: ['asr/*.jsx', 'asr/**/*.jsx', 'asr/actions/*.js', 'asr/stores/**/*.js'],
+                files: ['asr/*.jsx', 'asr/**/*.jsx', 'asr/**/*.js'],
                 tasks: ['browserify']
             },
             styles: {
@@ -40,7 +40,7 @@ module.exports = function (grunt) {
                 transform: [require('grunt-react').browserify]
             },
             client: {
-                src: ['asr/*.jsx', 'asr/**/*.jsx'],
+                src: ['asr/*.jsx', 'asr/**/*.jsx', 'asr/**/*.js'],
                 dest: 'public/js/bundle.js'
             }
         },
