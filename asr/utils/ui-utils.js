@@ -1,15 +1,23 @@
-
 module.exports = {
-    calcLightClasses : function(active, lock) {
+    calcLightClasses: function (active, lock) {
         var lightCls = "light";
 
-        if(lock && lock.powerState == 1) {
-            lightCls += active ? " blue" : " green";
+        if (lock) {
+            switch (lock.powerState) {
+                case 0:
+                    lightCls += " red";
+                    break;
+                case 1:
+                    lightCls += " green";
+                    break;
+                case 2:
+                    lightCls += " blue";
+                    break;
+            }
+
             if (lock.alert) {
                 lightCls += " on";
             }
-        } else {
-            lightCls += " red";
         }
 
         return lightCls;

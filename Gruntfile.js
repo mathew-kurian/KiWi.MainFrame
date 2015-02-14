@@ -48,7 +48,7 @@ module.exports = function (grunt) {
             dev: {
                 script: 'bin/www',
                 options: {
-                    ext: 'js,jsx,html,ejs'
+                    watch: ['public/**/*.js', './*.js', 'routes/*.js', 'routes/**/*.js']
                 }
             }
         }

@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var ShortId = require('mongoose-shortid');
 var Schema = mongoose.Schema;
 
 var UserSchema = Schema({
@@ -10,7 +9,6 @@ var UserSchema = Schema({
     username: {type: String, lowercase: true, trim: true},
     mobile: {number: String, uuid: String},
     photo: {data: Buffer, contentType: String},
-    pairedLocks: [Schema.Types.ObjectId],
     created: {type: Number, default: Date.now}
 });
 

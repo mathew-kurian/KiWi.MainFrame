@@ -9,45 +9,22 @@ var LockEventFlow = require('./lock-event-flow.jsx');
 var LockControlsOverview = require('./lock-controls-overview.jsx');
 var LockUsersOverview = require('./lock-users-overview.jsx');
 var UIUtils = require('./../utils/ui-utils');
+var TestDB = require('./../utils/test-utils').TestDB;
 
-var intervalId = 0;
+var tid = 0;
 
 var Dashboard = React.createClass({
 
     getInitialState: function () {
-        var state = {
+        return {
             title: "KiWi",
             logo: "hello",
             message: "hello",
             flowClass: "lock-event-flow",
-            locks: [
-                {
-                    name: "Houston",
-                    _id: "12",
-                    powerState: 1,
-                    lastUpdated: "three hours ago",
-                    battery: 87
-                },
-                {
-                    name: "Home",
-                    _id: "10",
-                    powerState: 0,
-                    lastUpdated: "a few seconds ago",
-                    battery: 95
-                },
-                {
-                    name: "Vacation",
-                    _id: "11",
-                    powerState: 1,
-                    lastUpdated: "three months ago",
-                    battery: 99
-                }
-            ]
+            users: [],
+            locks: [],
+            activeLock: undefined
         };
-
-        state.activeLock = state.locks[0];
-
-        return state;
     },
 
     onLockNotify: function () {
@@ -66,22 +43,33 @@ var Dashboard = React.createClass({
 
     componentDidMount: function () {
         var self = this;
+        var locks = TestDB.getLocks();
+        var users = TestDB.getUsers();
+
+        this.setState({locks: locks});
+        this.setState({users: users});
+        this.setState({activeLock: locks[parseInt(locks.length * Math.random())]});
 
         var generateNotifications = function () {
             self.onLockNotify();
-            intervalId = setTimeout(generateNotifications, Math.random() * 3000);
+            tid = setTimeout(generateNotifications, Math.random() * 3000);
         };
 
         generateNotifications();
     },
 
     componentWillUnmount: function () {
-        clearInterval(intervalId);
+        clearTimeout(tid);
     },
 
     onLockFocus: function (id) {
         for (var i = 0; i < this.state.locks.length; i++) {
             if (this.state.locks[i]._id == id) {
+                // turn off last activeLock
+                var activeLock = this.state.activeLock;
+                activeLock.alert = false;
+                this.setState({activeLock: activeLock});
+                // turn on new activeLock
                 return this.setState({activeLock: this.state.locks[i]});
             }
         }
@@ -92,7 +80,7 @@ var Dashboard = React.createClass({
 
         var lockObjects = this.state.locks.map(function (lock) {
             return (
-                <LockItem key={lock._id} lock={lock} onLockFocus={self.onLockFocus} active={ lock._id === self.state.activeLock._id }/>
+                <LockItem key={lock._id} lock={lock} onLockFocus={self.onLockFocus} active={ self.state.activeLock && lock._id === self.state.activeLock._id }/>
             );
         });
 
@@ -114,7 +102,7 @@ var Dashboard = React.createClass({
                 <section className="right">
                     <div className="inner-sidebar">
                         <div className="monitor">
-                            <div className={ UIUtils.calcLightClasses(this.state.activeLock._id === this.state.activeLock._id, this.state.activeLock) }></div>
+                            <div className={ UIUtils.calcLightClasses(!!this.state.activeLock, this.state.activeLock) }></div>
                         </div>
                         <div>
                             <div className="home"></div>
@@ -123,9 +111,9 @@ var Dashboard = React.createClass({
                             <div className="emergency"></div>
                         </div>
                     </div>
-                    <LockBanner lock={ this.state.activeLock }/>
-                    { this.state.flowClass === "lock-event-flow" ?
-                        <LockEventFlow lock={ this.state.activeLock }/> : null }
+                    { this.state.activeLock ? <LockBanner lock={ this.state.activeLock }/> : null }
+                    { this.state.activeLock && this.state.flowClass === "lock-event-flow" ?
+                        <LockEventFlow lock={ this.state.activeLock }/> : null } }
                     <LockControlsOverview />
                     <LockUsersOverview />
                 </section>

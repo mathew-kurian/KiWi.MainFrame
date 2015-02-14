@@ -69,7 +69,10 @@ body, html {
 .light {
   transition: all 250ms ease-in; }
   .light.red {
-    border-color: red !important; }
+    border-color: #c10000 !important; }
+    .light.red.on {
+      background: red;
+      box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px red; }
   .light.blue {
     border-color: #6eedfa !important; }
     .light.blue.on {
@@ -77,6 +80,9 @@ body, html {
       box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px #6eedfa; }
   .light.green {
     border-color: #69b430 !important; }
+    .light.green.on {
+      background: #76c937;
+      box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px #76c937; }
 
 section.left {
   background: #21252d;
@@ -137,7 +143,11 @@ section.left {
         font-weight: 600;
         font-size: 16px;
         vertical-align: middle;
-        font-family: "Open Sans", sans-serif; }
+        font-family: "Open Sans", sans-serif;
+        text-transform: capitalize;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden; }
 
 section.right {
   position: fixed;
@@ -159,7 +169,8 @@ section.right {
       font-weight: 700;
       font-family: "Open Sans", sans-serif;
       color: #5a6678;
-      letter-spacing: -1px; }
+      letter-spacing: -1px;
+      text-transform: capitalize; }
     section.right .banner .battery {
       position: absolute;
       right: 0;
