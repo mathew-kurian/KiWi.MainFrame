@@ -332,6 +332,15 @@ module.exports = LockUsersOverview;
 var React = require('react');
 var moment = require('moment');
 
+var eventTypeColorMap = {
+    system : "blue",
+    lock : "green",
+    unlock : "yellow",
+    share : "red",
+    task : "teal",
+    unshare : "yellow"
+}
+
 // inner class
 var EventItem = React.createClass({displayName: 'EventItem',
 
@@ -340,6 +349,9 @@ var EventItem = React.createClass({displayName: 'EventItem',
     },
 
     render: function () {
+
+        var user = this.props.event.user ? "task" : "system";
+
         return (
             React.DOM.div({className: "event"}, 
                 React.DOM.div({className: "icon"}), 
@@ -347,7 +359,7 @@ var EventItem = React.createClass({displayName: 'EventItem',
                 React.DOM.div({className: "info"}, 
                     React.DOM.div({className: "data-left"}, 
                         React.DOM.div({className: "data-top"}, 
-                            React.DOM.div({className:  "user " + ["blue", "green", "yellow", "red", "teal"][parseInt(Math.random() * 5)]},  this.props.event.user ? "task" : "system")
+                            React.DOM.div({className:  "user " + eventTypeColorMap[user]}, user )
                         ), 
                         React.DOM.div({className: "data-bottom"}, "mobile")
                     ), 

@@ -5,6 +5,15 @@
 var React = require('react');
 var moment = require('moment');
 
+var eventTypeColorMap = {
+    system : "blue",
+    lock : "green",
+    unlock : "yellow",
+    share : "red",
+    task : "teal",
+    unshare : "yellow"
+}
+
 // inner class
 var EventItem = React.createClass({
 
@@ -13,6 +22,9 @@ var EventItem = React.createClass({
     },
 
     render: function () {
+
+        var user = this.props.event.user ? "task" : "system";
+
         return (
             <div className="event">
                 <div className="icon"></div>
@@ -20,7 +32,7 @@ var EventItem = React.createClass({
                 <div className="info">
                     <div className="data-left">
                         <div className="data-top">
-                            <div className={ "user " + ["blue", "green", "yellow", "red", "teal"][parseInt(Math.random() * 5)]} >{ this.props.event.user ? "task" : "system" }</div>
+                            <div className={ "user " + eventTypeColorMap[user]} >{ user }</div>
                         </div>
                         <div className="data-bottom">mobile</div>
                     </div>
