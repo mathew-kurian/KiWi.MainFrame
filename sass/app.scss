@@ -131,6 +131,112 @@ section.right {
   bottom: 0;
   right: 0;
   background: rgb(244, 245, 247);
+  .section {
+    width: 100%;
+    background: #FFF;
+    border-radius: 4px;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    .block {
+      display: table;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    .title {
+      padding-bottom: 3px;
+      font-weight: 400;
+      font-size: 12px;
+      vertical-align: middle;
+      text-transform: uppercase;
+      opacity: 0.5;
+      font-family: "Open Sans", sans-serif;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #DDD;
+      color: #8E8E8E;
+      &.inline {
+        width: auto;
+        vertical-align: middle;
+        display: table-cell;
+        padding-left: 20px;
+        opacity: 1;
+        font-weight: 600;
+        font-size: 13px;
+        border-bottom: none;
+        padding-bottom: 0;
+        color: #808080;
+        text-transform: none;
+      }
+    }
+    &.blue {
+      background: #64C2DE;
+      .title {
+        color: #FFF;
+        opacity: 0.8;
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+    }
+    &.teal {
+      background: #45B7AF;
+      .title {
+        color: #FFF;
+        opacity: 0.8;
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+    }
+  }
+
+  @import 'event-flow';
+
+  .inner-content {
+    top: 96px;
+    left: 70px;
+    bottom: 0;
+    right: 320px;
+    position: absolute;
+    padding: 20px;
+  }
+
+  .primary-right {
+    position: fixed;
+    right: 0;
+    top: 96px;
+    width: 360px;
+    padding: 20px;
+    .section {
+      .battery {
+        padding: 0;
+        font-size: 59px;
+        text-align: center;
+        color: #FFF;
+        font-weight: 500;
+        font-family: "Open Sans", sans-serif;
+        &:after {
+          content: '%';
+          font-size: 15px;
+          position: relative;
+          top: -10px;
+          opacity: 0.5;
+          left: 5px;
+          font-family: "Proxima Nova", sans-serif;
+        }
+      }
+      .signal {
+        text-align: center;
+        color: #FFF;
+        font-size: 55px;
+        width: 100%;
+        line-height: 80px;
+      }
+      .toggle {
+        margin-bottom: 10px;
+        &.small {
+          width: 70px;
+          display: table-cell;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
   .banner {
     position: absolute;
     left: 70px;
@@ -276,100 +382,6 @@ section.right {
 }
 
 .box {
-  background: #000;
   flex: auto;
   min-height: 100px;
-}
-
-.primary-right {
-  position: fixed;
-  right: 0;
-  top: 96px;
-  width: 360px;
-  padding: 20px;
-  .section {
-    width: 100%;
-    background: #FFF;
-    border-radius: 4px;
-    padding: 20px;
-    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
-    .block {
-      display: table;
-      margin-bottom: 10px;
-      width: 100%;
-    }
-    .title {
-      padding-bottom: 3px;
-      font-weight: 400;
-      font-size: 12px;
-      vertical-align: middle;
-      text-transform: uppercase;
-      opacity: 0.5;
-      font-family: "Open Sans", sans-serif;
-      margin-bottom: 14px;
-      border-bottom: 1px solid #DDD;
-      color: #8E8E8E;
-      &.inline {
-        width: auto;
-        vertical-align: middle;
-        display: table-cell;
-        padding-left: 20px;
-        opacity: 1;
-        font-weight: 600;
-        font-size: 13px;
-        border-bottom: none;
-        padding-bottom: 0;
-        color: #808080;
-        text-transform: none;
-      }
-    }
-    &.blue {
-      background: #64C2DE;
-      .title {
-        color: #FFF;
-        opacity: 0.8;
-        border-color: rgba(255, 255, 255, 0.4);
-      }
-    }
-    &.teal {
-      background: #45B7AF;
-      .title {
-        color: #FFF;
-        opacity: 0.8;
-        border-color: rgba(255, 255, 255, 0.4);
-      }
-    }
-    .battery {
-      padding: 0;
-      font-size: 59px;
-      text-align: center;
-      color: #FFF;
-      font-weight: 500;
-      font-family: "Open Sans", sans-serif;
-      &:after {
-        content: '%';
-        font-size: 15px;
-        position: relative;
-        top: -10px;
-        opacity: 0.5;
-        left: 5px;
-        font-family: "Proxima Nova", sans-serif;
-      }
-    }
-    .signal {
-      text-align: center;
-      color: #FFF;
-      font-size: 55px;
-      width: 100%;
-      line-height: 80px;
-    }
-    .toggle {
-      margin-bottom: 10px;
-      &.small {
-        width: 70px;
-        display: table-cell;
-        vertical-align: middle;
-      }
-    }
-  }
 }

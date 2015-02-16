@@ -1,0 +1,62 @@
+.event-flow .event {
+  padding-top: 10px;
+  padding-bottom: 10px; }
+  .event-flow .event .icon, .event-flow .event .info, .event-flow .event .image {
+    display: inline-block;
+    vertical-align: top; }
+  .event-flow .event .info .data-left {
+    display: inline-block;
+    vertical-align: top; }
+    .event-flow .event .info .data-left .user {
+      background: #64c2de;
+      color: #FFF;
+      font-weight: bold;
+      padding: 2px 9px 2px 10px;
+      font-size: 10px;
+      border-radius: 10px 0 0 10px;
+      width: 65px;
+      display: inline-block;
+      text-transform: uppercase;
+      font-family: "Open Sans", sans-serif; }
+      .event-flow .event .info .data-left .user.blue {
+        background: #64c2de; }
+      .event-flow .event .info .data-left .user.green {
+        background: #b3d227; }
+      .event-flow .event .info .data-left .user.yellow {
+        background: #eadf10; }
+      .event-flow .event .info .data-left .user.red {
+        background: #E9545A; }
+      .event-flow .event .info .data-left .user.teal {
+        background: #45B794; }
+    .event-flow .event .info .data-left .data-bottom {
+      font-size: 10px;
+      list-style: none;
+      color: #C0C0C0;
+      font-weight: 400;
+      font-family: "Open Sans", sans-serif;
+      position: Relative;
+      text-align: center;
+      top: 1px; }
+  .event-flow .event .info .data-right {
+    display: inline-block;
+    vertical-align: top;
+    border-left: 1px solid #DDD;
+    padding-left: 4px; }
+    .event-flow .event .info .data-right .data-top {
+      font-size: 14px;
+      line-height: 1.42857;
+      color: #3F3F44; }
+      .event-flow .event .info .data-right .data-top .text {
+        font-weight: 500;
+        font-size: 13px;
+        color: #555;
+        font-family: "Open Sans", sans-serif; }
+        .event-flow .event .info .data-right .data-top .text:first-letter {
+          text-transform: capitalize; }
+    .event-flow .event .info .data-right .data-bottom {
+      font-size: 11px;
+      list-style: none;
+      color: #C0C0C0;
+      font-weight: 400;
+      font-family: "Open Sans", sans-serif;
+      position: Relative; }

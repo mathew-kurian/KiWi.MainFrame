@@ -46,6 +46,10 @@ var Lock = function () {
         events.push(Event(_id, pairedUsers));
     }
 
+    events.sort(function (a, b) {
+        return new Date(b.created) - new Date(a.created);
+    });
+
     return {
         owner: owner,
         _id: _id,
@@ -57,8 +61,8 @@ var Lock = function () {
         battery: parseInt(Math.random() * 101),
         created: new Date(Date.now() - 50000 * Math.random()),
         events: events,
-        alert : false,
-        powerState : Chance.integer({min: 0, max: 2})
+        alert: false,
+        powerState: Chance.integer({min: 0, max: 2})
     }
 };
 
@@ -70,10 +74,10 @@ var Event = function (lock, pairedUsers) {
         _id: ShortId.generate(),
         lock: lock,
         user: (function () {
-            return randIndex < 3 ? "system" : pairedUsers[parseInt(pairedUsers.length * Math.random())];
+            return randIndex < 3 ? undefined : pairedUsers[parseInt(pairedUsers.length * Math.random())];
         })(),
         text: texts[randIndex],
-        created: new Date(Date.now() - (Math.random() * 5000))
+        created: new Date(Date.now() - (Math.random() * 5000000))
     }
 };
 

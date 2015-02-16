@@ -5,7 +5,7 @@
 var React = require('react');
 var LockItem = require('./lock-item.jsx');
 var LockBanner = require('./lock-banner.jsx');
-var LockEventFlow = require('./lock-event-flow.jsx');
+var LockEventFlow = require('./widgets/lock-event-flow.jsx');
 var LockControlsOverview = require('./lock-controls-overview.jsx');
 var LockUsersOverview = require('./lock-users-overview.jsx');
 var UIUtils = require('./../utils/ui-utils');
@@ -100,6 +100,10 @@ var Dashboard = React.createClass({
                     </div>
                 </section>
                 <section className="right">
+                    <div className="inner-content flex vertical">
+                    { this.state.activeLock && this.state.flowClass === "lock-event-flow" ?
+                        <LockEventFlow events={ this.state.activeLock.events }/> : null }
+                    </div>
                     <div className="inner-sidebar">
                         <div className="monitor">
                             <div className={ UIUtils.calcLightClasses(!!this.state.activeLock, this.state.activeLock) }></div>
@@ -112,8 +116,6 @@ var Dashboard = React.createClass({
                         </div>
                     </div>
                     { this.state.activeLock ? <LockBanner lock={ this.state.activeLock }/> : null }
-                    { this.state.activeLock && this.state.flowClass === "lock-event-flow" ?
-                        <LockEventFlow lock={ this.state.activeLock }/> : null } }
                     <LockControlsOverview />
                     <LockUsersOverview />
                 </section>
