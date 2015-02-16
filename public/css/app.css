@@ -55,6 +55,56 @@
   font-weight: bold;
   font-style: normal; }
 
+@font-face {
+  font-family: 'Glasglow';
+  src: url('/fonts/glasgow_regular.eot');
+  src: url('/fonts/glasgow_regular.eot?#iefix') format('embedded-opentype'), url('/fonts/glasgow_regular.woff2') format('woff2'), url('/fonts/glasgow_regular.woff') format('woff'), url('/fonts/glasgow_regular.ttf') format('truetype'), url('/fonts/glasgow_regular.svg#glasgowregular') format('svg');
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Glasglow';
+  src: url('/fonts/glasgow-xlight.eot');
+  src: url('/fonts/glasgow-xlight.eot?#iefix') format('embedded-opentype'), url('/fonts/glasgow-xlight.woff2') format('woff2'), url('/fonts/glasgow-xlight.woff') format('woff'), url('/fonts/glasgow-xlight.ttf') format('truetype'), url('/fonts/glasgow-xlight.svg#glasgow-xlightregular') format('svg');
+  font-weight: 100;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Glasglow';
+  src: url('/fonts/glasgow-light.eot');
+  src: url('/fonts/glasgow-light.eot?#iefix') format('embedded-opentype'), url('/fonts/glasgow-light.woff2') format('woff2'), url('/fonts/glasgow-light.woff') format('woff'), url('/fonts/glasgow-light.ttf') format('truetype'), url('/fonts/glasgow-light.svg#glasgow-lightregular') format('svg');
+  font-weight: 200;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Glasglow';
+  src: url('/fonts/glasgow_bold.eot');
+  src: url('/fonts/glasgow_bold.eot?#iefix') format('embedded-opentype'), url('/fonts/glasgow_bold.woff2') format('woff2'), url('/fonts/glasgow_bold.woff') format('woff'), url('/fonts/glasgow_bold.ttf') format('truetype'), url('/fonts/glasgow_bold.svg#glasgowbold') format('svg');
+  font-weight: bold;
+  font-style: normal; }
+
+.icon {
+  font-family: 'Fontello', sans-serif;
+  font-weight: normal;
+  display: inline-block;
+  text-align: center; }
+  .icon.dashboard:before {
+    content: ''; }
+  .icon.users:before {
+    content: ''; }
+  .icon.emergency:before {
+    content: ''; }
+  .icon.events:before {
+    content: ''; }
+  .icon.location:before {
+    content: ''; }
+  .icon.add:before {
+    content: ''; }
+  .icon.menu:before {
+    content: ''; }
+  .icon.wifi:before {
+    content: ''; }
+
 body, html {
   background: none;
   margin: 0;
@@ -96,16 +146,17 @@ section.left {
   section.left * {
     color: #97a2b1; }
   section.left .header {
-    padding: 24px 20px 24px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15); }
+    padding: 30px 20px 31px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
     section.left .header .title {
-      font-size: 28px;
+      font-size: 15px;
       position: relative;
       left: 15px;
-      font-weight: 900;
+      font-weight: 700;
       color: #BAC3D0;
-      letter-spacing: -1px;
-      text-transform: uppercase; }
+      text-transform: uppercase;
+      font-family: "Open Sans"; }
     section.left .header .message {
       font-size: 12px;
       position: relative;
@@ -162,36 +213,24 @@ section.right {
     right: 0;
     height: 96px;
     top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    padding: 18px 25px; }
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    background: #FFF;
+    padding: 19px 25px; }
     section.right .banner .name {
       font-size: 24px;
-      font-weight: 700;
+      font-weight: normal;
       font-family: "Open Sans", sans-serif;
-      color: #5a6678;
-      letter-spacing: -1px;
+      color: rgba(90, 102, 120, 0.52);
       text-transform: capitalize; }
-    section.right .banner .battery {
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      width: 150px;
-      padding: 16px;
-      font-size: 41px;
-      background: #5aa65f;
-      text-align: center;
-      color: #FFF;
-      font-weight: 300;
-      font-family: "Open Sans", sans-serif; }
-      section.right .banner .battery:after {
-        content: '%';
-        font-size: 15px;
-        position: relative;
-        top: -10px;
-        opacity: 0.5;
-        left: 5px;
-        font-family: "Proxima Nova", sans-serif; }
+      section.right .banner .name .pre {
+        font-family: "Open Sans", sans-serif;
+        color: #5a6678;
+        padding-bottom: 0; }
+      section.right .banner .name .cen {
+        font-family: "Open Sans", sans-serif;
+        color: #5a6678;
+        padding-bottom: 0;
+        font-weight: bold; }
     section.right .banner .last-updated {
       color: #939ba9; }
       section.right .banner .last-updated b {
@@ -205,7 +244,8 @@ section.right {
       width: 100%;
       display: table;
       border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-      position: relative; }
+      position: relative;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
       section.right .inner-sidebar .monitor .light {
         height: 24px;
         width: 24px;
@@ -219,3 +259,155 @@ section.right {
 
 .active {
   font-weight: bold; }
+
+.button {
+  background: #E9545A;
+  height: 40px;
+  border-radius: 50px;
+  margin-bottom: 10px; }
+  .button .label {
+    line-height: 40px;
+    left: 0;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center;
+    color: #FFF; }
+
+.toggle {
+  width: 100%;
+  background: #515F76;
+  border-radius: 30px;
+  position: relative; }
+  .toggle .handle {
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    background: #EEE;
+    border: 3px solid #515F76; }
+  .toggle .label {
+    position: absolute;
+    left: 28px;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    color: #FFF;
+    line-height: 28px;
+    font-size: 10px;
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+    text-transform: uppercase;
+    font-weight: 500; }
+  .toggle.green {
+    background: #1DCC6C; }
+    .toggle.green .handle {
+      background: #19AE5D;
+      border-color: #1DCC6C; }
+
+.flex {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex; }
+
+.flex.vertical {
+  margin: -20px 0 0 -20px; }
+
+.flex > * {
+  margin: 0 0 0 20px; }
+
+.flex.vertical > * {
+  margin: 20px 0 0 0; }
+
+.vertical {
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column; }
+
+.box {
+  background: #000;
+  flex: auto;
+  min-height: 100px; }
+
+.primary-right {
+  position: fixed;
+  right: 0;
+  top: 96px;
+  width: 360px;
+  padding: 20px; }
+  .primary-right .section {
+    width: 100%;
+    background: #FFF;
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1); }
+    .primary-right .section .block {
+      display: table;
+      margin-bottom: 10px;
+      width: 100%; }
+    .primary-right .section .title {
+      padding-bottom: 3px;
+      font-weight: 400;
+      font-size: 12px;
+      vertical-align: middle;
+      text-transform: uppercase;
+      opacity: 0.5;
+      font-family: "Open Sans", sans-serif;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #DDD;
+      color: #8E8E8E; }
+      .primary-right .section .title.inline {
+        width: auto;
+        vertical-align: middle;
+        display: table-cell;
+        padding-left: 20px;
+        opacity: 1;
+        font-weight: 600;
+        font-size: 13px;
+        border-bottom: none;
+        padding-bottom: 0;
+        color: #808080;
+        text-transform: none; }
+    .primary-right .section.blue {
+      background: #64C2DE; }
+      .primary-right .section.blue .title {
+        color: #FFF;
+        opacity: 0.8;
+        border-color: rgba(255, 255, 255, 0.4); }
+    .primary-right .section.teal {
+      background: #45B7AF; }
+      .primary-right .section.teal .title {
+        color: #FFF;
+        opacity: 0.8;
+        border-color: rgba(255, 255, 255, 0.4); }
+    .primary-right .section .battery {
+      padding: 0;
+      font-size: 59px;
+      text-align: center;
+      color: #FFF;
+      font-weight: 500;
+      font-family: "Open Sans", sans-serif; }
+      .primary-right .section .battery:after {
+        content: '%';
+        font-size: 15px;
+        position: relative;
+        top: -10px;
+        opacity: 0.5;
+        left: 5px;
+        font-family: "Proxima Nova", sans-serif; }
+    .primary-right .section .signal {
+      text-align: center;
+      color: #FFF;
+      font-size: 55px;
+      width: 100%;
+      line-height: 80px; }
+    .primary-right .section .toggle {
+      margin-bottom: 10px; }
+      .primary-right .section .toggle.small {
+        width: 70px;
+        display: table-cell;
+        vertical-align: middle; }

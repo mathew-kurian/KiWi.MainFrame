@@ -1,4 +1,5 @@
 @import 'fonts';
+@import 'icons';
 
 $divider: rgba(255, 255, 255, 0.15);
 
@@ -14,6 +15,7 @@ body, html {
   font-family: "Museo Sans", "Open Sans", sans-serif;
   -webkit-font-smoothing: subpixel-antialiased;
 }
+
 .light {
 
   transition: all 250ms ease-in;
@@ -58,16 +60,17 @@ section.left {
     color: rgb(151, 162, 177);
   }
   .header {
-    padding: 24px 20px 24px;
+    padding: 30px 20px 31px;
     border-bottom: 1px solid $divider;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     .title {
-      font-size: 28px;
+      font-size: 15px;
       position: relative;
       left: 15px;
-      font-weight: 900;
+      font-weight: 700;
       color: #BAC3D0;
-      letter-spacing: -1px;
       text-transform: uppercase;
+      font-family: "Open Sans";
     }
     .message {
       font-size: 12px;
@@ -95,7 +98,7 @@ section.left {
       display: table;
       cursor: pointer;
       &.active {
-        background: rgba(0,0,0,0.1);
+        background: rgba(0, 0, 0, 0.1);
       }
       .light {
         display: inline-block;
@@ -134,37 +137,25 @@ section.right {
     right: 0;
     height: 96px;
     top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    padding: 18px 25px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    background: #FFF;
+    padding: 19px 25px;
     .name {
       font-size: 24px;
-      font-weight: 700;
+      font-weight: normal;
       font-family: "Open Sans", sans-serif;
-      color: #5a6678;
-      letter-spacing: -1px;
+      color: rgba(90, 102, 120, 0.52);
       text-transform: capitalize;
-    }
-    .battery {
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      width: 150px;
-      padding: 16px;
-      font-size: 41px;
-      background: #5aa65f;
-      text-align: center;
-      color: #FFF;
-      font-weight: 300;
-      font-family: "Open Sans", sans-serif;
-      &:after {
-        content: '%';
-        font-size: 15px;
-        position: relative;
-        top: -10px;
-        opacity: 0.5;
-        left: 5px;
-        font-family: "Proxima Nova", sans-serif;
+      .pre {
+        font-family: "Open Sans", sans-serif;
+        color: #5a6678;
+        padding-bottom: 0;
+      }
+      .cen {
+        font-family: "Open Sans", sans-serif;
+        color: #5a6678;
+        padding-bottom: 0;
+        font-weight: bold;
       }
     }
     .last-updated {
@@ -184,6 +175,7 @@ section.right {
       display: table;
       border-bottom: 1px solid $divider;
       position: relative;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
       .light {
         height: 24px;
         width: 24px;
@@ -201,4 +193,183 @@ section.right {
 
 .active {
   font-weight: bold;
+}
+
+.button {
+  background: #E9545A;
+  height: 40px;
+  border-radius: 50px;
+  margin-bottom: 10px;
+  .label {
+    line-height: 40px;
+    left: 0;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center;
+    color: #FFF;
+  }
+}
+
+.toggle {
+  width: 100%;
+  background: #515F76;
+  border-radius: 30px;
+  position: relative;
+  .handle {
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    background: #EEE;
+    border: 3px solid #515F76;
+  }
+  .label {
+    position: absolute;
+    left: 28px;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    color: #FFF;
+    line-height: 28px;
+    font-size: 10px;
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  &.green {
+    background: #1DCC6C;
+    .handle {
+      background: #19AE5D;
+      border-color: #1DCC6C;
+    }
+  }
+}
+
+.flex {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.flex.vertical {
+  margin: -20px 0 0 -20px;
+}
+
+.flex > * {
+  margin: 0 0 0 20px;
+}
+
+.flex.vertical > * {
+  margin: 20px 0 0 0;
+}
+
+.vertical {
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.box {
+  background: #000;
+  flex: auto;
+  min-height: 100px;
+}
+
+.primary-right {
+  position: fixed;
+  right: 0;
+  top: 96px;
+  width: 360px;
+  padding: 20px;
+  .section {
+    width: 100%;
+    background: #FFF;
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+    .block {
+      display: table;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    .title {
+      padding-bottom: 3px;
+      font-weight: 400;
+      font-size: 12px;
+      vertical-align: middle;
+      text-transform: uppercase;
+      opacity: 0.5;
+      font-family: "Open Sans", sans-serif;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #DDD;
+      color: #8E8E8E;
+      &.inline {
+        width: auto;
+        vertical-align: middle;
+        display: table-cell;
+        padding-left: 20px;
+        opacity: 1;
+        font-weight: 600;
+        font-size: 13px;
+        border-bottom: none;
+        padding-bottom: 0;
+        color: #808080;
+        text-transform: none;
+      }
+    }
+    &.blue {
+      background: #64C2DE;
+      .title {
+        color: #FFF;
+        opacity: 0.8;
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+    }
+    &.teal {
+      background: #45B7AF;
+      .title {
+        color: #FFF;
+        opacity: 0.8;
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+    }
+    .battery {
+      padding: 0;
+      font-size: 59px;
+      text-align: center;
+      color: #FFF;
+      font-weight: 500;
+      font-family: "Open Sans", sans-serif;
+      &:after {
+        content: '%';
+        font-size: 15px;
+        position: relative;
+        top: -10px;
+        opacity: 0.5;
+        left: 5px;
+        font-family: "Proxima Nova", sans-serif;
+      }
+    }
+    .signal {
+      text-align: center;
+      color: #FFF;
+      font-size: 55px;
+      width: 100%;
+      line-height: 80px;
+    }
+    .toggle {
+      margin-bottom: 10px;
+      &.small {
+        width: 70px;
+        display: table-cell;
+        vertical-align: middle;
+      }
+    }
+  }
 }

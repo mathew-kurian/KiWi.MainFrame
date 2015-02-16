@@ -1,0 +1,21 @@
+.icon {
+  font-family: 'Fontello', sans-serif;
+  font-weight: normal;
+  display: inline-block;
+  text-align: center; }
+  .icon.dashboard:before {
+    content: ''; }
+  .icon.users:before {
+    content: ''; }
+  .icon.emergency:before {
+    content: ''; }
+  .icon.events:before {
+    content: ''; }
+  .icon.location:before {
+    content: ''; }
+  .icon.add:before {
+    content: ''; }
+  .icon.menu:before {
+    content: ''; }
+  .icon.wifi:before {
+    content: ''; }

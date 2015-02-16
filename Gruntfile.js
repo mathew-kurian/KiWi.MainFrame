@@ -23,7 +23,7 @@ module.exports = function (grunt) {
                     options: {
                         style: 'expanded'
                     },
-                    includePaths: ['sass']
+                    includePaths: require('node-bourbon').with('sass')
                 },
                 files: [{
                     expand: true,

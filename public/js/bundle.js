@@ -75,7 +75,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
 
     getInitialState: function () {
         return {
-            title: "KiWi",
+            title: "dashboard",
             logo: "hello",
             message: "hello",
             flowClass: "lock-event-flow",
@@ -198,10 +198,9 @@ var LockBanner = React.createClass({displayName: 'LockBanner',
     render: function () {
         return (
             React.DOM.div({className: "banner"}, 
-                React.DOM.div({className: "name"},  this.props.lock.name), 
-                React.DOM.div({className: "last-updated"}, "checked in ", React.DOM.b(null,  this.props.lock.lastUpdated)), 
-                React.DOM.div({className: "wifi-signal-strength"},  this.props.lock.wifiSignalStrength), 
-                React.DOM.div({className: "battery"},  this.props.lock.battery)
+                React.DOM.div({className: "name"}, React.DOM.span({className: "pre"}, "Lock"), " ", React.DOM.span({className: "cen"},  this.props.lock.name)), 
+                React.DOM.div({className: "last-updated"}, "checked in ",  this.props.lock.lastUpdated || "a few hours ago"), 
+                React.DOM.div({className: "wifi-signal-strength"},  this.props.lock.wifiSignalStrength)
             )
         )
     }
@@ -221,19 +220,38 @@ var LockControlsOverview = React.createClass({displayName: 'LockControlsOverview
     getInitialState: function () {
         return {
             active: false,
-            name : "Undefined",
-            power : false
+            name: "Undefined",
+            power: false
         }
     },
 
     render: function () {
         return (
-            React.DOM.div({className: "extra-content secondary"}, 
-                React.DOM.div({className: "title"}, "Manage"), 
-                React.DOM.div({className: "toggle-lock"}), 
-                React.DOM.div(null, 
-                    React.DOM.div({className: "toggle-power"}), 
-                    React.DOM.div({className: "toggle-power-label"}, "Power")
+            React.DOM.div({className: "primary-right flex vertical"}, 
+                React.DOM.div({className: "flex"}, 
+                    React.DOM.div({className: "section box"}, 
+                        React.DOM.div({className: "title"}, "Manage"), 
+                        React.DOM.div({className: "button"}, 
+                            React.DOM.div({className: "label"}, "lock door")
+                        ), 
+                        React.DOM.div({className: "block"}, 
+                            React.DOM.div({className: "toggle-power toggle small inline"}, 
+                                React.DOM.div({className: "label"}, "on"), 
+                                React.DOM.div({className: "handle"})
+                            ), 
+                            React.DOM.div({className: "title inline"}, "Power")
+                        )
+                    )
+                ), 
+                React.DOM.div({className: "flex"}, 
+                    React.DOM.div({className: "section teal box"}, 
+                        React.DOM.div({className: "title"}, "Battery"), 
+                        React.DOM.div({className: "battery"}, "96")
+                    ), 
+                    React.DOM.div({className: "section blue box"}, 
+                        React.DOM.div({className: "title"}, "WiFi"), 
+                        React.DOM.div({className: "signal icon wifi"})
+                    )
                 )
             )
         )

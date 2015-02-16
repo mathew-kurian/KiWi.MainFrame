@@ -17,7 +17,7 @@ var Dashboard = React.createClass({
 
     getInitialState: function () {
         return {
-            title: "KiWi",
+            title: "dashboard",
             logo: "hello",
             message: "hello",
             flowClass: "lock-event-flow",
