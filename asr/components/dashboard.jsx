@@ -102,7 +102,7 @@ var Dashboard = React.createClass({
                 <section className="right">
                     <div className="inner-content flex vertical">
                     { this.state.activeLock && this.state.flowClass === "lock-event-flow" ?
-                        <LockEventFlow events={ this.state.activeLock.events }/> : null }
+                        <LockEventFlow users={ this.state.users || [] } events={ this.state.activeLock.events }/> : null }
                     </div>
                     <div className="inner-sidebar">
                         <div className="monitor">

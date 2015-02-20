@@ -69,6 +69,7 @@ var Lock = function () {
 var Event = function (lock, pairedUsers) {
     var texts = ["system maintenance started", "system maintenance completed", "system error",
         "shared a lock", "opened a lock", "locked door", "auto locking door due to inactivity", "low battery detected"];
+    var types = ["system", "system", "system", "share", "unlock", "lock", "geofence", "battery"];
     var randIndex = parseInt(Math.random() * texts.length);
     return {
         _id: ShortId.generate(),
@@ -77,13 +78,17 @@ var Event = function (lock, pairedUsers) {
             return randIndex < 3 ? undefined : pairedUsers[parseInt(pairedUsers.length * Math.random())];
         })(),
         text: texts[randIndex],
-        created: new Date(Date.now() - (Math.random() * 5000000))
-    }
-};
+        type: types[randIndex],
+            created
+    :
+    new Date(Date.now() - (Math.random() * 5000000))
+}
+}
+;
 
 var locks = [];
 
-for (i = 10; i < (10 + parseInt(Math.random() * 15)); i++) {
+for (i = 10; i < (12 + parseInt(Math.random() * 15)); i++) {
     locks.push(Lock());
 }
 

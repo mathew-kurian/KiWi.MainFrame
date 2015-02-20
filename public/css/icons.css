@@ -19,3 +19,17 @@
     content: ''; }
   .icon.wifi:before {
     content: ''; }
+  .icon.lock:before {
+    content: ''; }
+  .icon.unlock:before {
+    content: ''; }
+  .icon.system:before {
+    content: ''; }
+  .icon.battery:before {
+    content: ''; }
+  .icon.share:before {
+    content: ''; }
+  .icon.unshare:before {
+    content: ''; }
+  .icon.geofence:before {
+    content: ''; }

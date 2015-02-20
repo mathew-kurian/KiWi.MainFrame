@@ -141,6 +141,9 @@ section.right {
       display: table;
       margin-bottom: 10px;
       width: 100%;
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
     .title {
       padding-bottom: 3px;
@@ -165,6 +168,9 @@ section.right {
         padding-bottom: 0;
         color: #808080;
         text-transform: none;
+      }
+      &.no-margin {
+        margin: 0;
       }
     }
     &.blue {
@@ -304,7 +310,7 @@ section.right {
 .button {
   background: #E9545A;
   height: 40px;
-  border-radius: 50px;
+  border-radius: 5px;
   margin-bottom: 10px;
   .label {
     line-height: 40px;
@@ -341,7 +347,7 @@ section.right {
     text-align: center;
     font-family: "Open Sans", sans-serif;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: bold;
   }
   &.green {
     background: #1DCC6C;
