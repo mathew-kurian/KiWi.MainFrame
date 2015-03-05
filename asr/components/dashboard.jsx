@@ -6,8 +6,9 @@ var React = require('react');
 var LockItem = require('./lock-item.jsx');
 var LockBanner = require('./lock-banner.jsx');
 var LockEventFlow = require('./widgets/lock-event-flow.jsx');
-var LockControlsOverview = require('./lock-controls-overview.jsx');
-var LockUsersOverview = require('./lock-users-overview.jsx');
+var LockLiteControls = require('./widgets/lock-lite-controls.jsx');
+var LockBatteryLevel = require('./widgets/lock-battery-level.jsx');
+var LockSignalStrength = require('./widgets/lock-signal-strength.jsx');
 var UIUtils = require('./../utils/ui-utils');
 var TestDB = require('./../utils/test-utils').TestDB;
 
@@ -78,11 +79,28 @@ var Dashboard = React.createClass({
     render: function () {
         var self = this;
 
-        var lockObjects = this.state.locks.map(function (lock) {
+        var lockItemObjects = this.state.locks.map(function (lock) {
             return (
                 <LockItem key={lock._id} lock={lock} onLockFocus={self.onLockFocus} active={ self.state.activeLock && lock._id === self.state.activeLock._id }/>
             );
         });
+
+        var renderFlow = function () {
+            if (self.state.activeLock) {
+                switch (self.state.flowClass) {
+                    default:
+                        return null;
+                    case "lock-event-flow" :
+                        return <LockEventFlow users={ self.state.users || [] } events={ self.state.activeLock.events }/>;
+                }
+            }
+            return null;
+        };
+
+        var showEventFlow = function () { self.state.flowClass = "lock-event-flow"; };
+        var showUsersFlow = function () { self.state.flowClass = "lock-users-flow"; };
+        var showSettingsFlow = function () { self.state.flowClass = "lock-settings-flow"; };
+        var showMenuFlow = function () { self.state.flowClass = "lock-menu-flow"; };
 
         return (
             <div className = "main">
@@ -94,30 +112,44 @@ var Dashboard = React.createClass({
                     </div>
                     <div>
                         <div className="section-title">Active</div>
-                        <div className="locks">{ lockObjects }</div>
+                        <div className="locks">{ lockItemObjects }</div>
                         <div className="section-title">Options</div>
                         <div className="section-title">Inactive</div>
                     </div>
                 </section>
                 <section className="right">
-                    <div className="inner-content flex vertical">
-                    { this.state.activeLock && this.state.flowClass === "lock-event-flow" ?
-                        <LockEventFlow users={ this.state.users || [] } events={ this.state.activeLock.events }/> : null }
-                    </div>
-                    <div className="inner-sidebar">
+                    <div className="sidebar">
                         <div className="monitor">
-                            <div className={ UIUtils.calcLightClasses(!!this.state.activeLock, this.state.activeLock) }></div>
+                            <div className={ UIUtils.calcLightClasses(this.state.activeLock) }></div>
                         </div>
                         <div>
-                            <div className="home"></div>
-                            <div className="users"></div>
-                            <div className="settings"></div>
-                            <div className="emergency"></div>
+                            <div onClick={ showEventFlow } className={ UIUtils.checkJoin("icon dashboard", this.state.flowClass, "lock-event-flow", " active") }></div>
+                            <div onClick={ showUsersFlow } className={ UIUtils.checkJoin("icon users", this.state.flowClass, "lock-users-flow", " active") }></div>
+                            <div onClick={ showSettingsFlow } className={ UIUtils.checkJoin("icon settings", this.state.flowClass, "lock-settings-flow", " active") }></div>
+                            <div onClick={ showMenuFlow } className={ UIUtils.checkJoin("icon menu bottom", this.state.flowClass, "lock-menu-flow", " active") }></div>
                         </div>
                     </div>
                     { this.state.activeLock ? <LockBanner lock={ this.state.activeLock }/> : null }
-                    <LockControlsOverview />
-                    <LockUsersOverview />
+                    <div className="content">
+                        <div className="inset flex">
+                            <div className="content-left box">
+                                <div className="flex vertical">{ renderFlow() }</div>
+                                <div className="filler"></div>
+                            </div>
+                            <div className="content-right box">
+                                <div className="flex vertical">
+                                    <div className = "flex">
+                                        <LockLiteControls />
+                                    </div>
+                                    <div className = "flex">
+                                        <LockBatteryLevel />
+                                        <LockSignalStrength />
+                                    </div>
+                                </div>
+                                <div className="filler"></div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </div>
         )

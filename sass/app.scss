@@ -47,6 +47,95 @@ body, html {
   }
 }
 
+.button {
+  background: #E9545A;
+  height: 40px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  .label {
+    line-height: 40px;
+    left: 0;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center;
+    color: #FFF;
+  }
+}
+
+.toggle {
+  width: 100%;
+  background: #515F76;
+  border-radius: 30px;
+  position: relative;
+  .handle {
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    background: #EEE;
+    border: 3px solid #515F76;
+  }
+  .label {
+    position: absolute;
+    left: 28px;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    color: #FFF;
+    line-height: 28px;
+    font-size: 10px;
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  &.green {
+    background: #1DCC6C;
+    .handle {
+      background: #19AE5D;
+      border-color: #1DCC6C;
+    }
+  }
+}
+
+.active {
+  font-weight: bold;
+}
+
+.flex {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.flex.vertical {
+  margin: -20px 0 0 -20px;
+}
+
+.flex > * {
+  margin: 0 0 0 20px;
+}
+
+.flex.vertical > * {
+  margin: 20px 0 0 0;
+}
+
+.vertical {
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.box {
+  flex: auto;
+  min-height: 100px;
+}
+
 section.left {
   background: rgb(33, 37, 45);
   position: fixed;
@@ -70,7 +159,7 @@ section.left {
       font-weight: 700;
       color: #BAC3D0;
       text-transform: uppercase;
-      font-family: "Open Sans";
+      font-family: "Open Sans", sans-serif;
     }
     .message {
       font-size: 12px;
@@ -190,59 +279,6 @@ section.right {
       }
     }
   }
-
-  @import 'event-flow';
-
-  .inner-content {
-    top: 96px;
-    left: 70px;
-    bottom: 0;
-    right: 320px;
-    position: absolute;
-    padding: 20px;
-  }
-
-  .primary-right {
-    position: fixed;
-    right: 0;
-    top: 96px;
-    width: 360px;
-    padding: 20px;
-    .section {
-      .battery {
-        padding: 0;
-        font-size: 59px;
-        text-align: center;
-        color: #FFF;
-        font-weight: 500;
-        font-family: "Open Sans", sans-serif;
-        &:after {
-          content: '%';
-          font-size: 15px;
-          position: relative;
-          top: -10px;
-          opacity: 0.5;
-          left: 5px;
-          font-family: "Proxima Nova", sans-serif;
-        }
-      }
-      .signal {
-        text-align: center;
-        color: #FFF;
-        font-size: 55px;
-        width: 100%;
-        line-height: 80px;
-      }
-      .toggle {
-        margin-bottom: 10px;
-        &.small {
-          width: 70px;
-          display: table-cell;
-          vertical-align: middle;
-        }
-      }
-    }
-  }
   .banner {
     position: absolute;
     left: 70px;
@@ -277,10 +313,34 @@ section.right {
       }
     }
   }
-  .inner-sidebar {
+  .sidebar {
     background: rgb(45, 51, 61);
     width: 70px;
     height: 100%;
+    position: relative;
+    .icon {
+      color: rgba(255, 255, 255, 0.5);
+      display: block;
+      width: 100%;
+      height: 50px;
+      font-size: 25px;
+      line-height: 50px;
+      text-align: center;
+      cursor: pointer;
+      &:first-child {
+        margin-top: 10px;
+      }
+      &:hover, &.active {
+        color: white;
+      }
+      &.active {
+        cursor: default;
+      }
+      &.bottom {
+        position: absolute;
+        bottom: 10px;
+      }
+    }
     .monitor {
       height: 96px;
       width: 100%;
@@ -301,93 +361,64 @@ section.right {
       }
     }
   }
-}
-
-.active {
-  font-weight: bold;
-}
-
-.button {
-  background: #E9545A;
-  height: 40px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  .label {
-    line-height: 40px;
-    left: 0;
-    font-size: 12px;
-    text-transform: uppercase;
-    font-weight: 600;
-    text-align: center;
-    color: #FFF;
-  }
-}
-
-.toggle {
-  width: 100%;
-  background: #515F76;
-  border-radius: 30px;
-  position: relative;
-  .handle {
-    width: 28px;
-    height: 28px;
-    border-radius: 100%;
-    background: #EEE;
-    border: 3px solid #515F76;
-  }
-  .label {
+  .content {
     position: absolute;
-    left: 28px;
-    right: 0;
+    top: 96px;
+    left: 70px;
     bottom: 0;
-    top: 0;
-    color: #FFF;
-    line-height: 28px;
-    font-size: 10px;
-    text-align: center;
-    font-family: "Open Sans", sans-serif;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-  &.green {
-    background: #1DCC6C;
-    .handle {
-      background: #19AE5D;
-      border-color: #1DCC6C;
+    right: 0;
+    .inset {
+      overflow: auto;
+      height: 100%;
+      width: 100%;
+      padding: 20px;
+      .content-left {
+        margin: 0 !important;
+      }
+      .content-right {
+        max-width: 325px;
+        @media print, screen and (max-width: 960px) {
+          display: none;
+        }
+        .section {
+          .battery {
+            padding: 0;
+            font-size: 59px;
+            text-align: center;
+            color: #FFF;
+            font-weight: 500;
+            font-family: "Open Sans", sans-serif;
+            &:after {
+              content: '%';
+              font-size: 15px;
+              position: relative;
+              top: -10px;
+              opacity: 0.5;
+              left: 5px;
+              font-family: "Proxima Nova", sans-serif;
+            }
+          }
+          .signal {
+            text-align: center;
+            color: #FFF;
+            font-size: 55px;
+            width: 100%;
+            line-height: 80px;
+          }
+          .toggle {
+            margin-bottom: 10px;
+            &.small {
+              width: 70px;
+              display: table-cell;
+              vertical-align: middle;
+            }
+          }
+        }
+      }
+      .filler {
+        height: 20px;
+      }
     }
   }
-}
-
-.flex {
-  display: -ms-flexbox;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-}
-
-.flex.vertical {
-  margin: -20px 0 0 -20px;
-}
-
-.flex > * {
-  margin: 0 0 0 20px;
-}
-
-.flex.vertical > * {
-  margin: 20px 0 0 0;
-}
-
-.vertical {
-  -webkit-box-orient: vertical;
-  -moz-box-orient: vertical;
-  box-orient: vertical;
-  -webkit-flex-direction: column;
-  -moz-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.box {
-  flex: auto;
-  min-height: 100px;
+  @import 'event-flow';
 }

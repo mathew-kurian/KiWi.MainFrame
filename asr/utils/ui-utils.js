@@ -1,5 +1,5 @@
 module.exports = {
-    calcLightClasses: function (active, lock) {
+    calcLightClasses: function (lock) {
         var lightCls = "light";
 
         if (lock) {
@@ -21,5 +21,8 @@ module.exports = {
         }
 
         return lightCls;
+    },
+    checkJoin : function(pre, actual, expect, res, post){
+        return (pre || "") + (actual == expect ? res : "") + (post || "");
     }
 };

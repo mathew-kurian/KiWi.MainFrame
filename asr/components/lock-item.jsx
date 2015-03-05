@@ -21,7 +21,7 @@ var LockItem = React.createClass({
     render: function () {
         return (
             <div className={ "device " + (this.props.active ? "active" : "")} onClick={this.onLockFocus}>
-                <div className={ UIUtils.calcLightClasses(this.props.active, this.props.lock) }></div>
+                <div className={ UIUtils.calcLightClasses(this.props.lock) }></div>
                 <div className="name">{ this.props.lock.name }</div>
             </div>
         )
