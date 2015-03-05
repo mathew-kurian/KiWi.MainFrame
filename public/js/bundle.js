@@ -158,10 +158,22 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
             return null;
         };
 
-        var showEventFlow = function () { self.state.flowClass = "lock-event-flow"; };
-        var showUserFlow = function () { self.state.flowClass = "lock-user-flow"; };
-        var showSettingsFlow = function () { self.state.flowClass = "lock-settings-flow"; };
-        var showMenuFlow = function () { self.state.flowClass = "lock-menu-flow"; };
+        var showEventFlow = function () {
+            self.state.flowClass = "lock-event-flow";
+            self.forceUpdate();
+        };
+        var showUserFlow = function () {
+            self.state.flowClass = "lock-user-flow";
+            self.forceUpdate();
+        };
+        var showSettingsFlow = function () {
+            self.state.flowClass = "lock-settings-flow";
+            self.forceUpdate();
+        };
+        var showMenuFlow = function () {
+            self.state.flowClass = "lock-menu-flow";
+            self.forceUpdate();
+        };
 
         return (
             React.DOM.div({className: "main"}, 
