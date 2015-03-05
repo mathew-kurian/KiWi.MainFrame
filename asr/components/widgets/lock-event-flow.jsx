@@ -25,7 +25,7 @@ var EventItem = React.createClass({
     render: function () {
 
         return (
-            <div className="lock-event-flow flow">
+            <div className="event">
                 <div className={ "icon " + this.props.event.type }></div>
                 <div className="image"></div>
                 <div className="info">
@@ -73,7 +73,7 @@ var LockEventFlow = React.createClass({
         });
 
         return (
-            <div className="flex">
+            <div className="lock-event-flow flow flex">
                 <div className="section box">
                     <div className="title no-margin">Event Flow</div>
                     <div className="block event-flow">{ eventObjects }</div>

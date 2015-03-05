@@ -6,6 +6,7 @@ var React = require('react');
 var LockItem = require('./lock-item.jsx');
 var LockBanner = require('./lock-banner.jsx');
 var LockEventFlow = require('./widgets/lock-event-flow.jsx');
+var LockUserFlow = require('./widgets/lock-user-flow.jsx');
 var LockLiteControls = require('./widgets/lock-lite-controls.jsx');
 var LockBatteryLevel = require('./widgets/lock-battery-level.jsx');
 var LockSignalStrength = require('./widgets/lock-signal-strength.jsx');
@@ -92,13 +93,15 @@ var Dashboard = React.createClass({
                         return null;
                     case "lock-event-flow" :
                         return <LockEventFlow users={ self.state.users || [] } events={ self.state.activeLock.events }/>;
+                    case "lock-user-flow" :
+                        return <LockUserFlow users={ self.state.users || [] } />;
                 }
             }
             return null;
         };
 
         var showEventFlow = function () { self.state.flowClass = "lock-event-flow"; };
-        var showUsersFlow = function () { self.state.flowClass = "lock-users-flow"; };
+        var showUserFlow = function () { self.state.flowClass = "lock-user-flow"; };
         var showSettingsFlow = function () { self.state.flowClass = "lock-settings-flow"; };
         var showMenuFlow = function () { self.state.flowClass = "lock-menu-flow"; };
 
@@ -124,7 +127,7 @@ var Dashboard = React.createClass({
                         </div>
                         <div>
                             <div onClick={ showEventFlow } className={ UIUtils.checkJoin("icon dashboard", this.state.flowClass, "lock-event-flow", " active") }></div>
-                            <div onClick={ showUsersFlow } className={ UIUtils.checkJoin("icon users", this.state.flowClass, "lock-users-flow", " active") }></div>
+                            <div onClick={ showUserFlow } className={ UIUtils.checkJoin("icon users", this.state.flowClass, "lock-user-flow", " active") }></div>
                             <div onClick={ showSettingsFlow } className={ UIUtils.checkJoin("icon settings", this.state.flowClass, "lock-settings-flow", " active") }></div>
                             <div onClick={ showMenuFlow } className={ UIUtils.checkJoin("icon menu bottom", this.state.flowClass, "lock-menu-flow", " active") }></div>
                         </div>
