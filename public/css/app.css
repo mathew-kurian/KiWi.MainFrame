@@ -118,6 +118,8 @@
     content: ''; }
   .icon.geofence:before {
     content: ''; }
+  .icon.menu-dot:before {
+    content: ''; }
 
 body, html {
   background: none;
@@ -131,6 +133,8 @@ body, html {
   -webkit-font-smoothing: subpixel-antialiased; }
 
 .light {
+  -webkit-transition: all 250ms ease-in;
+  -moz-transition: all 250ms ease-in;
   transition: all 250ms ease-in; }
   .light.red {
     border-color: #c10000 !important; }
@@ -295,7 +299,13 @@ section.right {
   top: 0;
   bottom: 0;
   right: 0;
-  background: #f4f5f7; }
+  background: #f4f5f7;
+  z-index: 3;
+  -webkit-transition: all 250ms ease-in;
+  -moz-transition: all 250ms ease-in;
+  transition: all 250ms ease-in; }
+  section.right.expand {
+    left: 0; }
   section.right .section {
     width: 100%;
     background: #FFF;
@@ -351,6 +361,7 @@ section.right {
     right: 0;
     height: 96px;
     top: 0;
+    z-index: 2;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     background: #FFF;
     padding: 19px 25px; }
@@ -386,7 +397,10 @@ section.right {
       font-size: 25px;
       line-height: 50px;
       text-align: center;
-      cursor: pointer; }
+      cursor: pointer;
+      -webkit-transition: all 250ms ease-in;
+      -moz-transition: all 250ms ease-in;
+      transition: all 250ms ease-in; }
       section.right .sidebar .icon:first-child {
         margin-top: 10px; }
       section.right .sidebar .icon:hover, section.right .sidebar .icon.active {
@@ -460,9 +474,9 @@ section.right {
             vertical-align: middle; }
       section.right .content .inset .filler {
         height: 20px; }
-  section.right .event-flow .event {
+  section.right .lock-event-flow .event {
     border-bottom: 1px solid #EEE; }
-    section.right .event-flow .event .button {
+    section.right .lock-event-flow .event .button {
       display: inline-block;
       height: 20px;
       float: right;
@@ -470,21 +484,21 @@ section.right {
       margin: 17px;
       border: 1px solid rgba(45, 51, 61, 0.13);
       border-radius: 28px; }
-      section.right .event-flow .event .button .label {
+      section.right .lock-event-flow .event .button .label {
         line-height: 20px;
         font-size: 9px;
         padding: 0 10px;
         color: #999; }
-    section.right .event-flow .event:nth-child(even) {
+    section.right .lock-event-flow .event:nth-child(even) {
       background: rgba(242, 242, 242, 0.188235); }
-    section.right .event-flow .event:last-child {
+    section.right .lock-event-flow .event:last-child {
       border-bottom: none; }
-    section.right .event-flow .event .icon, section.right .event-flow .event .info, section.right .event-flow .event .image {
+    section.right .lock-event-flow .event .icon, section.right .lock-event-flow .event .info, section.right .lock-event-flow .event .image {
       display: inline-block;
       vertical-align: top; }
-    section.right .event-flow .event:hover {
+    section.right .lock-event-flow .event:hover {
       background: #F0FBFF; }
-    section.right .event-flow .event .icon {
+    section.right .lock-event-flow .event .icon {
       font-size: 18px;
       line-height: 33px;
       color: #999;
@@ -492,13 +506,13 @@ section.right {
       height: 33px;
       width: 33px;
       margin: 10px; }
-    section.right .event-flow .event .info {
+    section.right .lock-event-flow .event .info {
       border-left: 1px solid #EEE;
       padding: 10px; }
-      section.right .event-flow .event .info .data-left {
+      section.right .lock-event-flow .event .info .data-left {
         display: inline-block;
         vertical-align: top; }
-      section.right .event-flow .event .info .data-bottom {
+      section.right .lock-event-flow .event .info .data-bottom {
         font-size: 10px;
         list-style: none;
         color: #BBB;
@@ -507,28 +521,28 @@ section.right {
         position: Relative;
         text-align: left;
         top: 1px; }
-        section.right .event-flow .event .info .data-bottom span {
+        section.right .lock-event-flow .event .info .data-bottom span {
           font-family: "Open Sans", sans-serif;
           font-weight: 600; }
-        section.right .event-flow .event .info .data-bottom .user {
+        section.right .lock-event-flow .event .info .data-bottom .user {
           font-weight: bold;
           border-bottom: 1px dotted; }
-          section.right .event-flow .event .info .data-bottom .user:before {
+          section.right .lock-event-flow .event .info .data-bottom .user:before {
             content: '@'; }
-    section.right .event-flow .event .data-right {
+    section.right .lock-event-flow .event .data-right {
       display: inline-block;
       vertical-align: top; }
-      section.right .event-flow .event .data-right .data-top {
+      section.right .lock-event-flow .event .data-right .data-top {
         font-size: 14px;
         line-height: 1.42857;
         color: #3F3F44; }
-        section.right .event-flow .event .data-right .data-top .text {
+        section.right .lock-event-flow .event .data-right .data-top .text {
           font-weight: 600;
           font-size: 13px;
           color: #7C7C7C; }
-          section.right .event-flow .event .data-right .data-top .text:first-letter {
+          section.right .lock-event-flow .event .data-right .data-top .text:first-letter {
             text-transform: capitalize; }
-        section.right .event-flow .event .data-right .data-top .user {
+        section.right .lock-event-flow .event .data-right .data-top .user {
           color: #FFF;
           font-weight: bold;
           padding: 1px 4px 1px 4px;
@@ -538,19 +552,19 @@ section.right {
           display: inline-block;
           text-transform: uppercase;
           font-family: "Open Sans", sans-serif; }
-          section.right .event-flow .event .data-right .data-top .user.blue {
+          section.right .lock-event-flow .event .data-right .data-top .user.blue {
             background: rgba(100, 194, 222, 0.06);
             border: 1px solid #64c2de;
             color: #64c2de; }
-          section.right .event-flow .event .data-right .data-top .user.green {
+          section.right .lock-event-flow .event .data-right .data-top .user.green {
             background: #b3d227; }
-          section.right .event-flow .event .data-right .data-top .user.yellow {
+          section.right .lock-event-flow .event .data-right .data-top .user.yellow {
             background: #F8CB00; }
-          section.right .event-flow .event .data-right .data-top .user.red {
+          section.right .lock-event-flow .event .data-right .data-top .user.red {
             background: #E9545A; }
-          section.right .event-flow .event .data-right .data-top .user.teal {
+          section.right .lock-event-flow .event .data-right .data-top .user.teal {
             background: #45B794; }
-        section.right .event-flow .event .data-right .data-top .data-bottom {
+        section.right .lock-event-flow .event .data-right .data-top .data-bottom {
           font-size: 11px;
           list-style: none;
           color: #C0C0C0;

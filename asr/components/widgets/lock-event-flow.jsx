@@ -76,7 +76,7 @@ var LockEventFlow = React.createClass({
             <div className="lock-event-flow flow flex">
                 <div className="section box">
                     <div className="title no-margin">Event Flow</div>
-                    <div className="block event-flow">{ eventObjects }</div>
+                    <div className="block">{ eventObjects }</div>
                 </div>
             </div>
         )

@@ -11,5 +11,6 @@
     <orderEntry type="library" name="Node.js v0.10.34 Core Modules" level="application" />
     <orderEntry type="library" name="react-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="react-router-DefinitelyTyped" level="application" />
+    <orderEntry type="library" name="flux-DefinitelyTyped" level="application" />
   </component>
 </module>

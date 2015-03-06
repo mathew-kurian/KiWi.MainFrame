@@ -25,6 +25,7 @@ var Dashboard = React.createClass({
             flowClass: "lock-event-flow",
             users: [],
             locks: [],
+            lockItemSidebar: "",
             activeLock: undefined
         };
     },
@@ -112,8 +113,8 @@ var Dashboard = React.createClass({
             self.state.flowClass = "lock-settings-flow";
             self.forceUpdate();
         };
-        var showMenuFlow = function () {
-            self.state.flowClass = "lock-menu-flow";
+        var toggleLockItemSidebar = function () {
+            self.state.lockItemSidebar = self.state.lockItemSidebar ? "" : "expand";
             self.forceUpdate();
         };
 
@@ -132,7 +133,7 @@ var Dashboard = React.createClass({
                         <div className="section-title">Inactive</div>
                     </div>
                 </section>
-                <section className="right">
+                <section className={"right " + this.state.lockItemSidebar }>
                     <div className="sidebar">
                         <div className="monitor">
                             <div className={ UIUtils.calcLightClasses(this.state.activeLock) }></div>
@@ -141,7 +142,7 @@ var Dashboard = React.createClass({
                             <div onClick={ showEventFlow } className={ UIUtils.checkJoin("icon dashboard", this.state.flowClass, "lock-event-flow", " active") }></div>
                             <div onClick={ showUserFlow } className={ UIUtils.checkJoin("icon users", this.state.flowClass, "lock-user-flow", " active") }></div>
                             <div onClick={ showSettingsFlow } className={ UIUtils.checkJoin("icon settings", this.state.flowClass, "lock-settings-flow", " active") }></div>
-                            <div onClick={ showMenuFlow } className={ UIUtils.checkJoin("icon menu bottom", this.state.flowClass, "lock-menu-flow", " active") }></div>
+                            <div onClick={ toggleLockItemSidebar } className="icon menu bottom"></div>
                         </div>
                     </div>
                     { this.state.activeLock ? <LockBanner lock={ this.state.activeLock }/> : null }

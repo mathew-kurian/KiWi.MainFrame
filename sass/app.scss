@@ -1,5 +1,6 @@
 @import 'fonts';
 @import 'icons';
+@import 'bourbon';
 
 $divider: rgba(255, 255, 255, 0.15);
 
@@ -18,7 +19,7 @@ body, html {
 
 .light {
 
-  transition: all 250ms ease-in;
+  @include transition(all 250ms ease-in);
 
   &.red {
     border-color: #c10000 !important;
@@ -220,6 +221,11 @@ section.right {
   bottom: 0;
   right: 0;
   background: rgb(244, 245, 247);
+  z-index: 3;
+  @include transition(all 250ms ease-in);
+  &.expand {
+    left: 0;
+  }
   .section {
     width: 100%;
     background: #FFF;
@@ -285,6 +291,7 @@ section.right {
     right: 0;
     height: 96px;
     top: 0;
+    z-index: 2;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     background: #FFF;
     padding: 19px 25px;
@@ -327,6 +334,7 @@ section.right {
       line-height: 50px;
       text-align: center;
       cursor: pointer;
+      @include transition(all 250ms ease-in);
       &:first-child {
         margin-top: 10px;
       }
@@ -420,5 +428,5 @@ section.right {
       }
     }
   }
-  @import 'event-flow';
+  @import 'lock-event-flow';
 }

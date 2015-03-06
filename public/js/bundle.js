@@ -83,6 +83,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
             flowClass: "lock-event-flow",
             users: [],
             locks: [],
+            lockItemSidebar: "",
             activeLock: undefined
         };
     },
@@ -170,8 +171,8 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
             self.state.flowClass = "lock-settings-flow";
             self.forceUpdate();
         };
-        var showMenuFlow = function () {
-            self.state.flowClass = "lock-menu-flow";
+        var toggleLockItemSidebar = function () {
+            self.state.lockItemSidebar = self.state.lockItemSidebar ? "" : "expand";
             self.forceUpdate();
         };
 
@@ -190,7 +191,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
                         React.DOM.div({className: "section-title"}, "Inactive")
                     )
                 ), 
-                React.DOM.section({className: "right"}, 
+                React.DOM.section({className: "right " + this.state.lockItemSidebar}, 
                     React.DOM.div({className: "sidebar"}, 
                         React.DOM.div({className: "monitor"}, 
                             React.DOM.div({className:  UIUtils.calcLightClasses(this.state.activeLock) })
@@ -199,7 +200,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
                             React.DOM.div({onClick: showEventFlow, className:  UIUtils.checkJoin("icon dashboard", this.state.flowClass, "lock-event-flow", " active") }), 
                             React.DOM.div({onClick: showUserFlow, className:  UIUtils.checkJoin("icon users", this.state.flowClass, "lock-user-flow", " active") }), 
                             React.DOM.div({onClick: showSettingsFlow, className:  UIUtils.checkJoin("icon settings", this.state.flowClass, "lock-settings-flow", " active") }), 
-                            React.DOM.div({onClick: showMenuFlow, className:  UIUtils.checkJoin("icon menu bottom", this.state.flowClass, "lock-menu-flow", " active") })
+                            React.DOM.div({onClick: toggleLockItemSidebar, className: "icon menu bottom"})
                         )
                     ), 
                      this.state.activeLock ? LockBanner({lock:  this.state.activeLock}) : null, 
@@ -394,7 +395,7 @@ var LockEventFlow = React.createClass({displayName: 'LockEventFlow',
             React.DOM.div({className: "lock-event-flow flow flex"}, 
                 React.DOM.div({className: "section box"}, 
                     React.DOM.div({className: "title no-margin"}, "Event Flow"), 
-                    React.DOM.div({className: "block event-flow"}, eventObjects )
+                    React.DOM.div({className: "block"}, eventObjects )
                 )
             )
         )
