@@ -351,8 +351,8 @@ section.right {
   section.right .section {
     width: 100%;
     background: #FFF;
-    border-radius: 4px;
-    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     padding: 20px; }
     section.right .section .block {
       display: table;
@@ -361,16 +361,16 @@ section.right {
       section.right .section .block:last-child {
         margin-bottom: 0; }
     section.right .section .title {
-      padding-bottom: 3px;
-      font-weight: 400;
-      font-size: 12px;
+      padding-bottom: 10px;
       vertical-align: middle;
       text-transform: uppercase;
-      opacity: 0.5;
+      opacity: 1;
       font-family: "Open Sans", sans-serif;
       margin-bottom: 14px;
       border-bottom: 1px solid #DDD;
-      color: #8E8E8E; }
+      color: #8E8E8E;
+      font-size: 12px;
+      font-weight: bold; }
       section.right .section .title.inline {
         width: auto;
         vertical-align: middle;
