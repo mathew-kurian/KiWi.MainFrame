@@ -8,6 +8,7 @@ var LockSchema = Schema({
     name: {type: String, default: "Untitled", trim: true},
     location: {lat: Number, long: Number},
     locked : { type : Boolean, default : false },
+    enabled : { type: Boolean, default : true },
     battery: {type: Number, default: 0},
     created: {type: Number, default: Date.now}
 });
