@@ -9,9 +9,14 @@ var User = function () {
             first: Chance.first(),
             last: Chance.last()
         },
-        mobile: Chance.phone().replace(/[\(\s\(]/g, ""),
+        location : {
+            zip : Chance.zip(),
+            state : Chance.state({ full: true })
+        },
+        email: Chance.email({domain: "gmail.com"}),
+        mobile: Chance.phone(),
         photo: "https://randomuser.me/api/portraits/med/" + (Math.random() > 0.5 ? "men" : "women") + "/" + parseInt(Math.random() * 90) + ".jpg",
-        created: new Date(Date.now() - Math.random() * 50000)
+        created: new Date(Date.now() - Math.random() * 500000)
     };
 
     u.username = (u.name.first.substring(0, 1) + u.name.last).toLowerCase();

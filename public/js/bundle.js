@@ -153,7 +153,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
                     case "lock-event-flow" :
                         return LockEventFlow({users:  self.state.users || [], events:  self.state.activeLock.events});
                     case "lock-user-flow" :
-                        return LockUserFlow({users:  self.state.users || []});
+                        return LockUserFlow({users:  self.state.users || [], pairedUsers:  self.state.activeLock.pairedUsers});
                 }
             }
             return null;
@@ -185,10 +185,16 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
                         React.DOM.div({className: "message"},  this.state.message)
                     ), 
                     React.DOM.div(null, 
-                        React.DOM.div({className: "section-title"}, "Active"), 
-                        React.DOM.div({className: "locks"}, lockItemObjects ), 
-                        React.DOM.div({className: "section-title"}, "Options"), 
-                        React.DOM.div({className: "section-title"}, "Inactive")
+                        React.DOM.div({className: "group"}, 
+                            React.DOM.div({className: "section-title"}, "Active Locks"), 
+                            React.DOM.div({className: "locks"}, lockItemObjects )
+                        ), 
+                        React.DOM.div({className: "group"}, 
+                            React.DOM.div({className: "clicker green"}, 
+                                React.DOM.div({className: "icon plus"}), 
+                                React.DOM.div({className: "label"}, "Add Lock")
+                            )
+                        )
                     )
                 ), 
                 React.DOM.section({className: "right " + this.state.lockItemSidebar}, 
@@ -358,7 +364,7 @@ var EventItem = React.createClass({displayName: 'EventItem',
                         )
                     )
                 ), 
-                React.DOM.div({className: "button"}, 
+                React.DOM.div({className: "button tiny"}, 
                     React.DOM.div({className: "label"}, "Restore")
                 )
             )
@@ -474,6 +480,7 @@ module.exports = LockSignalStrength;
 
 var React = require('react');
 var moment = require('moment');
+var UIUtils = require('./../../utils/ui-utils');
 
 // inner class
 var UserItem = React.createClass({displayName: 'UserItem',
@@ -483,9 +490,37 @@ var UserItem = React.createClass({displayName: 'UserItem',
     },
 
     render: function () {
+        var self = this;
+
+        var pictureStyle = {
+            'background-image': 'url(' + this.props.user.photo + ')'
+        };
 
         return (
-            React.DOM.div(null)
+            React.DOM.div({className: "section user"}, 
+                React.DOM.div({className: "inner-top"}, 
+                    React.DOM.div({className: "photo", style: pictureStyle }), 
+                    React.DOM.div({className: "details"}, 
+                        React.DOM.div({className: "location"},  this.props.user.location.state), 
+                        React.DOM.div({className: "side"}, 
+                            React.DOM.div({className: "name"},  this.props.user.name.first + " " + this.props.user.name.last), 
+                            React.DOM.div({className: "tag"}, "Owner")
+                        )
+                    ), 
+                    React.DOM.div({className: "button small"}, 
+                        React.DOM.div({className: "label"}, "DISABLE")
+                    )
+                ), 
+                React.DOM.div({className: "inner-bottom"}, 
+                    React.DOM.div({className: "detail mobile box"}, 
+                        React.DOM.span({className: "icon phone"}),  this.props.user.mobile), 
+                    React.DOM.div({className: "detail email box"}, 
+                        React.DOM.span({className: "icon email"}),  this.props.user.email), 
+                    React.DOM.div({className: "detail last-active box"}, 
+                        React.DOM.span({className: "icon clock"}),  moment(this.props.user.created).fromNow() ), 
+                    React.DOM.div({className: "icon menu-dot-horizontal more box"})
+                )
+            )
         )
     }
 });
@@ -499,12 +534,29 @@ var LockUserFlow = React.createClass({displayName: 'LockUserFlow',
     render: function () {
         var self = this;
 
+        var userObjects = this.props.pairedUsers.map(function (uid) {
+            return (
+                UserItem({uid: uid, user:  UIUtils.findObjectById(self.props.users, uid) })
+            );
+        });
+
         return (
-            React.DOM.div({className: "lock-user-flow flow flex"}, 
-                React.DOM.div({className: "section box"}, 
-                    React.DOM.div({className: "title no-margin"}, "Users Flow"), 
-                    React.DOM.div({className: "block event-flow"})
-                )
+            React.DOM.div({className: "lock-user-flow flow"}, 
+                React.DOM.div({className: "lock-user-add flex"}, 
+                    React.DOM.div({className: "section box"}, 
+                        React.DOM.div({className: "title"}, "Add User"), 
+                        React.DOM.div({className: "flex"}, 
+                            React.DOM.div({className: "input-wrap box"}, 
+                                React.DOM.input({className: "input", placeholder: "@username"}), 
+                                React.DOM.div({className: "description"}, "To provide access to another user, add them to the lock.")
+                            ), 
+                            React.DOM.div({className: "box button small"}, 
+                                React.DOM.div({className: "label"}, "Add")
+                            )
+                        )
+                    )
+                ), 
+                React.DOM.div({className: "flex vertical lock-user-view"}, userObjects )
             )
         )
     }
@@ -512,7 +564,7 @@ var LockUserFlow = React.createClass({displayName: 'LockUserFlow',
 
 module.exports = LockUserFlow;
 
-},{"moment":173,"react":318}],11:[function(require,module,exports){
+},{"./../../utils/ui-utils":12,"moment":173,"react":318}],11:[function(require,module,exports){
 var ShortId = require('shortid');
 var Chance = require('chance')();
 var randomWords = require('random-words');
@@ -524,9 +576,14 @@ var User = function () {
             first: Chance.first(),
             last: Chance.last()
         },
-        mobile: Chance.phone().replace(/[\(\s\(]/g, ""),
+        location : {
+            zip : Chance.zip(),
+            state : Chance.state({ full: true })
+        },
+        email: Chance.email({domain: "gmail.com"}),
+        mobile: Chance.phone(),
         photo: "https://randomuser.me/api/portraits/med/" + (Math.random() > 0.5 ? "men" : "women") + "/" + parseInt(Math.random() * 90) + ".jpg",
-        created: new Date(Date.now() - Math.random() * 50000)
+        created: new Date(Date.now() - Math.random() * 500000)
     };
 
     u.username = (u.name.first.substring(0, 1) + u.name.last).toLowerCase();
@@ -646,6 +703,14 @@ module.exports = {
     },
     checkJoin : function(pre, actual, expect, res, post){
         return (pre || "") + (actual == expect ? res : "") + (post || "");
+    },
+    findObjectById : function (arr, id) {
+        for (var i = 0; i < arr.length; i++) {
+            var elem = arr[i];
+            if (elem._id == id) {
+                return elem;
+            }
+        }
     }
 };
 },{}],13:[function(require,module,exports){

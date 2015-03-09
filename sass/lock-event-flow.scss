@@ -2,20 +2,14 @@
 .lock-event-flow {
   .event {
     border-bottom: 1px solid #EEE;
-    .button {
+    position: relative;
+    .button.tiny {
       display: inline-block;
-      height: 20px;
       float: right;
-      background: rgba(238, 238, 238, 0.33);
-      margin: 17px;
-      border: 1px solid rgba(45, 51, 61, 0.13);
-      border-radius: 28px;
-      .label {
-        line-height: 20px;
-        font-size: 9px;
-        padding: 0 10px;
-        color: #999;
-      }
+      margin: 15px;
+      vertical-align: top;
+      position: absolute;
+      right: 0;
     }
     &:nth-child(even) {
       background: rgba(242, 242, 242, 0.188235);
@@ -63,6 +57,7 @@
         .user {
           font-weight: bold;
           border-bottom: 1px dotted;
+          color: rgb(147, 155, 169);
           &:before {
             content: '@';
           }
@@ -79,7 +74,7 @@
         .text {
           font-weight: 600;
           font-size: 13px;
-          color: #7C7C7C;
+          color: #5A6678;
           &:first-letter {
             text-transform: capitalize;
           }

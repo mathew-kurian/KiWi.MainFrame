@@ -12,6 +12,7 @@
 		"location" ,
 		"add" ,
 		"menu" ,
+        "menu-dot-horizontal" ,
         "wifi" ,
         "lock" ,
         "unlock" ,
@@ -20,6 +21,10 @@
         "share" ,
         "unshare" ,
         "geofence" ,
+        "email" ,
+        "phone" ,
+        "clock" ,
+        "plus" ,
         "menu-dot" ;
 
 	@each $i in $icons{

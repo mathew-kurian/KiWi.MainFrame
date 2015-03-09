@@ -50,17 +50,32 @@ body, html {
 
 .button {
   background: #E9545A;
-  height: 40px;
-  border-radius: 5px;
+  border-radius: 4px;
   margin-bottom: 10px;
+  padding: 14px 12px;
   .label {
-    line-height: 40px;
     left: 0;
     font-size: 12px;
     text-transform: uppercase;
     font-weight: 600;
     text-align: center;
     color: #FFF;
+  }
+  &.small {
+    background: #E7ECEE !important;
+    padding: 7px 12px !important;
+    .label {
+      font-size: 11px !important;
+      color: #506470 !important;
+    }
+  }
+  &.tiny {
+    background: #E7ECEE !important;
+    padding: 7px 12px !important;
+    .label {
+      font-size: 9px !important;
+      color: #506470 !important;
+    }
   }
 }
 
@@ -99,10 +114,6 @@ body, html {
   }
 }
 
-.active {
-  font-weight: bold;
-}
-
 .flex {
   display: -ms-flexbox;
   display: -webkit-box;
@@ -134,11 +145,10 @@ body, html {
 
 .box {
   flex: auto;
-  min-height: 100px;
 }
 
 section.left {
-  background: rgb(33, 37, 45);
+  background: #1C2B36;
   position: fixed;
   top: 0;
   left: 0;
@@ -149,10 +159,40 @@ section.left {
   * {
     color: rgb(151, 162, 177);
   }
+  .group {
+    padding-bottom: 20px;
+    .clicker {
+      width: 100%;
+      height: 45px;
+      padding-left: 20px;
+      &.green {
+        background: rgb(77, 189, 116);
+      }
+      .icon {
+        display: inline-block;
+        color: #FFF;
+        line-height: 45px;
+        vertical-align: top;
+        font-size: 16px;
+      }
+      .label {
+        font-size: 13px;
+        color: #FFF;
+        display: inline-block;
+        vertical-align: top;
+        font-family: "Open Sans", sans-serif;
+        line-height: 45px;
+        padding-left: 10px;
+      }
+    }
+  }
   .header {
     padding: 30px 20px 31px;
-    border-bottom: 1px solid $divider;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    &.logo-only {
+      background: url(/img/logo.png) 15px 23px no-repeat;
+      background-size: 75%;
+      height: 90px;
+    }
     .title {
       font-size: 15px;
       position: relative;
@@ -173,23 +213,20 @@ section.left {
     padding: 20px 0;
     margin-left: 20px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 12px;
     vertical-align: middle;
-    text-transform: uppercase;
-    opacity: 0.5;
+    color: #FFF;
     font-family: "Open Sans", sans-serif;
+    text-transform: uppercase;
   }
   .locks {
     font-weight: 500;
     .device {
       height: 40px;
       width: 100%;
-      padding: 10px 20px;
       display: table;
       cursor: pointer;
-      &.active {
-        background: rgba(0, 0, 0, 0.1);
-      }
+      padding: 10px 20px 10px 30px;
       .light {
         display: inline-block;
         width: 12px;
@@ -201,14 +238,19 @@ section.left {
       .name {
         display: inline-block;
         margin-left: 10px;
-        font-weight: 600;
-        font-size: 16px;
+        font-size: 13px;
         vertical-align: middle;
         font-family: "Open Sans", sans-serif;
         text-transform: capitalize;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
+      }
+      &.active {
+        background: #121A20;
+        .name {
+          color: #FFF;
+        }
       }
     }
   }
@@ -269,7 +311,7 @@ section.right {
       }
     }
     &.blue {
-      background: #64C2DE;
+      background: #3BC0C3;
       .title {
         color: #FFF;
         opacity: 0.8;
@@ -277,7 +319,23 @@ section.right {
       }
     }
     &.teal {
-      background: #45B7AF;
+      background: #4DBD74;
+      .title {
+        color: #FFF;
+        opacity: 0.8;
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+    }
+    &.navy {
+      background: #2d333d;
+      .title {
+        color: #FFF;
+        opacity: 0.8;
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+    }
+    &.green {
+      background: #4DBD74;
       .title {
         color: #FFF;
         opacity: 0.8;
@@ -321,7 +379,7 @@ section.right {
     }
   }
   .sidebar {
-    background: rgb(45, 51, 61);
+    background: #121A20;
     width: 70px;
     height: 100%;
     position: relative;
@@ -353,9 +411,7 @@ section.right {
       height: 96px;
       width: 100%;
       display: table;
-      border-bottom: 1px solid $divider;
       position: relative;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
       .light {
         height: 24px;
         width: 24px;
@@ -385,6 +441,7 @@ section.right {
       }
       .content-right {
         max-width: 325px;
+        min-width: 325px;
         @media print, screen and (max-width: 960px) {
           display: none;
         }
@@ -429,4 +486,5 @@ section.right {
     }
   }
   @import 'lock-event-flow';
+  @import 'lock-user-flow';
 }

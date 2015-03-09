@@ -24,5 +24,13 @@ module.exports = {
     },
     checkJoin : function(pre, actual, expect, res, post){
         return (pre || "") + (actual == expect ? res : "") + (post || "");
+    },
+    findObjectById : function (arr, id) {
+        for (var i = 0; i < arr.length; i++) {
+            var elem = arr[i];
+            if (elem._id == id) {
+                return elem;
+            }
+        }
     }
 };

@@ -1,18 +1,13 @@
 .lock-event-flow .event {
-  border-bottom: 1px solid #EEE; }
-  .lock-event-flow .event .button {
+  border-bottom: 1px solid #EEE;
+  position: relative; }
+  .lock-event-flow .event .button.tiny {
     display: inline-block;
-    height: 20px;
     float: right;
-    background: rgba(238, 238, 238, 0.33);
-    margin: 17px;
-    border: 1px solid rgba(45, 51, 61, 0.13);
-    border-radius: 28px; }
-    .lock-event-flow .event .button .label {
-      line-height: 20px;
-      font-size: 9px;
-      padding: 0 10px;
-      color: #999; }
+    margin: 15px;
+    vertical-align: top;
+    position: absolute;
+    right: 0; }
   .lock-event-flow .event:nth-child(even) {
     background: rgba(242, 242, 242, 0.188235); }
   .lock-event-flow .event:last-child {
@@ -50,7 +45,8 @@
         font-weight: 600; }
       .lock-event-flow .event .info .data-bottom .user {
         font-weight: bold;
-        border-bottom: 1px dotted; }
+        border-bottom: 1px dotted;
+        color: #939ba9; }
         .lock-event-flow .event .info .data-bottom .user:before {
           content: '@'; }
   .lock-event-flow .event .data-right {
@@ -63,7 +59,7 @@
       .lock-event-flow .event .data-right .data-top .text {
         font-weight: 600;
         font-size: 13px;
-        color: #7C7C7C; }
+        color: #5A6678; }
         .lock-event-flow .event .data-right .data-top .text:first-letter {
           text-transform: capitalize; }
       .lock-event-flow .event .data-right .data-top .user {

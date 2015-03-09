@@ -95,7 +95,7 @@ var Dashboard = React.createClass({
                     case "lock-event-flow" :
                         return <LockEventFlow users={ self.state.users || [] } events={ self.state.activeLock.events }/>;
                     case "lock-user-flow" :
-                        return <LockUserFlow users={ self.state.users || [] } />;
+                        return <LockUserFlow users={ self.state.users || [] } pairedUsers={ self.state.activeLock.pairedUsers } />;
                 }
             }
             return null;
@@ -127,10 +127,16 @@ var Dashboard = React.createClass({
                         <div className="message">{ this.state.message }</div>
                     </div>
                     <div>
-                        <div className="section-title">Active</div>
-                        <div className="locks">{ lockItemObjects }</div>
-                        <div className="section-title">Options</div>
-                        <div className="section-title">Inactive</div>
+                        <div className="group">
+                            <div className="section-title">Active Locks</div>
+                            <div className="locks">{ lockItemObjects }</div>
+                        </div>
+                        <div className="group">
+                            <div className="clicker green">
+                                <div className="icon plus"></div>
+                                <div className="label">Add Lock</div>
+                            </div>
+                        </div>
                     </div>
                 </section>
                 <section className={"right " + this.state.lockItemSidebar }>

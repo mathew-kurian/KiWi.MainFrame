@@ -39,7 +39,7 @@ var EventItem = React.createClass({
                         </div>
                     </div>
                 </div>
-                <div className="button">
+                <div className="button tiny">
                     <div className="label">Restore</div>
                 </div>
             </div>

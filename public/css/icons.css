@@ -17,6 +17,8 @@
     content: ''; }
   .icon.menu:before {
     content: ''; }
+  .icon.menu-dot-horizontal:before {
+    content: ''; }
   .icon.wifi:before {
     content: ''; }
   .icon.lock:before {
@@ -33,5 +35,13 @@
     content: ''; }
   .icon.geofence:before {
     content: ''; }
+  .icon.email:before {
+    content: ''; }
+  .icon.phone:before {
+    content: ''; }
+  .icon.clock:before {
+    content: ''; }
+  .icon.plus:before {
+    content: ''; }
   .icon.menu-dot:before {
     content: ''; }
