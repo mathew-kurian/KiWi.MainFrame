@@ -7,6 +7,11 @@ Web portal for all IO for all KiWi products
 - React
 - Reflux
 - MongoDB
+- EJS
+- Socket.IO
+- Scribe.js
+- Jest (front-end testing)
+- Should.js (back-end testing)
 
 
 ## API
