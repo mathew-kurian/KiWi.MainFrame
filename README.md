@@ -2,11 +2,11 @@
 Web portal for all IO for all KiWi products
 
 ## Stack
-NodeJS
-Express
-React
-Reflux
-MongoDB
+- NodeJS
+- Express
+- React
+- Reflux
+- MongoDB
 
 
 ## API
