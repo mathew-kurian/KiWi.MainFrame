@@ -10,5 +10,5 @@ MongoDB
 
 
 ## API
-The following REST endpoints allow third-party developers to build apps to interact with locks
+Please visit [Wiki](https://github.com/getKiWi/KiWi.MainFrame/wiki/API) for more information.
 
