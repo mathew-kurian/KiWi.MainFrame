@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var config = require('./../config');
-var Token = require('./token.model');
+var tools = require('./../libs/tools');
 var statics = require('./../libs/mongoose-statics');
 
 var AccountSchema = Schema({
@@ -39,29 +39,9 @@ AccountSchema.pre('save', function (next) {
 
 AccountSchema.statics.list = statics.list;
 
-AccountSchema.statics.login = function (options, cb) {
-    var query = {};
-
-    if (options.email) query.email = options.email;
-    if (options.username) query.username = options.username;
-    if (options._id) query._id = options._id;
-
-    if (Object.keys(query).length === 0 || !options.password)
-        return cb('No email, username, or _id  and/or password');
-
-    query.password = options.password;
-
-    this.findOne(options)
-        .exec(function (err, account) {
-            if (err) return cb(err);
-            if (!account) return cb("Invalid email, username, or _id  and/or password");
-            new Token({
-                account: account._id
-            }).save(function (err, token) {
-                    if (err) return cb(err);
-                    cb(undefined, token._id);
-                });
-        });
+AccountSchema.statics.create = function addItem(data, cb){
+    data = tools.object.is(data) ? data : {};
+    (new this(data)).save(cb);
 };
 
 module.exports = mongoose.model('Account', AccountSchema);

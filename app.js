@@ -8,6 +8,10 @@ var scribe = require('scribe-js')();
 var app = express();
 var mongoose = require("mongoose");
 
+// Imgur
+// a5eea26247b3dda
+// f6ff9173371fb4fe3cabd46945f91e066942f03b
+
 mongoose.connect('mongodb://localhost/kiwi-mainframe');
 
 nodejsx.install({

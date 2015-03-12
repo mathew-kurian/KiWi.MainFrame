@@ -5,7 +5,7 @@ var EventSchema = Schema({
     lock: Schema.Types.ObjectId,
     user: Schema.Types.ObjectId,
     text: {type: String, trim: true},
-    created: {type: Number, default: Date.now}
+    created: {type: Date}
 }, {strict: true});
 
 EventSchema.pre('save', function (next) {
