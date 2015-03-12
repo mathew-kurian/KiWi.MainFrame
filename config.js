@@ -4,5 +4,6 @@ module.exports = {
     registrationAlgorithm: 'aes-256-ctr',
     registrationSymmetricKey: 'jkcm',
     registrationPassword: '123456',
-    defaultLockName: "MyKiWi"
+    defaultLockName: "MyKiWi",
+    defaultClientId: "dev"
 };

@@ -1,11 +1,13 @@
 var Key = require('./../../models/key.model.js');
-var codes = require('./../../libs/codes');
+var status = require('./../../constants/status');
 
 module.exports = {
-    list: function (req, res) {
-        Key.list({}, function (err, tokens) {
-            if (err)  return res.sendErr(codes.db_err, err);
-            res.sendOk({tokens: tokens});
-        });
+    debug : {
+        list: function (req, res) {
+            Key.list({}, function (err, keys) {
+                if (err)  return res.sendErr(status.db_err, err);
+                res.sendOk({keys: keys});
+            });
+        }
     }
 };

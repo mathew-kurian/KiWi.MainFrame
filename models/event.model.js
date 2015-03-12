@@ -6,7 +6,7 @@ var EventSchema = Schema({
     user: Schema.Types.ObjectId,
     text: {type: String, trim: true},
     created: {type: Date}
-}, {strict: true});
+});
 
 EventSchema.pre('save', function (next) {
     var now = new Date();

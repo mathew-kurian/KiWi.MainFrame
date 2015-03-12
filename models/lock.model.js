@@ -17,7 +17,7 @@ var LockSchema = Schema({
     created: {type: Date},
     updated: {type: Date},
     registered: {type: Boolean, default: false}
-}, {strict: true});
+});
 
 LockSchema.index({location: '2dsphere'});
 

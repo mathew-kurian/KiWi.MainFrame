@@ -1,11 +1,13 @@
 var Token = require('./../../models/token.model.js');
-var codes = require('./../../libs/codes');
+var status = require('./../../constants/status');
 
 module.exports = {
-    list: function (req, res) {
-        Token.list({}, function (err, tokens) {
-            if (err)  return res.sendErr(codes.db_err, err);
-            res.sendOk({tokens: tokens});
-        });
+    debug : {
+        list: function (req, res) {
+            Token.list({}, function (err, tokens) {
+                if (err)  return res.sendErr(status.db_err, err);
+                res.sendOk({tokens: tokens});
+            });
+        }
     }
 };

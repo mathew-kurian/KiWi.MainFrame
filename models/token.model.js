@@ -16,23 +16,4 @@ TokenSchema.pre('save', function (next) {
 
 TokenSchema.statics.list = statics.list;
 
-TokenSchema.statics.validate = function (_id, cb) {
-    this.findById(_id).exec(function (err, token) {
-        if (err) return cb(err);
-        if (!token) return cb("Token not found. Expired?");
-        if (new Date(token.created).getTime() + config.tokenExpirationTime > Date.now()) {
-            token.created = Date.now();
-            token.save(function () {
-                if (err) return cb(err);
-                cb(undefined, token.account);
-            });
-        } else {
-            token.remove(function () {
-                return cb("Token expired");
-            });
-        }
-    });
-};
-
-
 module.exports = mongoose.model('Event', TokenSchema);

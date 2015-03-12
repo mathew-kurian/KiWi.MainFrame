@@ -1,15 +1,22 @@
 var mongoose = require('mongoose');
 var tools = require('./../libs/tools');
+var permission = require('./../constants/permission');
+var util = require('util');
 var statics = require('./../libs/mongoose-statics');
 var Schema = mongoose.Schema;
 
 var KeySchema = Schema({
     account: {type: Schema.Types.ObjectId, required: true},
     lock: {type: Schema.Types.ObjectId, required: true},
-    permission: {type: Number, validate: /[0-4]/g, default: 0, required: true},
+    permission: {
+        type: Number,
+        validate: tools.regex.parse(util.format('/[%d-%d]/g', permission.highest, permission.lowest)),
+        default: permission.lowest,
+        required: true
+    },
     created: {type: Date},
     updated: {type: Date}
-}, {strict: true});
+});
 
 KeySchema.index({location: '2dsphere'});
 
