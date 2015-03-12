@@ -1,12 +1,16 @@
 var mongoose = require('mongoose');
 var tools = require('./../libs/tools');
 var statics = require('./../libs/mongoose-statics');
+var config = require('./../config');
 var Schema = mongoose.Schema;
 
 var LockSchema = Schema({
-    serial: {type: String, required: true},
-    name: {type: String, default: "Untitled", trim: true},
-    location: {type: {type: String, required: true, default: [Number.MAX_VALUE, Number.MAX_VALUE]}, coordinates: []},
+    serial: {type: String, required: true, index: {unique: true}},
+    name: {type: String, default: config.defaultLockName, trim: true},
+    location: {
+        type: {type: String, default: 'Point', required: 'true'},
+        coordinates: {type: Array, default: [0, 0], required: true}
+    },
     locked: {type: Boolean, default: false, required: true},
     enabled: {type: Boolean, default: true, required: true},
     battery: {type: Number, default: 0},

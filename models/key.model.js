@@ -1,10 +1,11 @@
 var mongoose = require('mongoose');
 var tools = require('./../libs/tools');
+var statics = require('./../libs/mongoose-statics');
 var Schema = mongoose.Schema;
 
 var KeySchema = Schema({
-    account: {type: ObjectId, required: true},
-    lock: {type: ObjectId, required: true},
+    account: {type: Schema.Types.ObjectId, required: true},
+    lock: {type: Schema.Types.ObjectId, required: true},
     permission: {type: Number, validate: /[0-4]/g, default: 0, required: true},
     created: {type: Date},
     updated: {type: Date}
@@ -19,10 +20,12 @@ KeySchema.pre('save', function (next) {
     next();
 });
 
+KeySchema.statics.list = statics.list;
+
 KeySchema.statics.create = function addItem(data, cb) {
     data = tools.object.is(data) ? data : {};
     delete data.permission;
     (new this(data)).save(cb);
 };
 
-module.exports = mongoose.model('Lock', KeySchema);
+module.exports = mongoose.model('Key', KeySchema);

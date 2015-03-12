@@ -7,6 +7,17 @@ module.exports.object = {
     clone: function (obj) {
         obj = typeof obj === 'object' ? obj : {};
         return JSON.parse(JSON.stringify(obj));
+    },
+    is: function () {
+        for (var i = 0; i < arguments.length; i++) {
+            if (typeof arguments[i] !== "object") {
+                return false;
+            } else if (Array.isArray(arguments[i])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 };
 

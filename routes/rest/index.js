@@ -1,5 +1,6 @@
 var express = require('express');
 var account = require('./account');
+var key = require('./key');
 var token = require('./token');
 var lock = require('./lock');
 var codes = require('./../../libs/codes');
@@ -29,6 +30,8 @@ router.get('/account/edit', account.edit);
 router.get('/account/debug/list', account.list);
 
 router.get('/token/debug/list', token.list);
+
+router.get('/key/debug/list', key.list);
 
 router.get('/lock/create', lock.create);
 router.get('/lock/register', lock.register);

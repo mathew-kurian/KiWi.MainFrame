@@ -5,7 +5,7 @@ var tools = require('./../../libs/tools');
 
 module.exports = {
     create: function (req, res) {
-        new Account(req.query).save(function (err, account) {
+        Account.create(req.query, function (err, account) {
             if (err) return res.sendErr(codes.db_err, err);
             res.sendOk({account: account});
         });
@@ -23,12 +23,13 @@ module.exports = {
         if (req.query.username) query.username = req.query.username;
         if (req.query._id) query._id = req.query._id;
 
-        if (Object.keys(query).length === 0 || !options.password)
+        if (Object.keys(query).length === 0 || !req.query.password)
             return res.sendErr(codes.param_err, 'No email, username, or _id  and/or password');
 
-        query.password = options.password;
+        query.password = req.query.password;
 
-        Account.findOne(options, function (err, account) {
+        // noinspection JSUnresolvedFunction
+        Account.findOne(query, function (err, account) {
             if (err) return res.sendErr(codes.db_err, err);
             if (!account) return res.sendErr(codes.db_err, "Account not found");
 
@@ -36,7 +37,7 @@ module.exports = {
                 account: account._id
             }).save(function (err, token) {
                     if (err) return res.sendErr(codes.db_err, err);
-                    res.sendOk(undefined, {token: token._id});
+                    res.sendOk({token: token._id});
                 });
         });
     },
@@ -51,7 +52,6 @@ module.exports = {
 
             // noinspection JSUnresolvedFunction
             Account.findById(account, function (err, account) {
-
                 if (err) return res.sendErr(codes.db_err, err);
                 if (!account) return res.sendErr(codes.db_err, "Account not found");
 

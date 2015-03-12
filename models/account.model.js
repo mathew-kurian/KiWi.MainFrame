@@ -17,7 +17,7 @@ var AccountSchema = Schema({
         index: {unique: true},
         validate: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
     },
-    mobile: {type: Number, validate: /^\d{10}$/},
+    mobile: {type: Number, validate: /^\d{10}$/, required: true},
     photo: {
         type: String,
         default: config.defaultProfilePicture,
@@ -39,7 +39,7 @@ AccountSchema.pre('save', function (next) {
 
 AccountSchema.statics.list = statics.list;
 
-AccountSchema.statics.create = function addItem(data, cb){
+AccountSchema.statics.create = function addItem(data, cb) {
     data = tools.object.is(data) ? data : {};
     (new this(data)).save(cb);
 };
