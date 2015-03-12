@@ -8,6 +8,15 @@ module.exports = {
     highest : 0,
 
     hasAllPairedKeyAccess : function(level){
+        return level > module.exports.visitor;
+    },
+    hasKeyCreateAccess : function(level){
+        return level > module.exports.friend;
+    },
+    hasKeyEditAccess : function(level){
+        return level > module.exports.friend;
+    },
+    hasKeyRemoveAccess: function(level){
         return level > module.exports.friend;
     }
 };

@@ -1,5 +1,4 @@
 var Lock = require('./../../models/lock.model.js');
-var Token = require('./../../models/token.model.js');
 var Key = require('./../../models/key.model.js');
 var status = require('./../../constants/status');
 var tools = require('./../../libs/tools');
@@ -58,24 +57,6 @@ module.exports = {
                 if (err) return res.sendErr(status.db_err, err);
                 res.sendOk({info: "registered"});
             });
-        });
-    },
-    keys: function (req, res) {
-        // noinspection JSUnresolvedFunction, JSUnresolvedVariable
-        Key.findOne({account: req.token.account, lock: req.query.lock}, function (err, key) {
-            if (err) return res.sendErr(status.db_err, err);
-            if (!key) return res.sendErr(status.db_err, "Key not found");
-
-            if (!permission.hasAllPairedKeyAccess(key.permission))
-                return res.sendErr(status.permission_err, "Access denied");
-
-            // noinspection JSUnresolvedVariable
-            Key.list({criteria: {lock: req.query.lock}}, function (err, keys) {
-                if (err) return res.sendErr(status.db_err, err);
-                if (!keys) return res.sendErr(status.db_err, "No keys have been issued");
-
-                res.sendOk({keys: keys});
-            })
         });
     }
 };

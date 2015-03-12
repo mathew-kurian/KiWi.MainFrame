@@ -3,7 +3,7 @@ var account = require('./account');
 var key = require('./key');
 var token = require('./token');
 var lock = require('./lock');
-var tools = require('./../../libs/tools');
+var key = require('./key');
 var config = require('./../../config');
 var status = require('./../../constants/status');
 var Token = require('./../../models/token.model.js');
@@ -57,16 +57,21 @@ var isLoggedIn = function (req, res, next) {
 
 router.get('/account/create', account.create);
 router.get('/account/login', account.login);
-
 router.get('/account/edit', isLoggedIn, account.edit);
+router.get('/account/debug/list', account.debug.list);
+
 router.get('/lock/list', isLoggedIn, lock.list);
 router.get('/lock/create', isLoggedIn, lock.create);
 router.get('/lock/register', isLoggedIn, lock.register);
-router.get('/lock/keys', isLoggedIn, lock.keys);
+router.get('/lock/debug/list', lock.debug.list);
+
+router.get('/keys/create', isLoggedIn, key.create);
+router.get('/keys/edit', isLoggedIn, key.edit);
+router.get('/keys/remove', isLoggedIn, key.remove);
+router.get('/keys/list', isLoggedIn, key.list);
+router.get('/keys/peers', isLoggedIn, key.peers);
+router.get('/key/debug/list', key.debug.list);
 
 router.get('/token/debug/list', token.debug.list);
-router.get('/key/debug/list', key.debug.list);
-router.get('/lock/debug/list', lock.debug.list);
-router.get('/account/debug/list', account.debug.list);
 
 module.exports = router;
