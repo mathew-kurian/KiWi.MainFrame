@@ -50,7 +50,7 @@ module.exports = {
             return res.sendErr(status.param_err, "Invalid field type");
 
         // noinspection JSUnresolvedFunction
-        Account.findById(res.token.account, function (err, account) {
+        Account.findById(req.token.account, function (err, account) {
             if (err) return res.sendErr(status.db_err, err);
             if (!account) return res.sendErr(status.db_err, "Account not found");
 

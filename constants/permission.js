@@ -5,5 +5,9 @@ module.exports = {
     owner : 3,
 
     lowest : 3,
-    highest : 0
+    highest : 0,
+
+    hasAllPairedKeyAccess : function(level){
+        return level > module.exports.friend;
+    }
 };

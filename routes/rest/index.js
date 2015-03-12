@@ -44,7 +44,7 @@ var isLoggedIn = function (req, res, next) {
             token.created = Date.now();
             token.save(function () {
                 if (err) res.sendErr(status.db_err, err);
-                res.token = token.toObject();
+                req.token = token.toObject();
                 next();
             });
         } else {
@@ -62,6 +62,7 @@ router.get('/account/edit', isLoggedIn, account.edit);
 router.get('/lock/list', isLoggedIn, lock.list);
 router.get('/lock/create', isLoggedIn, lock.create);
 router.get('/lock/register', isLoggedIn, lock.register);
+router.get('/lock/keys', isLoggedIn, lock.keys);
 
 router.get('/token/debug/list', token.debug.list);
 router.get('/key/debug/list', key.debug.list);

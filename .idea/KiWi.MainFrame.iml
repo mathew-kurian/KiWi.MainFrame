@@ -15,5 +15,6 @@
     <orderEntry type="library" name="mongoose-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="moment-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="mongodb-DefinitelyTyped" level="application" />
+    <orderEntry type="library" name="jQuery-2.0.0" level="application" />
   </component>
 </module>

@@ -9,5 +9,13 @@ module.exports = {
                 res.sendOk({keys: keys});
             });
         }
+    },
+    edit : function(req, res){
+        Key.findOneById(req.query.key, function(err, key){
+
+        });
+    },
+    remove : function(req, res){
+
     }
 };

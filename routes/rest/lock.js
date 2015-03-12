@@ -16,7 +16,7 @@ module.exports = {
         }
     },
     list: function (req, res) {
-        Lock.list({account: res.token.account}, function (err, locks) {
+        Lock.list({criteria: {account: res.token.account}}, function (err, locks) {
             if (err)  return res.sendErr(status.db_err, err);
             res.sendOk({locks: locks});
         });
@@ -44,7 +44,7 @@ module.exports = {
         var dec = decipher.update(text, 'hex', 'utf8');
 
         if (config.registrationPassword !== (dec + decipher.final('utf8')))
-            return res.sendErr(status.key_err, "Encryption key invalid")
+            return res.sendErr(status.key_err, "Encryption key invalid");
 
         // noinspection JSUnresolvedFunction, JSUnresolvedVariable
         Lock.findOne({serial: req.query.serial}, function (err, lock) {
@@ -59,6 +59,23 @@ module.exports = {
                 res.sendOk({info: "registered"});
             });
         });
-    }
+    },
+    keys: function (req, res) {
+        // noinspection JSUnresolvedFunction, JSUnresolvedVariable
+        Key.findOne({account: req.token.account, lock: req.query.lock}, function (err, key) {
+            if (err) return res.sendErr(status.db_err, err);
+            if (!key) return res.sendErr(status.db_err, "Key not found");
 
+            if (!permission.hasAllPairedKeyAccess(key.permission))
+                return res.sendErr(status.permission_err, "Access denied");
+
+            // noinspection JSUnresolvedVariable
+            Key.list({criteria: {lock: req.query.lock}}, function (err, keys) {
+                if (err) return res.sendErr(status.db_err, err);
+                if (!keys) return res.sendErr(status.db_err, "No keys have been issued");
+
+                res.sendOk({keys: keys});
+            })
+        });
+    }
 };

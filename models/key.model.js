@@ -14,11 +14,12 @@ var KeySchema = Schema({
         default: permission.lowest,
         required: true
     },
+    expiration: {type: Date, default: new Date(8640000000000000), required: true},
     created: {type: Date},
     updated: {type: Date}
 });
 
-KeySchema.index({location: '2dsphere'});
+KeySchema.index({account: 1, lock: 1}, {unique: true})
 
 KeySchema.pre('save', function (next) {
     var now = new Date();
