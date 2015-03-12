@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var config = require('./../config');
+var Token = require('./token.model');
+var statics = require('./../libs/mongoose-statics');
 
 var AccountSchema = Schema({
     name: {
@@ -23,7 +25,9 @@ var AccountSchema = Schema({
     },
     created: {type: Date},
     updated: {type: Date},
-    password: {type: String, required: true}
+    // password must be greater than 4 characters
+    // include at least one numeric digit.
+    password: {type: String, required: true, validate: /^(?=.*\d).{4,}$/}
 });
 
 AccountSchema.pre('save', function (next) {
@@ -33,33 +37,30 @@ AccountSchema.pre('save', function (next) {
     next();
 });
 
-AccountSchema.statics.list = function (options, cb) {
-    var criteria = options.criteria || {};
-    var sort = options.sort || {createdAt: -1};
-    var limit = options.limit === 0 ? 0 : (options.limit || 10);
-    var page = options.page || 0;
-    var populate = options.populate || [];
-    var select = options.select || '';
+AccountSchema.statics.list = statics.list;
 
-    this.find(criteria)
-        .select(select)
-        .populate(populate)
-        .sort(sort)
-        .limit(limit)
-        .skip(limit * page)
-        .exec(cb)
-};
-
-AccountSchema.methods.login = function (options, cb) {
+AccountSchema.statics.login = function (options, cb) {
     var query = {};
 
     if (options.email) query.email = options.email;
     if (options.username) query.username = options.username;
     if (options._id) query._id = options._id;
 
-    this.findOne(options)
-        .exec(function () {
+    if (Object.keys(query).length === 0 || !options.password)
+        return cb('No email, username, or _id  and/or password');
 
+    query.password = options.password;
+
+    this.findOne(options)
+        .exec(function (err, account) {
+            if (err) return cb(err);
+            if (!account) return cb("Invalid email, username, or _id  and/or password");
+            new Token({
+                account: account._id
+            }).save(function (err, token) {
+                    if (err) return cb(err);
+                    cb(undefined, token._id);
+                });
         });
 };
 

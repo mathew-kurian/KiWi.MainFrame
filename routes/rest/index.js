@@ -1,6 +1,7 @@
 var express = require('express');
 var account = require('./account');
-var codes = require('./../codes');
+var token = require('./token');
+var codes = require('./../../libs/codes');
 var router = express.Router();
 
 router.use(function (req, res, next) {
@@ -15,17 +16,11 @@ router.use(function (req, res, next) {
     };
 
     res.sendErr = function (status, err) {
-        res.sendJson({
-            status: status,
-            err: err
-        });
+        res.sendJson(status, err);
     };
 
     res.sendOk = function (data) {
-        res.sendJson({
-            status: codes.ok,
-            res: data
-        });
+        res.sendJson(codes.ok, undefined, data);
     };
 
     next();
@@ -33,5 +28,9 @@ router.use(function (req, res, next) {
 
 router.get('/account/create', account.create);
 router.get('/account/list', account.list);
+router.get('/account/login', account.login);
+router.get('/account/edit', account.edit);
+
+router.get('/token/list', token.list);
 
 module.exports = router;
