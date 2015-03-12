@@ -6,6 +6,9 @@ var bodyParser = require('body-parser');
 var nodejsx = require('node-jsx');
 var scribe = require('scribe-js')();
 var app = express();
+var mongoose = require("mongoose");
+
+mongoose.connect('mongodb://localhost/kiwi-mainframe');
 
 nodejsx.install({
     extension: '.jsx'
@@ -33,6 +36,8 @@ app.get('/', function (req, res) {
     var markup = React.renderComponentToString(reactApp());
     res.send('<!DOCTYPE html>' + markup);
 });
+
+app.use('/rest', require('./routes/rest'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
