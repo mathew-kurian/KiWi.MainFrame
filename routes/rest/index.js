@@ -3,10 +3,10 @@ var account = require('./account');
 var key = require('./key');
 var token = require('./token');
 var lock = require('./lock');
-var key = require('./key');
 var config = require('./../../config');
 var status = require('./../../constants/status');
 var Token = require('./../../models/token.model.js');
+
 var router = express.Router();
 
 router.use(function (req, res, next) {
@@ -27,20 +27,22 @@ router.use(function (req, res, next) {
     next();
 });
 
-router.use(function (req, res, next) {
-    // noinspection JSUnresolvedVariable
-    if (req.query.clientId === config.defaultClientId)
-        return res.sendErr(status.clientId_err, 'Invalid clientId. Request access?');
+if (config.default_client_id) {
+    router.use(function (req, res, next) {
+        // noinspection JSUnresolvedVariable
+        if (req.query.client_id !== config.default_client_id)
+            return res.sendErr(status.client_id_err, 'Invalid clientId. Request access from developer?');
 
-    next();
-});
+        next();
+    });
+}
 
 var isLoggedIn = function (req, res, next) {
     // noinspection JSUnresolvedFunction, JSUnresolvedVariable
     Token.findById(req.query.token, function (err, token) {
         if (err) return res.sendErr(status.db_err, err);
         if (!token) return res.sendErr(status.db_err, 'Token not found. Expired?');
-        if (new Date(token.created).getTime() + config.tokenExpirationTime > Date.now()) {
+        if (new Date(token.created).getTime() + config.token_expiration_time > Date.now()) {
             token.created = Date.now();
             token.save(function () {
                 if (err) res.sendErr(status.db_err, err);

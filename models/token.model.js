@@ -1,19 +1,12 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var config = require('../config');
-var statics = require('./../libs/mongoose-statics');
+var config = require('./../config');
+var Mongol = require('./../libs/mongol.js');
+var Schema = Mongol.Extend.Timestamp(mongoose.Schema);
 
-var TokenSchema = new Schema({
-    account: {type: Schema.Types.ObjectId, required: true},
-    created: {type: Date, default: Date.now}
+var TokenSchema = Schema({
+    account: {type: Schema.Types.ObjectId, required: true}
 });
 
-TokenSchema.pre('save', function (next) {
-    var now = new Date();
-    if (!this.created) this.created = now;
-    next();
-});
-
-TokenSchema.statics.list = statics.list;
+Mongol.statics.list(TokenSchema);
 
 module.exports = mongoose.model('Event', TokenSchema);

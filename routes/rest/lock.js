@@ -15,7 +15,7 @@ module.exports = {
         }
     },
     list: function (req, res) {
-        Lock.list({criteria: {account: res.token.account}}, function (err, locks) {
+        Lock.list({criteria: {account: req.token.account}}, function (err, locks) {
             if (err)  return res.sendErr(status.db_err, err);
             res.sendOk({locks: locks});
         });
@@ -24,7 +24,7 @@ module.exports = {
         // noinspection JSUnresolvedVariable
         Lock.create({serial: req.query.serial}, function (err, lock) {
             if (err) return res.sendErr(status.db_err, err);
-            Key.create({account: res.token.account, lock: lock._id, permission: permission.owner}, function (err) {
+            Key.create({account: req.token.account, lock: lock._id, permission: permission.owner}, function (err) {
                 if (err) {
                     return lock.remove(lock._id, function (err) {
                         if (err) return res.sendErr(status.db_err, err);
@@ -39,10 +39,10 @@ module.exports = {
         if (!Array.isArray(req.query.location) || req.query.location.length !== 2)
             return res.sendErr(status.param_err, "Invalid location");
 
-        var decipher = crypto.createDecipher(config.registrationAlgorithm, config.registrationPassword);
+        var decipher = crypto.createDecipher(config.registration_algorithm, config.registration_password);
         var dec = decipher.update(text, 'hex', 'utf8');
 
-        if (config.registrationPassword !== (dec + decipher.final('utf8')))
+        if (config.registration_password !== (dec + decipher.final('utf8')))
             return res.sendErr(status.key_err, "Encryption key invalid");
 
         // noinspection JSUnresolvedFunction, JSUnresolvedVariable

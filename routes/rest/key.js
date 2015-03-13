@@ -44,9 +44,6 @@ module.exports = {
             if (err) return res.sendErr(status.db_err, err);
             if (!key) return res.sendErr(status.db_err, "Key not found");
 
-            if (!permission.hasKeyEditAccess(key.permission))
-                return res.sendErr(status.permission_err, "Access denied");
-
             // noinspection JSUnresolvedVariable
             Key.list({criteria: {account: key.account}}, function (err, keys) {
                 if (err) return res.sendErr(status.db_err, err);

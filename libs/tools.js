@@ -103,28 +103,33 @@ exports.auto = function (a) {
 };
 
 // FIXME Add support for index of array!!!!
-var _f = ["-s", "-n", "-f"];
+var _f = ["-s", "-n", "-f", "-d"];
 
 // README:
+// -d: Delete Key/Set
 // -f: Create Key/Set Value
 // -s: Create Key/Set Value IFF Value != null/undefined
 // -n: Create Key/Set Value IFF Key == null/undefined
 module.exports.set = function (obj, a, b, f) {
     var _bobj = obj;
+    if (arguments.length === 3 && b === '-d') f = b;
     f = exports.array.contains(_f, f) ? f : '-n';
-    if (exports.undef(a)) {
-        return _bobj;
-    }
+    if (exports.undef(a)) return _bobj;
     a = a.split(/[>|\.]/g);
     while (a.length) {
         var key = a.shift();
-        if ((exports.undef(obj[key]) || (f && (typeof obj[key] !== 'object' || Array.isArray(obj[key])))) && a.length > 0) {
+        if (exports.undef(obj[key]) && f === "-d") {
+            return;
+        } else if ((exports.undef(obj[key]) || (f && (typeof obj[key] !== 'object' || Array.isArray(obj[key])))) && a.length > 0) {
             obj[key] = {};
             obj = obj[key];
         } else if (a.length === 0) {
             var _key = key.substring(0, key.length - 1);
             var plus = key.substring(key.length - 1) === "+";
-            if (plus && Array.isArray(obj[_key])) {
+            if (f === "-d") {
+                delete obj[key];
+                return _bobj;
+            } else if (plus && Array.isArray(obj[_key])) {
                 obj[_key].push(b);
                 return _bobj;
             } else if (exports.undef(obj[key]) || (f === '-s' && !exports.undef(b)) || f === '-f') {
@@ -143,6 +148,10 @@ module.exports.set = function (obj, a, b, f) {
     }
 
     return _bobj;
+};
+
+module.exports.del = function (obj, a) {
+    return module.exports.set(obj, a, '-d');
 };
 
 module.exports.get = function (obj, a, b) {

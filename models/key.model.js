@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var tools = require('./../libs/tools');
 var permission = require('./../constants/permission');
 var util = require('util');
-var statics = require('./../libs/mongoose-statics');
-var Schema = mongoose.Schema;
+var Mongol = require('./../libs/mongol.js');
+var Schema = Mongol.Extend.Timestamp(mongoose.Schema);
 
 var KeySchema = Schema({
     account: {type: Schema.Types.ObjectId, required: true},
@@ -14,26 +14,12 @@ var KeySchema = Schema({
         default: permission.lowest,
         required: true
     },
-    expiration: {type: Date, default: new Date(8640000000000000), required: true},
-    created: {type: Date},
-    updated: {type: Date}
+    expiration: {type: Date, default: new Date(8640000000000000), required: true}
 });
 
-KeySchema.index({account: 1, lock: 1}, {unique: true})
+Mongol.statics.list(KeySchema);
+Mongol.statics.create(KeySchema, ['permission']);
 
-KeySchema.pre('save', function (next) {
-    var now = new Date();
-    this.updated = now;
-    if (!this.created) this.created = now;
-    next();
-});
-
-KeySchema.statics.list = statics.list;
-
-KeySchema.statics.create = function addItem(data, cb) {
-    data = tools.object.is(data) ? data : {};
-    delete data.permission;
-    (new this(data)).save(cb);
-};
+KeySchema.index({account: 1, lock: 1}, {unique: true});
 
 module.exports = mongoose.model('Key', KeySchema);

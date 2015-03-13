@@ -1,17 +1,14 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var Mongol = require('./../libs/mongol.js');
+var Schema = Mongol.Extend.Timestamp(mongoose.Schema);
 
 var EventSchema = Schema({
     lock: Schema.Types.ObjectId,
     user: Schema.Types.ObjectId,
-    text: {type: String, trim: true},
-    created: {type: Date}
+    text: {type: String, trim: true}
 });
 
-EventSchema.pre('save', function (next) {
-    var now = new Date();
-    if (!this.created) this.created = now;
-    next();
-});
+Mongol.statics.list(EventSchema);
+Mongol.statics.create(EventSchema);
 
 module.exports = mongoose.model('Event', EventSchema);
