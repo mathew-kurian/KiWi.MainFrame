@@ -1,15 +1,34 @@
-var socket;
+var account = require('./account.js');
 
-module.exports.install = function (tcp) {
-    socket = tcp;
+module.exports.install = function (io) {
+    io.use(function (socket, next) {
+        socket.secret = socket.request._query['secret'];
+        socket.action = socket.request._query['action'];
+
+        // FIXME stop handling request if secret OR action == null
+
+        next();
+    });
+
+    io.on('connection', function (socket) {
+        switch (socket.action) {
+            case 'account':
+                account.connected(socket);
+        }
+    });
+
+
+    io.on('disconnect', function (socket) {
+        switch (socket.action) {
+            case 'account':
+                account.disconnected(socket);
+        }
+    });
 };
 
-module.exports.broadcast = function (channels, event, data) {
-    if (!socket) return console.error("Dropped broadcast: ", channels, data);
-    if (!Array.isArray(channels)) channels = [channels];
+module.exports.Account = require("./account.js");
 
-    for (var i = 0; i < channels.length; i++)
-        socket.emit(channels[i], {event: event, res: data});
-};
+
+
 
 

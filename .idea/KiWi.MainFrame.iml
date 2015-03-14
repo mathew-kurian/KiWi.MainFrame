@@ -10,11 +10,13 @@
     <orderEntry type="library" name="express-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="Node.js v0.10.34 Core Modules" level="application" />
     <orderEntry type="library" name="react-DefinitelyTyped" level="application" />
-    <orderEntry type="library" name="react-router-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="flux-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="mongoose-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="moment-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="mongodb-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="jQuery-2.0.0" level="application" />
+    <orderEntry type="library" name="socket.io-1.3.4" level="application" />
+    <orderEntry type="library" name="jquery-2.0.0" level="application" />
+    <orderEntry type="library" name="html5" level="application" />
   </component>
 </module>

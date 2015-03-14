@@ -1,6 +1,7 @@
 var express = require('express');
 var account = require('./account');
 var key = require('./key');
+var socket = require('./socket');
 var token = require('./token');
 var lock = require('./lock');
 var config = require('./../../config');
@@ -73,6 +74,11 @@ router.get('/keys/remove', isLoggedIn, key.remove);
 router.get('/keys/list', isLoggedIn, key.list);
 router.get('/keys/peers', isLoggedIn, key.peers);
 router.get('/key/debug/list', key.debug.list);
+
+router.get('/socket/open', isLoggedIn, socket.open);
+router.get('/socket/close', isLoggedIn, socket.close);
+router.get('/socket/debug/dashboard', isLoggedIn, socket.debug.dashboard);
+router.get('/socket/debug/emit', isLoggedIn, socket.debug.emit);
 
 router.get('/token/debug/list', token.debug.list);
 

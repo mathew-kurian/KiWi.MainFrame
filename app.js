@@ -19,7 +19,7 @@ var reactApp = require('./asr/app.jsx');
 var app = express();
 var io = require('socket.io').listen(app.listen(port));
 
-sockets.install(io.sockets);
+sockets.install(io);
 
 app.use('/', require('./routes'));
 

@@ -5,5 +5,6 @@ module.exports = {
     registration_symmetric_key: 'jkcm',
     registration_password: '123456',
     default_lock_name: "MyKiWi",
-    default_client_id: "dev"
+    default_client_id: "dev",
+    maxSocketsPerToken: 3
 };
