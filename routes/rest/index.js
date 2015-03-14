@@ -43,8 +43,8 @@ var isLoggedIn = function (req, res, next) {
     Token.findById(req.query.token, function (err, token) {
         if (err) return res.sendErr(status.db_err, err);
         if (!token) return res.sendErr(status.db_err, 'Token not found. Expired?');
-        if (new Date(token.created).getTime() + config.token_expiration_time > Date.now()) {
-            token.created = Date.now();
+        if (new Date(token.updated).getTime() + config.token_expiration_time > Date.now()) {
+            // automatically set the updated Date field
             token.save(function () {
                 if (err) res.sendErr(status.db_err, err);
                 req.token = token.toObject();

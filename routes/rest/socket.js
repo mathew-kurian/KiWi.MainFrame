@@ -16,7 +16,7 @@ module.exports = {
         },
         emit: function(req, res){
             sockets.Account.emit(req.token.account, event.debug, { content: req.query.content });
-            res.sendStatus(200);
+            res.sendOk({info: "emitted on account id:" + req.token.account});
         }
     }
 };

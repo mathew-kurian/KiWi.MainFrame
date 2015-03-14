@@ -29,7 +29,7 @@ module.exports.close = function (token, account) {
     for (var i = 0; i < length; i++){
         var socket = socketInfo.sockets[i];
         socket.emit('*', {event: event.disconnected, msg: "Disconnected upon request"});
-        console.log("socket id:%s disconnecting", socket.id);
+        console.log("socket disconnecting id:%s", socket.id);
         socket.disconnect('unauthorized');
     }
 
@@ -42,13 +42,13 @@ module.exports.close = function (token, account) {
 module.exports.connected = function (socket) {
     var socketInfo = socketsBySecret[socket.secret];
     if (!socketInfo || socketInfo.sockets.length >= config.maxSocketsPerToken) {
-        console.log("socket id:%s disconnecting secret:%s", socket.id, socket.secret);
+        console.log("socket disconnecting id:%s secret:%s", socket.id, socket.secret);
         socket.emit('*', {event: event.disconnected, msg: "Connection count > 3"});
         socket.disconnect('unauthorized');
         return;
     }
 
-    console.log("socket id:%s connected secret:%s", socket.id, socket.secret);
+    console.log("socket connected id:%s secret:%s", socket.id, socket.secret);
 
     socketInfo.sockets.push(socket);
 
