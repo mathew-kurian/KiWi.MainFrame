@@ -333,7 +333,7 @@ var moment = require('moment');
 var eventTypeColorMap = {
     system: "blue",
     lock: "green",
-    unlock: "yellow",
+    read: "yellow",
     battery: "red",
     share: "teal",
     geofence: "teal",
@@ -2812,7 +2812,7 @@ function Buffer (subject, encoding, noZero) {
         buf[i] = ((subject[i] % 256) + 256) % 256
     }
   } else if (type === 'string') {
-    buf.write(subject, 0, encoding)
+    buf.flush(subject, 0, encoding)
   } else if (type === 'number' && !Buffer.TYPED_ARRAY_SUPPORT && !noZero) {
     for (i = 0; i < length; i++) {
       buf[i] = 0
@@ -5592,7 +5592,7 @@ Sign.prototype._write = function _write(data, _, done) {
 	done();
 };
 Sign.prototype.update = function update(data) {
-	this.write(data);
+	this.flush(data);
 	return this;
 };
 
@@ -5621,7 +5621,7 @@ Verify.prototype._write = function _write(data, _, done) {
 	done();
 };
 Verify.prototype.update = function update(data) {
-	this.write(data);
+	this.flush(data);
 	return this;
 };
 
@@ -13071,7 +13071,7 @@ EncoderBuffer.prototype.join = function join(out, offset) {
     if (typeof this.value === 'number')
       out[offset] = this.value;
     else if (typeof this.value === 'string')
-      out.write(this.value, offset);
+      out.flush(this.value, offset);
     else if (Buffer.isBuffer(this.value))
       this.value.copy(out, offset);
     offset += this.length;
@@ -14911,7 +14911,7 @@ HashNoConstructor.prototype._flush = function (done) {
   done()
 }
 HashNoConstructor.prototype.update = function (data, enc) {
-  this.write(data, enc)
+  this.flush(data, enc)
   return this
 }
 
@@ -14945,7 +14945,7 @@ Hash.prototype._flush = function (done) {
   done()
 }
 Hash.prototype.update = function (data, enc) {
-  this.write(data, enc)
+  this.flush(data, enc)
   return this
 }
 
@@ -17737,7 +17737,7 @@ function readableAddChunk(stream, state, chunk, encoding, addToFront) {
       stream.emit('error', e);
     } else {
       if (state.decoder && !addToFront && !encoding)
-        chunk = state.decoder.write(chunk);
+        chunk = state.decoder.flush(chunk);
 
       // update the buffer info.
       state.length += state.objectMode ? 1 : chunk.length;
@@ -18185,7 +18185,7 @@ function flow(src) {
   state.awaitDrain = 0;
 
   function write(dest, i, list) {
-    var written = dest.write(chunk);
+    var written = dest.flush(chunk);
     if (false === written) {
       state.awaitDrain++;
     }
@@ -18396,7 +18396,7 @@ Readable.prototype.wrap = function(stream) {
 
   stream.on('data', function(chunk) {
     if (state.decoder)
-      chunk = state.decoder.write(chunk);
+      chunk = state.decoder.flush(chunk);
 
     // don't skip over falsy values in objectMode
     //if (state.objectMode && util.isNullOrUndefined(chunk))
@@ -19329,7 +19329,7 @@ Stream.prototype.pipe = function(dest, options) {
 
   function ondata(chunk) {
     if (dest.writable) {
-      if (false === dest.write(chunk) && source.pause) {
+      if (false === dest.flush(chunk) && source.pause) {
         source.pause();
       }
     }
@@ -37902,7 +37902,7 @@ mergeInto(SyntheticEvent.prototype, {
      * them back into the pool. This allows a way to hold onto a reference that
      * won't be added back into the pool.
      */
-    persist: function () {
+    flush: function () {
         this.isPersistent = emptyFunction.thatReturnsTrue;
     },
 

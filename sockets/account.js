@@ -41,7 +41,7 @@ module.exports.close = function (token, account) {
 
 module.exports.connected = function (socket) {
     var socketInfo = socketsBySecret[socket.secret];
-    if (!socketInfo || socketInfo.sockets.length >= config.maxSocketsPerToken) {
+    if (!socketInfo || socketInfo.sockets.length >= config.max_sockets_per_token) {
         console.log("socket disconnecting id:%s secret:%s", socket.id, socket.secret);
         socket.emit('*', {event: event.disconnected, msg: "Connection count > 3"});
         socket.disconnect('unauthorized');

@@ -9,4 +9,4 @@ var TokenSchema = Schema({
 
 Mongol.statics.list(TokenSchema);
 
-module.exports = mongoose.model('Event', TokenSchema);
+module.exports = mongoose.model('Token', TokenSchema);

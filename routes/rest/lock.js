@@ -2,6 +2,7 @@ var Lock = require('./../../models/lock.model.js');
 var Key = require('./../../models/key.model.js');
 var status = require('./../../constants/status');
 var tools = require('./../../libs/tools');
+var Mongol = require('./../../libs/mongol');
 var config = require('./../../config');
 var permission = require('./../../constants/permission');
 
@@ -10,14 +11,21 @@ module.exports = {
         list: function (req, res) {
             Lock.list({}, function (err, locks) {
                 if (err)  return res.sendErr(status.db_err, err);
+                for (var i = 0; i < locks.length; i++)
+                    Mongol.Private.open(locks[i]);
                 res.sendOk({locks: locks});
             });
         }
     },
     list: function (req, res) {
-        Lock.list({criteria: {account: req.token.account}}, function (err, locks) {
+        Key.list({criteria: {account: req.token.account}}, function (err, keys) {
             if (err)  return res.sendErr(status.db_err, err);
-            res.sendOk({locks: locks});
+            var locks = [];
+            for (var i = 0; i < keys.length; i++) locks.push(keys[i].lock);
+            Lock.list({criteria: {_id: { $in: locks }}}, function(err, locks){
+                if (err)  return res.sendErr(status.db_err, err);
+                res.sendOk({locks: locks});
+            });
         });
     },
     create: function (req, res) {
@@ -39,10 +47,9 @@ module.exports = {
         if (!Array.isArray(req.query.location) || req.query.location.length !== 2)
             return res.sendErr(status.param_err, "Invalid location");
 
-        var decipher = crypto.createDecipher(config.registration_algorithm, config.registration_password);
-        var dec = decipher.update(text, 'hex', 'utf8');
+        var password = tools.crypto.symmetric.decrypt(req.query.password, config.registration_algorithm, config.registration_password);
 
-        if (config.registration_password !== (dec + decipher.final('utf8')))
+        if (config.registration_password !== password)
             return res.sendErr(status.key_err, "Encryption key invalid");
 
         // noinspection JSUnresolvedFunction, JSUnresolvedVariable
@@ -50,9 +57,11 @@ module.exports = {
             if (err) return res.sendErr(status.db_err, err);
             if (!lock) return res.sendErr(status.db_err, "Lock not found");
 
-            lock.registered = true;
-            // noinspection JSUnresolvedVariable
-            lock.location = req.query.location;
+            Mongol.Private.open(lock);
+            Mongol.Private.set("registered", true);
+            Mongol.Private.set("location", req.query.location);
+            Mongol.Private.flush(lock);
+
             lock.save(function (err) {
                 if (err) return res.sendErr(status.db_err, err);
                 res.sendOk({info: "registered"});
