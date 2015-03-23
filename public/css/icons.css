@@ -1,5 +1,5 @@
 .icon {
-  font-family: 'Fontello', sans-serif;
+  font-family: 'Fontello', sans-serif !important;
   font-weight: normal;
   display: inline-block;
   text-align: center; }

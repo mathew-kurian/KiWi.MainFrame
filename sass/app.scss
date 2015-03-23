@@ -48,7 +48,9 @@ body, html {
   }
 }
 
-.button {
+.button, button {
+  border: none;
+  outline: none;
   background: #E9545A;
   border-radius: 4px;
   margin-bottom: 10px;
@@ -488,3 +490,5 @@ section.right {
   @import 'lock-event-flow';
   @import 'lock-user-flow';
 }
+
+@import 'account';

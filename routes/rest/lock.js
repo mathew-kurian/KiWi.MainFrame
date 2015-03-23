@@ -1,5 +1,5 @@
-var Lock = require('./../../models/lock.model.js');
-var Key = require('./../../models/key.model.js');
+var Lock = require('./../../models/lock.model');
+var Key = require('./../../models/key.model');
 var status = require('./../../constants/status');
 var tools = require('./../../libs/tools');
 var Mongol = require('./../../libs/mongol');

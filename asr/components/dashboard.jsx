@@ -19,6 +19,8 @@ var Dashboard = React.createClass({
 
     getInitialState: function () {
         return {
+            client_id: "",
+            token: "",
             title: "dashboard",
             logo: "hello",
             message: "hello",

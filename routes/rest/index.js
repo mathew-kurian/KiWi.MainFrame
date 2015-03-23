@@ -6,7 +6,7 @@ var token = require('./token');
 var lock = require('./lock');
 var config = require('./../../config');
 var status = require('./../../constants/status');
-var Token = require('./../../models/token.model.js');
+var Token = require('./../../models/token.model');
 
 var router = express.Router();
 
@@ -37,6 +37,20 @@ if (config.default_client_id) {
         next();
     });
 }
+
+router.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+        res.send(200);
+    }
+    else {
+        next();
+    }
+});
 
 var isLoggedIn = function (req, res, next) {
     // noinspection JSUnresolvedFunction, JSUnresolvedVariable

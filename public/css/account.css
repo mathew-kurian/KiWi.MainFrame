@@ -1,0 +1,89 @@
+.account {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #fff; }
+  .account * {
+    font-family: "Open Sans", sans-serif; }
+  .account .scroll {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto; }
+    .account .scroll .title {
+      font-size: 30px;
+      font-family: "Open Sans", sans-serif;
+      color: #f46756;
+      font-weight: bold;
+      margin-bottom: 10px; }
+      .account .scroll .title.small {
+        font-size: 20px;
+        color: #888;
+        margin: 0 0 20px;
+        font-weight: bold; }
+    .account .scroll .description {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      color: #777; }
+      .account .scroll .description a {
+        text-decoration: none;
+        color: #f46756; }
+      .account .scroll .description.center {
+        text-align: center; }
+      .account .scroll .description.small {
+        font-size: 11px !important; }
+      .account .scroll .description.large {
+        font-size: 15px !important; }
+    .account .scroll .divider {
+      width: 100%;
+      border-bottom: 1px solid #DDD; }
+    .account .scroll .floater {
+      width: 500px;
+      margin: 20px auto 40px;
+      padding: 30px; }
+      .account .scroll .floater.header {
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0; }
+    .account .scroll input {
+      background: rgba(194, 209, 216, 0.34);
+      width: 100%;
+      color: #333;
+      font-family: "Open Sans", sans-serif;
+      outline: none;
+      -webkit-transition: all 250ms ease-in;
+      -moz-transition: all 250ms ease-in;
+      transition: all 250ms ease-in;
+      margin: 0 0 10px;
+      border: none;
+      padding: 16px;
+      font-size: 14px;
+      border-radius: 5px;
+      line-height: 1.42857; }
+      .account .scroll input:focus {
+        border-color: rgba(0, 0, 0, 0.3); }
+    .account .scroll .label {
+      width: 100%;
+      position: relative; }
+      .account .scroll .label span {
+        padding: 15px;
+        color: #8F9193;
+        position: absolute;
+        font-size: 16px; }
+      .account .scroll .label input {
+        padding-left: 45px; }
+    .account .scroll input.err {
+      border-color: red !important;
+      color: red !important;
+      background: rgba(255, 0, 0, 0.1); }
+    .account .scroll button {
+      color: #FFF;
+      background: #7fb8da;
+      width: 100%;
+      margin: 10px auto;
+      font-weight: bold;
+      border-radius: 50px; }
+      .account .scroll button .label {
+        font-size: 15px; }
