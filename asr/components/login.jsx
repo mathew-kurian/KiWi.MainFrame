@@ -6,18 +6,22 @@
 var $ = require('jquery');
 var React = require('react');
 var UIUtils = require('./../utils/ui-utils');
+var Dashboard = require('./dashboard.jsx');
 var Account = require('./../../models/account.model.raw');
 
 var Login = React.createClass({
     getInitialState: function () {
         return {
+            // FIXME make client_id a constant - not in config.js
             client_id: "dev",
             username: "",
             password: "",
             name: {first: "", last: ""},
             email: "",
             mobile: "",
-            wait: false
+            wait: false,
+            login_visible: true,
+            token: undefined
         }
     },
 
@@ -25,6 +29,8 @@ var Login = React.createClass({
         if (this.state.wait) return;
 
         var self = this;
+
+        self.setState({wait: true});
 
         $.ajax({
             url: 'http://kiwi.t.proxylocal.com/rest/account/login?' +
@@ -36,14 +42,14 @@ var Login = React.createClass({
             success: function (res) {
                 if (res.status) {
                     self.setState({wait: false});
-                    return alert(res.err);
+                    return notify(res.err);
                 }
 
-                // open dashboard
+                self.setState({token: res.data.token});
 
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error(status, err);
+                notify(status, err);
                 self.setState({wait: false});
             }.bind(this)
         });
@@ -53,6 +59,8 @@ var Login = React.createClass({
         if (this.state.wait) return;
 
         var self = this;
+
+        self.setState({wait: true});
 
         $.ajax({
             url: 'http://kiwi.t.proxylocal.com/rest/account/create?' + '' +
@@ -68,63 +76,67 @@ var Login = React.createClass({
             success: function (res) {
                 if (res.status) {
                     self.setState({wait: false});
-                    return alert(res.err);
+                    return notify(res.err);
                 }
 
-                // open dashboard
+                notify("Created account! Please proceed to login.");
 
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error(status, err);
+                notify(status, err);
                 self.setState({wait: false});
             }.bind(this)
         });
-
+    },
+    toggleLogin: function () {
+        this.setState({login_visible: !this.state.login_visible});
     },
     render: function () {
-        return (
-            <div className="account">
-                <div className="scroll">
-                    <div className="divider">
-                        <div className="floater header">
-                            <div className="title">Hi there!</div>
-                            <div className="description">Use a KiWi account to view the dashboard and control your locks from a remote location. You can also add new devices, share keys, and enable GeoFencing.</div>
-                        </div>
-                    </div>
-                    <div className="login">
-                        <div className="floater">
-                            <input onChange={UIUtils.validate(this, 'username', {validate: Account.username.validate}) } placeholder="Username" type="username" />
-                            <input onChange={UIUtils.validate(this, 'password', {validate: Account.password.validate}) } placeholder="Password" type="password" />
-                            <button onClick={ this.handleLogin }>
-                                <div className="label">Login</div>
-                            </button>
-                            <div className="description center large">Don't have an account? <a href="#">Sign up</a></div>
-                        </div>
-                    </div>
-                    <div className="create">
-                        <div className="floater">
-                            <input onChange={UIUtils.validate(this, 'name.first', {validate: Account.name.first.validate}) } placeholder="First Name" type="email" />
-                            <input onChange={UIUtils.validate(this, 'name.last', {validate: Account.name.last.validate}) } placeholder="Last Name" type="text"/>
-                            <div className="label">
-                                <span className="icon email"></span>
-                                <input onChange={UIUtils.validate(this, 'email', {validate: Account.email.validate}) } placeholder="Email" type="email" />
+        return this.state.token ? ( <Dashboard token={this.state.token} client_id={this.state.client_id} />) :
+
+            (
+                <div className="account">
+                    <div className="scroll">
+                        <div className="divider">
+                            <div className="floater header">
+                                <div className="title">Hi there!</div>
+                                <div className="description">Use a KiWi account to view the dashboard and control your locks from a remote location. You can also add new devices, share keys, and enable GeoFencing.</div>
                             </div>
-                            <div className="label">
-                                <span className="icon phone"></span>
-                                <input onChange={UIUtils.validate(this, 'mobile', {validate: Account.mobile.validate}) } placeholder="Mobile" type="phone" />
+                        </div>
+                        <div className={"login " + (this.state.login_visible || "hidden")}>
+                            <div className="floater">
+                                <input onChange={UIUtils.validate(this, 'username', {validate: Account.username.validate}) } placeholder="Username" type="username" />
+                                <input onChange={UIUtils.validate(this, 'password', {validate: Account.password.validate}) } placeholder="Password" type="password" />
+                                <button onClick={ this.handleLogin }>
+                                    <div className="label">Login</div>
+                                </button>
+                                <div className="description center large">Don't have an account&#63; <a onClick={this.toggleLogin} href="#">Sign up</a></div>
                             </div>
-                            <input onChange={UIUtils.validate(this, 'username', {validate: Account.username.validate}) } placeholder="Username" type="username" />
-                            <input onChange={UIUtils.validate(this, 'password', {validate: Account.password.validate}) } placeholder="Password" type="password" />
-                            <div className="description small">By clicking on Sign up, you agree to KiWi's <a href="#">terms &amp; conditions</a> and <a href="#">privacy policy</a></div>
-                            <button onClick={ this.handleCreate }>
-                                <div className="label">Create</div>
-                            </button>
-                            <div className="description center large">Already have an account? <a href="#">Log in</a></div>
+                        </div>
+                        <div className={"create " + (!this.state.login_visible || "hidden")}>
+                            <div className="floater">
+                                <input onChange={UIUtils.validate(this, 'name.first', {validate: Account.name.first.validate}) } placeholder="First Name" type="email" />
+                                <input onChange={UIUtils.validate(this, 'name.last', {validate: Account.name.last.validate}) } placeholder="Last Name" type="text"/>
+                                <div className="label">
+                                    <span className="icon email"></span>
+                                    <input onChange={UIUtils.validate(this, 'email', {validate: Account.email.validate}) } placeholder="Email" type="email" />
+                                </div>
+                                <div className="label">
+                                    <span className="icon phone"></span>
+                                    <input onChange={UIUtils.validate(this, 'mobile', {validate: Account.mobile.validate}) } placeholder="Mobile" type="phone" />
+                                </div>
+                                <input onChange={UIUtils.validate(this, 'username', {validate: Account.username.validate}) } placeholder="Username" type="username" />
+                                <input onChange={UIUtils.validate(this, 'password', {validate: Account.password.validate}) } placeholder="Password" type="password" />
+                                <div className="description small">By clicking on Sign up, you agree to KiWi's <a href="#">terms &amp; conditions</a> and <a href="#">privacy policy</a></div>
+                                <button onClick={ this.handleCreate }>
+                                    <div className="label">Create</div>
+                                </button>
+                                <div className="description center large">Already have an account&#63; <a onClick={this.toggleLogin} href="#">Log in</a></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        )
+            );
     }
 });
 

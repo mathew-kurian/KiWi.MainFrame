@@ -28,7 +28,6 @@
       }
     }
 
-
     .description {
       font-size: 13px;
       font-weight: 500;
@@ -56,6 +55,9 @@
       width: 500px;
       margin: 20px auto 40px;
       padding: 30px;
+      @media print, screen and (max-width: 720px) {
+        width: 100%;
+      }
       &.header {
         padding-top: 0;
         padding-bottom: 0;
@@ -101,9 +103,9 @@
       color: #FFF;
       background: rgba(127, 184, 218, 1);
       width: 100%;
-      margin: 10px auto;
       font-weight: bold;
       border-radius: 50px;
+      margin: 10px auto 20px;
       .label {
         font-size: 15px;
       }

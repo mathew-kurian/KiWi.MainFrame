@@ -162,13 +162,50 @@ body, html {
       background: #76c937;
       box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px #76c937; }
 
+@-webkit-keyframes ripple-animation {
+  from {
+    -webkit-transform: scale(1);
+    opacity: 0.4; }
+
+  to {
+    -webkit-transform: scale(100);
+    opacity: 0; } }
+
+@-moz-keyframes ripple-animation {
+  from {
+    -moz-transform: scale(1);
+    opacity: 0.4; }
+
+  to {
+    -moz-transform: scale(100);
+    opacity: 0; } }
+
+@keyframes ripple-animation {
+  from {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+    opacity: 0.4; }
+
+  to {
+    -webkit-transform: scale(100);
+    -moz-transform: scale(100);
+    -ms-transform: scale(100);
+    -o-transform: scale(100);
+    transform: scale(100);
+    opacity: 0; } }
+
 .button, button {
   border: none;
   outline: none;
   background: #E9545A;
   border-radius: 4px;
   margin-bottom: 10px;
-  padding: 14px 12px; }
+  padding: 14px 12px;
+  overflow: hidden;
+  position: Relative; }
   .button .label, button .label {
     left: 0;
     font-size: 12px;
@@ -188,6 +225,15 @@ body, html {
     .button.tiny .label, button.tiny .label {
       font-size: 9px !important;
       color: #506470 !important; }
+  .button .ripple-effect, button .ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background: white;
+    -webkit-animation: ripple-animation 2s;
+    -moz-animation: ripple-animation 2s;
+    animation: ripple-animation 2s; }
 
 .toggle {
   width: 100%;
@@ -336,6 +382,12 @@ section.left {
         background: #121A20; }
         section.left .locks .device.active .name {
           color: #FFF; }
+
+.hidden {
+  display: none; }
+
+.visible {
+  display: block; }
 
 section.right {
   position: fixed;
@@ -797,6 +849,9 @@ section.right {
       width: 500px;
       margin: 20px auto 40px;
       padding: 30px; }
+      @media print, screen and (max-width: 720px) {
+        .account .scroll .floater {
+          width: 100%; } }
       .account .scroll .floater.header {
         padding-top: 0;
         padding-bottom: 0;
@@ -836,8 +891,29 @@ section.right {
       color: #FFF;
       background: #7fb8da;
       width: 100%;
-      margin: 10px auto;
       font-weight: bold;
-      border-radius: 50px; }
+      border-radius: 50px;
+      margin: 10px auto 20px; }
       .account .scroll button .label {
         font-size: 15px; }
+
+.notification-center {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30%;
+  z-index: 9999; }
+  .notification-center * {
+    font-family: "Open Sans", sans-serif;
+    color: #777; }
+  .notification-center .event {
+    background: #FAF9DE;
+    padding: 20px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
+    .notification-center .event .status {
+      font-size: 14px;
+      font-weight: bold; }
+    .notification-center .event .msg {
+      font-size: 12px; }

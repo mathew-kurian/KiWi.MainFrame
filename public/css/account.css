@@ -43,6 +43,9 @@
       width: 500px;
       margin: 20px auto 40px;
       padding: 30px; }
+      @media print, screen and (max-width: 720px) {
+        .account .scroll .floater {
+          width: 100%; } }
       .account .scroll .floater.header {
         padding-top: 0;
         padding-bottom: 0;
@@ -82,8 +85,8 @@
       color: #FFF;
       background: #7fb8da;
       width: 100%;
-      margin: 10px auto;
       font-weight: bold;
-      border-radius: 50px; }
+      border-radius: 50px;
+      margin: 10px auto 20px; }
       .account .scroll button .label {
         font-size: 15px; }
