@@ -9,7 +9,8 @@
  */
 
 var React = require('react');
-var Dashboard = require('./components/dashboard.jsx');
+var Login = require('./components/login.jsx');
+var NotificationCenter = require('./components/notification-center.jsx');
 
 var App = React.createClass({
     render: function () {
@@ -25,7 +26,8 @@ var App = React.createClass({
                     <title>Kiwi Control - Dashboard</title>
                 </head>
                 <body>
-                    <Dashboard/>
+                    <NotificationCenter />
+                    <Login/>
                     <script type="text/javascript" src="/js/bundle.js"></script>
                 </body>
             </html>

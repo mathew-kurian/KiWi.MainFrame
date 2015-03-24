@@ -48,11 +48,26 @@ body, html {
   }
 }
 
-.button {
+@include keyframes(ripple-animation) {
+  from {
+    @include transform(scale(1));
+    opacity: 0.4;
+  }
+  to {
+    @include transform(scale(100));
+    opacity: 0;
+  }
+}
+
+.button, button {
+  border: none;
+  outline: none;
   background: #E9545A;
   border-radius: 4px;
   margin-bottom: 10px;
   padding: 14px 12px;
+  overflow: hidden;
+  position: Relative;
   .label {
     left: 0;
     font-size: 12px;
@@ -76,6 +91,14 @@ body, html {
       font-size: 9px !important;
       color: #506470 !important;
     }
+  }
+  .ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background: white;
+    @include animation(ripple-animation 2s);
   }
 }
 
@@ -254,6 +277,14 @@ section.left {
       }
     }
   }
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
 }
 
 section.right {
@@ -488,3 +519,6 @@ section.right {
   @import 'lock-event-flow';
   @import 'lock-user-flow';
 }
+
+@import 'account';
+@import 'notification-center';

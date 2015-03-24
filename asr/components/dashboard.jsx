@@ -19,6 +19,10 @@ var Dashboard = React.createClass({
 
     getInitialState: function () {
         return {
+
+            // FIXME make client_id a constant - not in config.js
+            client_id: "",
+            token: "",
             title: "dashboard",
             logo: "hello",
             message: "hello",

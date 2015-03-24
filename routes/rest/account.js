@@ -1,5 +1,5 @@
-var Account = require('./../../models/account.model.js');
-var Token = require('./../../models/token.model.js');
+var Account = require('./../../models/account.model');
+var Token = require('./../../models/token.model');
 var status = require('./../../constants/status');
 var tools = require('./../../libs/tools');
 

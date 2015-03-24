@@ -1,0 +1,114 @@
+@import 'bourbon';
+
+.account {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #fff;
+  * {
+    font-family: "Open Sans", sans-serif;
+  }
+  .scroll {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    .title {
+      font-size: 30px;
+      font-family: "Open Sans", sans-serif;
+      color: rgba(244, 103, 86, 1);
+      font-weight: bold;
+      margin-bottom: 10px;
+      &.small {
+        font-size: 20px;
+        color: #888;
+        margin: 0 0 20px;
+        font-weight: bold;
+      }
+    }
+
+    .description {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      color: #777;
+      a {
+        text-decoration: none;
+        color: rgba(244, 103, 86, 1);
+      }
+      &.center {
+        text-align: center;
+      }
+      &.small {
+        font-size: 11px !important;
+      }
+      &.large {
+        font-size: 15px !important;
+      }
+    }
+    .divider {
+      width: 100%;
+      border-bottom: 1px solid #DDD;
+    }
+    .floater {
+      width: 500px;
+      margin: 20px auto 40px;
+      padding: 30px;
+      @media print, screen and (max-width: 720px) {
+        width: 100%;
+      }
+      &.header {
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+    }
+    input {
+      background: rgba(194, 209, 216, 0.34);
+      width: 100%;
+      color: #333;
+      font-family: "Open Sans", sans-serif;
+      outline: none;
+      @include transition(all 250ms ease-in);
+      margin: 0 0 10px;
+      border: none;
+      padding: 16px;
+      font-size: 14px;
+      border-radius: 5px;
+      line-height: 1.42857;
+      &:focus {
+        border-color: rgba(0, 0, 0, 0.3);
+      }
+    }
+    .label {
+      width: 100%;
+      position: relative;
+      span {
+        padding: 15px;
+        color: #8F9193;
+        position: absolute;
+        font-size: 16px;
+      }
+      input {
+        padding-left: 45px;
+      }
+    }
+    input.err {
+      border-color: red !important;
+      color: red !important;
+      background: rgba(255, 0, 0, 0.1);
+    }
+    button {
+      color: #FFF;
+      background: rgba(127, 184, 218, 1);
+      width: 100%;
+      font-weight: bold;
+      border-radius: 50px;
+      margin: 10px auto 20px;
+      .label {
+        font-size: 15px;
+      }
+    }
+  }
+}

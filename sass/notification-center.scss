@@ -1,0 +1,27 @@
+@import 'bourbon';
+
+.notification-center {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30%;
+  z-index: 9999;
+  * {
+    font-family: "Open Sans", sans-serif;
+    color: #777;
+  }
+  .event {
+    background: #FAF9DE;
+    padding: 20px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    .status {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .msg {
+      font-size: 12px;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-var Token = require('./../../models/token.model.js');
+var Token = require('./../../models/token.model');
 var status = require('./../../constants/status');
 
 module.exports = {

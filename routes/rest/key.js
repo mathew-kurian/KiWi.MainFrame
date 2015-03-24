@@ -1,4 +1,4 @@
-var Key = require('./../../models/key.model.js');
+var Key = require('./../../models/key.model');
 var status = require('./../../constants/status');
 var permission = require('./../../constants/permission');
 

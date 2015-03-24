@@ -84,7 +84,7 @@
   font-style: normal; }
 
 .icon {
-  font-family: 'Fontello', sans-serif;
+  font-family: 'Fontello', sans-serif !important;
   font-weight: normal;
   display: inline-block;
   text-align: center; }
@@ -162,30 +162,78 @@ body, html {
       background: #76c937;
       box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px #76c937; }
 
-.button {
+@-webkit-keyframes ripple-animation {
+  from {
+    -webkit-transform: scale(1);
+    opacity: 0.4; }
+
+  to {
+    -webkit-transform: scale(100);
+    opacity: 0; } }
+
+@-moz-keyframes ripple-animation {
+  from {
+    -moz-transform: scale(1);
+    opacity: 0.4; }
+
+  to {
+    -moz-transform: scale(100);
+    opacity: 0; } }
+
+@keyframes ripple-animation {
+  from {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+    opacity: 0.4; }
+
+  to {
+    -webkit-transform: scale(100);
+    -moz-transform: scale(100);
+    -ms-transform: scale(100);
+    -o-transform: scale(100);
+    transform: scale(100);
+    opacity: 0; } }
+
+.button, button {
+  border: none;
+  outline: none;
   background: #E9545A;
   border-radius: 4px;
   margin-bottom: 10px;
-  padding: 14px 12px; }
-  .button .label {
+  padding: 14px 12px;
+  overflow: hidden;
+  position: Relative; }
+  .button .label, button .label {
     left: 0;
     font-size: 12px;
     text-transform: uppercase;
     font-weight: 600;
     text-align: center;
     color: #FFF; }
-  .button.small {
+  .button.small, button.small {
     background: #E7ECEE !important;
     padding: 7px 12px !important; }
-    .button.small .label {
+    .button.small .label, button.small .label {
       font-size: 11px !important;
       color: #506470 !important; }
-  .button.tiny {
+  .button.tiny, button.tiny {
     background: #E7ECEE !important;
     padding: 7px 12px !important; }
-    .button.tiny .label {
+    .button.tiny .label, button.tiny .label {
       font-size: 9px !important;
       color: #506470 !important; }
+  .button .ripple-effect, button .ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background: white;
+    -webkit-animation: ripple-animation 2s;
+    -moz-animation: ripple-animation 2s;
+    animation: ripple-animation 2s; }
 
 .toggle {
   width: 100%;
@@ -334,6 +382,12 @@ section.left {
         background: #121A20; }
         section.left .locks .device.active .name {
           color: #FFF; }
+
+.hidden {
+  display: none; }
+
+.visible {
+  display: block; }
 
 section.right {
   position: fixed;
@@ -749,3 +803,117 @@ section.right {
           max-width: 100px;
           min-width: 100px;
           font-size: 20px; }
+
+.account {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #fff; }
+  .account * {
+    font-family: "Open Sans", sans-serif; }
+  .account .scroll {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto; }
+    .account .scroll .title {
+      font-size: 30px;
+      font-family: "Open Sans", sans-serif;
+      color: #f46756;
+      font-weight: bold;
+      margin-bottom: 10px; }
+      .account .scroll .title.small {
+        font-size: 20px;
+        color: #888;
+        margin: 0 0 20px;
+        font-weight: bold; }
+    .account .scroll .description {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      color: #777; }
+      .account .scroll .description a {
+        text-decoration: none;
+        color: #f46756; }
+      .account .scroll .description.center {
+        text-align: center; }
+      .account .scroll .description.small {
+        font-size: 11px !important; }
+      .account .scroll .description.large {
+        font-size: 15px !important; }
+    .account .scroll .divider {
+      width: 100%;
+      border-bottom: 1px solid #DDD; }
+    .account .scroll .floater {
+      width: 500px;
+      margin: 20px auto 40px;
+      padding: 30px; }
+      @media print, screen and (max-width: 720px) {
+        .account .scroll .floater {
+          width: 100%; } }
+      .account .scroll .floater.header {
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0; }
+    .account .scroll input {
+      background: rgba(194, 209, 216, 0.34);
+      width: 100%;
+      color: #333;
+      font-family: "Open Sans", sans-serif;
+      outline: none;
+      -webkit-transition: all 250ms ease-in;
+      -moz-transition: all 250ms ease-in;
+      transition: all 250ms ease-in;
+      margin: 0 0 10px;
+      border: none;
+      padding: 16px;
+      font-size: 14px;
+      border-radius: 5px;
+      line-height: 1.42857; }
+      .account .scroll input:focus {
+        border-color: rgba(0, 0, 0, 0.3); }
+    .account .scroll .label {
+      width: 100%;
+      position: relative; }
+      .account .scroll .label span {
+        padding: 15px;
+        color: #8F9193;
+        position: absolute;
+        font-size: 16px; }
+      .account .scroll .label input {
+        padding-left: 45px; }
+    .account .scroll input.err {
+      border-color: red !important;
+      color: red !important;
+      background: rgba(255, 0, 0, 0.1); }
+    .account .scroll button {
+      color: #FFF;
+      background: #7fb8da;
+      width: 100%;
+      font-weight: bold;
+      border-radius: 50px;
+      margin: 10px auto 20px; }
+      .account .scroll button .label {
+        font-size: 15px; }
+
+.notification-center {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30%;
+  z-index: 9999; }
+  .notification-center * {
+    font-family: "Open Sans", sans-serif;
+    color: #777; }
+  .notification-center .event {
+    background: #FAF9DE;
+    padding: 20px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
+    .notification-center .event .status {
+      font-size: 14px;
+      font-weight: bold; }
+    .notification-center .event .msg {
+      font-size: 12px; }
