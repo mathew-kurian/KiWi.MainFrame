@@ -38,7 +38,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/logs', scribe.webPanel());
 app.use('/', require('./routes'));
 
-app.get('/', function (req, res) {
+app.get('/dashboard', function (req, res) {
     var markup = React.renderComponentToString(reactApp());
     res.send('<!DOCTYPE html>' + markup);
 });

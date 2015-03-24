@@ -810,7 +810,14 @@ section.right {
   right: 0;
   bottom: 0;
   left: 0;
-  background: #fff; }
+  background: #1c3445;
+  background: -moz-radial-gradient(center, ellipse cover, #1b4c6d 0%, #1c3445 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #1b4c6d), color-stop(100%, #1c3445));
+  background: -webkit-radial-gradient(center, ellipse cover, #1b4c6d 0%, #1c3445 100%);
+  background: -o-radial-gradient(center, ellipse cover, #1b4c6d 0%, #1c3445 100%);
+  background: -ms-radial-gradient(center, ellipse cover, #1b4c6d 0%, #1c3445 100%);
+  background: radial, ellipse center, #1b4c6d 0%, #1c3445 100%;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1b4c6d', endColorstr='#1c3445', GradientType=1); }
   .account * {
     font-family: "Open Sans", sans-serif; }
   .account .scroll {
@@ -820,7 +827,7 @@ section.right {
     .account .scroll .title {
       font-size: 30px;
       font-family: "Open Sans", sans-serif;
-      color: #f46756;
+      color: #A5D512;
       font-weight: bold;
       margin-bottom: 10px; }
       .account .scroll .title.small {
@@ -835,7 +842,7 @@ section.right {
       color: #777; }
       .account .scroll .description a {
         text-decoration: none;
-        color: #f46756; }
+        color: #A5D512; }
       .account .scroll .description.center {
         text-align: center; }
       .account .scroll .description.small {
@@ -848,7 +855,9 @@ section.right {
     .account .scroll .floater {
       width: 500px;
       margin: 20px auto 40px;
-      padding: 30px; }
+      padding: 30px;
+      background: #fff;
+      border-radius: 5px; }
       @media print, screen and (max-width: 720px) {
         .account .scroll .floater {
           width: 100%; } }
@@ -866,7 +875,7 @@ section.right {
       -moz-transition: all 250ms ease-in;
       transition: all 250ms ease-in;
       margin: 0 0 10px;
-      border: none;
+      border: 1px solid rgba(0, 0, 0, 0.11);
       padding: 16px;
       font-size: 14px;
       border-radius: 5px;
@@ -889,10 +898,9 @@ section.right {
       background: rgba(255, 0, 0, 0.1); }
     .account .scroll button {
       color: #FFF;
-      background: #7fb8da;
+      background: #19AAC7;
       width: 100%;
       font-weight: bold;
-      border-radius: 50px;
       margin: 10px auto 20px; }
       .account .scroll button .label {
         font-size: 15px; }

@@ -8,6 +8,7 @@ var React = require('react');
 var UIUtils = require('./../utils/ui-utils');
 var Dashboard = require('./dashboard.jsx');
 var Account = require('./../../models/account.model.raw');
+var ls = global.localStorage;
 
 var Login = React.createClass({
     getInitialState: function () {
@@ -24,7 +25,9 @@ var Login = React.createClass({
             token: undefined
         }
     },
-
+    componentDidMount: function () {
+        this.setState({token: ls ? ls.getItem('token') : undefined});
+    },
     handleLogin: function () {
         if (this.state.wait) return;
 
@@ -45,6 +48,7 @@ var Login = React.createClass({
                     return notify(res.err);
                 }
 
+                ls.setItem('token', res.data.token);
                 self.setState({token: res.data.token});
 
             }.bind(this),
@@ -97,14 +101,10 @@ var Login = React.createClass({
             (
                 <div className="account">
                     <div className="scroll">
-                        <div className="divider">
-                            <div className="floater header">
-                                <div className="title">Hi there!</div>
-                                <div className="description">Use a KiWi account to view the dashboard and control your locks from a remote location. You can also add new devices, share keys, and enable GeoFencing.</div>
-                            </div>
-                        </div>
                         <div className={"login " + (this.state.login_visible || "hidden")}>
                             <div className="floater">
+                                <div className="title">Login</div>
+                                <div className="description">Use a KiWi account to view the dashboard and control your locks from a remote location. You can also add new devices, share keys, and enable GeoFencing.</div>
                                 <input onChange={UIUtils.validate(this, 'username', {validate: Account.username.validate}) } placeholder="Username" type="username" />
                                 <input onChange={UIUtils.validate(this, 'password', {validate: Account.password.validate}) } placeholder="Password" type="password" />
                                 <button onClick={ this.handleLogin }>
@@ -115,6 +115,8 @@ var Login = React.createClass({
                         </div>
                         <div className={"create " + (!this.state.login_visible || "hidden")}>
                             <div className="floater">
+                                <div className="title">Sign Up</div>
+                                <div className="description">Use a KiWi account to view the dashboard and control your locks from a remote location. You can also add new devices, share keys, and enable GeoFencing.</div>
                                 <input onChange={UIUtils.validate(this, 'name.first', {validate: Account.name.first.validate}) } placeholder="First Name" type="email" />
                                 <input onChange={UIUtils.validate(this, 'name.last', {validate: Account.name.last.validate}) } placeholder="Last Name" type="text"/>
                                 <div className="label">

@@ -343,6 +343,7 @@ var LockItem = React.createClass({displayName: 'LockItem',
 module.exports = LockItem;
 
 },{"./../utils/ui-utils":14,"react":324}],6:[function(require,module,exports){
+(function (global){
 /**
  * @jsx React.DOM
  */
@@ -353,6 +354,7 @@ var React = require('react');
 var UIUtils = require('./../utils/ui-utils');
 var Dashboard = require('./dashboard.jsx');
 var Account = require('./../../models/account.model.raw');
+var ls = global.localStorage;
 
 var Login = React.createClass({displayName: 'Login',
     getInitialState: function () {
@@ -369,7 +371,9 @@ var Login = React.createClass({displayName: 'Login',
             token: undefined
         }
     },
-
+    componentDidMount: function () {
+        this.setState({token: ls ? ls.getItem('token') : undefined});
+    },
     handleLogin: function () {
         if (this.state.wait) return;
 
@@ -390,6 +394,7 @@ var Login = React.createClass({displayName: 'Login',
                     return notify(res.err);
                 }
 
+                ls.setItem('token', res.data.token);
                 self.setState({token: res.data.token});
 
             }.bind(this),
@@ -442,14 +447,10 @@ var Login = React.createClass({displayName: 'Login',
             (
                 React.DOM.div({className: "account"}, 
                     React.DOM.div({className: "scroll"}, 
-                        React.DOM.div({className: "divider"}, 
-                            React.DOM.div({className: "floater header"}, 
-                                React.DOM.div({className: "title"}, "Hi there!"), 
-                                React.DOM.div({className: "description"}, "Use a KiWi account to view the dashboard and control your locks from a remote location. You can also add new devices, share keys, and enable GeoFencing.")
-                            )
-                        ), 
                         React.DOM.div({className: "login " + (this.state.login_visible || "hidden")}, 
                             React.DOM.div({className: "floater"}, 
+                                React.DOM.div({className: "title"}, "Login"), 
+                                React.DOM.div({className: "description"}, "Use a KiWi account to view the dashboard and control your locks from a remote location. You can also add new devices, share keys, and enable GeoFencing."), 
                                 React.DOM.input({onChange: UIUtils.validate(this, 'username', {validate: Account.username.validate}), placeholder: "Username", type: "username"}), 
                                 React.DOM.input({onChange: UIUtils.validate(this, 'password', {validate: Account.password.validate}), placeholder: "Password", type: "password"}), 
                                 React.DOM.button({onClick:  this.handleLogin}, 
@@ -460,6 +461,8 @@ var Login = React.createClass({displayName: 'Login',
                         ), 
                         React.DOM.div({className: "create " + (!this.state.login_visible || "hidden")}, 
                             React.DOM.div({className: "floater"}, 
+                                React.DOM.div({className: "title"}, "Sign Up"), 
+                                React.DOM.div({className: "description"}, "Use a KiWi account to view the dashboard and control your locks from a remote location. You can also add new devices, share keys, and enable GeoFencing."), 
                                 React.DOM.input({onChange: UIUtils.validate(this, 'name.first', {validate: Account.name.first.validate}), placeholder: "First Name", type: "email"}), 
                                 React.DOM.input({onChange: UIUtils.validate(this, 'name.last', {validate: Account.name.last.validate}), placeholder: "Last Name", type: "text"}), 
                                 React.DOM.div({className: "label"}, 
@@ -487,6 +490,7 @@ var Login = React.createClass({displayName: 'Login',
 
 module.exports = Login;
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./../../models/account.model.raw":17,"./../utils/ui-utils":14,"./dashboard.jsx":3,"jquery":178,"react":324}],7:[function(require,module,exports){
 /**
  * @jsx React.DOM
