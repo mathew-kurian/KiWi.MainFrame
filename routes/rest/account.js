@@ -1,4 +1,6 @@
 var Account = require('./../../models/account.model');
+var sockets = require('./../../sockets');
+var event = require('./../../constants/event');
 var Token = require('./../../models/token.model');
 var status = require('./../../constants/status');
 var tools = require('./../../libs/tools');
@@ -8,6 +10,10 @@ module.exports = {
         Account.create(req.query, function (err, account) {
             if (err) return res.sendErr(status.db_err, err);
             res.sendOk({account: account});
+            Account.count({}, function (err, c) {
+                if (err) return;
+                sockets.Account.emit('*', event.account_created, {count: c});
+            });
         });
     },
     login: function (req, res) {
@@ -27,12 +33,11 @@ module.exports = {
             if (err) return res.sendErr(status.db_err, err);
             if (!account) return res.sendErr(status.db_err, "Account not found");
 
-            new Token({
-                account: account._id
-            }).save(function (err, token) {
-                    if (err) return res.sendErr(status.db_err, err);
-                    res.sendOk({token: token._id});
-                });
+            new Token({account: account._id}).save(function (err, token) {
+                if (err) return res.sendErr(status.db_err, err);
+                res.sendOk({token: token._id});
+                sockets.Account.emit(account, event.account_login, undefined, "Login detected");
+            });
         });
     },
     debug: {
@@ -63,7 +68,7 @@ module.exports = {
                 var _value = tools.get(account, field.name);
                 updated[field.name] = false;
                 // noinspection JSUnresolvedVariable
-                if (save |= updated[field.name] = (!field.testAndSet || (field.testAndSet && _value == field._value)))
+                if (save |= updated[field.name] = (_value != field.value || (field.testAndSet && _value == field._value)))
                     tools.set(account, field.name, field.value, '-f');
             });
 
@@ -72,6 +77,11 @@ module.exports = {
             account.save(function (err) {
                 if (err) return res.sendErr(status.db_err, err);
                 res.sendOk({updated: updated, _account: _account, account: account});
+                sockets.Account.emit(req.token.account, event.account_model_update, {
+                    updated: updated,
+                    _account: _account,
+                    account: account
+                });
             });
         });
     }

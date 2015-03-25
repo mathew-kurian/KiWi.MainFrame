@@ -110,7 +110,7 @@ var Login = React.createClass({
                                 <button onClick={ this.handleLogin }>
                                     <div className="label">Login</div>
                                 </button>
-                                <div className="description center large">Don't have an account&#63; <a onClick={this.toggleLogin} href="#">Sign up</a></div>
+                                <div className="description center large">Don't have an account&#63; <a onClick={this.toggleLogin} className="prevent-default" href="#">Sign up</a></div>
                             </div>
                         </div>
                         <div className={"create " + (!this.state.login_visible || "hidden")}>
@@ -129,11 +129,11 @@ var Login = React.createClass({
                                 </div>
                                 <input onChange={UIUtils.validate(this, 'username', {validate: Account.username.validate}) } placeholder="Username" type="username" />
                                 <input onChange={UIUtils.validate(this, 'password', {validate: Account.password.validate}) } placeholder="Password" type="password" />
-                                <div className="description small">By clicking on Sign up, you agree to KiWi's <a href="#">terms &amp; conditions</a> and <a href="#">privacy policy</a></div>
+                                <div className="description small">By clicking on Sign up, you agree to KiWi's <a className="prevent-default" href="#">terms &amp; conditions</a> and <a  className="prevent-default" href="#">privacy policy</a></div>
                                 <button onClick={ this.handleCreate }>
                                     <div className="label">Create</div>
                                 </button>
-                                <div className="description center large">Already have an account&#63; <a onClick={this.toggleLogin} href="#">Log in</a></div>
+                                <div className="description center large">Already have an account&#63; <a className="prevent-default" onClick={this.toggleLogin} href="#">Log in</a></div>
                             </div>
                         </div>
                     </div>

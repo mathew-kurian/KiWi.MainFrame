@@ -66,6 +66,12 @@ module.exports.disconnected = function (socket) {
 };
 
 module.exports.emit = function (account, event, data, msg) {
+    if(account === '*'){
+        for(var a in sockets)
+            module.exports.emit(a, event, data, msg);
+        return;
+    }
+
     if (!sockets[account]) return;
     for (var token in sockets[account]) {
         var socketInfo = sockets[account][token];

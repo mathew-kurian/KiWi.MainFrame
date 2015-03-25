@@ -12,13 +12,13 @@ var router = express.Router();
 
 router.use(function (req, res, next) {
 
-    res.sendJson = function (status, err, data) {
+    res.sendJson = function (status, msg, data) {
         res.header('Content-Type', 'application/json');
-        res.json({status: status, err: err, data: data});
+        res.json({status: status, msg: msg, data: data});
     };
 
-    res.sendErr = function (status, err) {
-        res.sendJson(status, err);
+    res.sendErr = function (status, msg) {
+        res.sendJson(status, msg);
     };
 
     res.sendOk = function (data) {
@@ -79,7 +79,7 @@ router.get('/account/debug/list', account.debug.list);
 
 router.get('/lock/list', isLoggedIn, lock.list);
 router.get('/lock/create', isLoggedIn, lock.create);
-router.get('/lock/register', isLoggedIn, lock.register);
+router.get('/lock/register', lock.register);
 router.get('/lock/debug/list', lock.debug.list);
 
 router.get('/keys/create', isLoggedIn, key.create);

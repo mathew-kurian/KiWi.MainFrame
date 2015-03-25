@@ -1,6 +1,7 @@
 var Lock = require('./../../models/lock.model');
 var Key = require('./../../models/key.model');
 var status = require('./../../constants/status');
+var event = require('./../../constants/event');
 var tools = require('./../../libs/tools');
 var Mongol = require('./../../libs/mongol');
 var config = require('./../../config');
@@ -22,7 +23,7 @@ module.exports = {
             if (err)  return res.sendErr(status.db_err, err);
             var locks = [];
             for (var i = 0; i < keys.length; i++) locks.push(keys[i].lock);
-            Lock.list({criteria: {_id: { $in: locks }}}, function(err, locks){
+            Lock.list({criteria: {_id: {$in: locks}}}, function (err, locks) {
                 if (err)  return res.sendErr(status.db_err, err);
                 res.sendOk({locks: locks});
             });
@@ -39,6 +40,7 @@ module.exports = {
                     });
                 }
                 res.sendOk({lock: lock});
+                sockets.Account.emit('*', event.lock_created, {lock: lock});
             });
         });
     },
@@ -58,13 +60,17 @@ module.exports = {
             if (!lock) return res.sendErr(status.db_err, "Lock not found");
 
             Mongol.Private.open(lock);
-            Mongol.Private.set("registered", true);
-            Mongol.Private.set("location", req.query.location);
+            Mongol.Private.set(lock, "registered", true);
+            Mongol.Private.set(lock, "location", req.query.location);
             Mongol.Private.flush(lock);
 
             lock.save(function (err) {
                 if (err) return res.sendErr(status.db_err, err);
-                res.sendOk({info: "registered"});
+                Key.findOne({permission: permission.owner, lock: lock._id}, function (err, key) {
+                    if (err) return res.sendErr(status.db_err, err);
+                    res.sendOk({info: "registered"});
+                    sockets.Account.emit(key.account, event.lock_registered, {lock: lock});
+                });
             });
         });
     }
