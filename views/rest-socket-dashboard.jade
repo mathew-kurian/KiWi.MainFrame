@@ -65,13 +65,10 @@ script.
     $("#open").click(function (e) {
         e.preventDefault();
         $.get("/rest/socket/open?token=#{token}&client_id=#{client_id}", function (data) {
-            var socket = _socket = io(window.location.origin, {
-                query: data.data.query + "&action=account",
-                forceNew: true
-            });
-            socket.on('*', function (msg) {
-                appendTextArea("WebSocket", msg);
-            });
+            var socket = new WebSocket('ws://' + window.location.host + '/socket?' + data.data.query + '&action=account');
+            socket.onmessage = function (msg) {
+                appendTextArea("WebSocket", JSON.parse(msg.data));
+            }
         });
     });
 

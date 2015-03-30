@@ -1,27 +1,30 @@
 var account = require('./account.js');
+var url = require('url');
 
-module.exports.install = function (io) {
-    io.use(function (socket, next) {
-        socket.secret = socket.request._query['secret'];
-        socket.action = socket.request._query['action'];
+module.exports.install = function (wss) {
+    //wss.use(function (socket, next) {
+    //    socket.secret = socket.request._query['secret'];
+    //    socket.action = socket.request._query['action'];
+    //
+    //    // FIXME stop handling request if secret OR action == null
+    //
+    //    next();
+    //});
 
-        // FIXME stop handling request if secret OR action == null
-
-        next();
-    });
-
-    io.on('connection', function (socket) {
-        // FIXME @kgowru - Add print statement here
-        switch (socket.action) {
+    wss.on('connection', function (socket) {
+        var query = url.parse(socket.upgradeReq.url, true).query;
+        socket.action = query.action;
+        socket.secret = query.secret;
+        switch (query.action) {
             case 'account':
                 account.connected(socket);
         }
     });
 
 
-    io.on('disconnect', function (socket) {
-        // FIXME @kgowru - Add print statement here
-        switch (socket.action) {
+    wss.on('disconnect', function (socket) {
+        var query = url.parse(socket.upgradeReq.url, true).query;
+        switch (query.action) {
             case 'account':
                 account.disconnected(socket);
         }

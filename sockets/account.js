@@ -28,9 +28,13 @@ module.exports.close = function (token, account) {
     var length = socketInfo.sockets.length;
     for (var i = 0; i < length; i++){
         var socket = socketInfo.sockets[i];
-        socket.emit('*', {event: event.disconnected, msg: "Disconnected upon request"});
+        try {
+            socket.send(JSON.stringify({event: event.disconnected, msg: "Disconnected upon request"}));
+        } catch(e){
+            console.error(e);
+        }
         console.log("socket disconnecting id:%s", socket.id);
-        socket.disconnect('unauthorized');
+        socket.terminate();
     }
 
     delete sockets[account][token];
@@ -43,8 +47,8 @@ module.exports.connected = function (socket) {
     var socketInfo = socketsBySecret[socket.secret];
     if (!socketInfo || socketInfo.sockets.length >= config.max_sockets_per_token) {
         console.log("socket disconnecting id:%s secret:%s", socket.id, socket.secret);
-        socket.emit('*', {event: event.disconnected, msg: "Connection count > 3"});
-        socket.disconnect('unauthorized');
+        socket.send(JSON.stringify({event: event.disconnected, msg: "Connection count > 3"}));
+        socket.terminate();
         return;
     }
 
@@ -52,7 +56,7 @@ module.exports.connected = function (socket) {
 
     socketInfo.sockets.push(socket);
 
-    socket.emit('*', {event: event.connected});
+    socket.send(JSON.stringify({event: event.connected}));
 };
 
 module.exports.disconnected = function (socket) {
@@ -76,6 +80,6 @@ module.exports.emit = function (account, event, data, msg) {
     for (var token in sockets[account]) {
         var socketInfo = sockets[account][token];
         for (var i = 0; i < socketInfo.sockets.length; i++)
-            socketInfo.sockets[i].emit('*', {event: event, msg: msg, data: data});
+            socketInfo.sockets[i].send(JSON.stringify({event: event, msg: msg, data: data}));
     }
 };

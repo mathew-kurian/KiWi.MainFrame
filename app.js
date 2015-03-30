@@ -7,8 +7,9 @@ var scribe = require('scribe-js')();
 var sockets = require('./sockets');
 var mongoose = require("mongoose");
 var http = require('http');
-var compression = require('compression')
+var compression = require('compression');
 var React = require('react');
+var WebSocketServer = require("ws").Server;
 
 // noinspection JSUnresolvedVariable
 var port = process.env.PORT || 5000;
@@ -18,9 +19,8 @@ jsx.install({extension: '.jsx'});
 
 var reactApp = require('./asr/app.jsx');
 var app = express();
-var io = require('socket.io').listen(app.listen(port));
+var server = http.createServer(app);
 
-sockets.install(io);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -53,4 +53,8 @@ app.use(function (err, req, res) {
     res.render('error', {message: err.message, status: err.status || 500, stack: err.stack});
 });
 
+server.listen(port);
 
+var wss = new WebSocketServer({server: server, path: "/socket"});
+
+sockets.install(wss);
