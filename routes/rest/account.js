@@ -49,7 +49,6 @@ module.exports = {
         }
     },
     edit: function (req, res) {
-
         // noinspection JSUnresolvedVariable
         if (!Array.isArray(req.query.fields))
             return res.sendErr(status.param_err, "Invalid field type");
@@ -59,29 +58,14 @@ module.exports = {
             if (err) return res.sendErr(status.db_err, err);
             if (!account) return res.sendErr(status.db_err, "Account not found");
 
-            var updated = {};
-            var save = false;
-            var _account = tools.object.clone(account);
+            var merge_res = tools.merge(account, req.query.fields, 'account');
 
-            // noinspection JSUnresolvedVariable
-            req.query.fields.forEach(function (field) {
-                var _value = tools.get(account, field.name);
-                updated[field.name] = false;
-                // noinspection JSUnresolvedVariable
-                if (save |= updated[field.name] = (_value != field.value || (field.testAndSet && _value == field._value)))
-                    tools.set(account, field.name, field.value, '-f');
-            });
-
-            if (!save) return res.sendOk({updated: updated, _account: _account, account: account});
+            if (!merge_res.save) return res.sendOk(merge_res);
 
             account.save(function (err) {
                 if (err) return res.sendErr(status.db_err, err);
-                res.sendOk({updated: updated, _account: _account, account: account});
-                sockets.Account.emit(req.token.account, event.account_model_update, {
-                    updated: updated,
-                    _account: _account,
-                    account: account
-                });
+                res.sendOk(merge_res);
+                sockets.Account.emit(req.token.account, event.account_model_update, merge_res);
             });
         });
     }

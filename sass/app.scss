@@ -5,7 +5,7 @@
 $divider: rgba(255, 255, 255, 0.15);
 
 body, html {
-  background: none;
+  background: #1d3444;
   margin: 0;
   padding: 0;
   border: none;
@@ -18,33 +18,19 @@ body, html {
 }
 
 .light {
-
+  opacity: 0.5;
   @include transition(all 250ms ease-in);
-
   &.red {
-    border-color: #c10000 !important;
-
-    &.on {
-      background: red;
-      box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px red;
-    }
+    background: #DA3610 !important;
   }
   &.blue {
-    border-color: rgb(110, 237, 250) !important;
-
-    &.on {
-      background: #6eedfa;
-      box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px #6eedfa;
-    }
-
+    background: #00BFDD !important;
   }
   &.green {
-    border-color: rgb(105, 180, 48) !important;
-
-    &.on {
-      background: rgb(118, 201, 55);
-      box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px rgb(118, 201, 55);
-    }
+    background: #8DCA35 !important;
+  }
+  &.on {
+    opacity: 1 !important;
   }
 }
 
@@ -171,14 +157,15 @@ body, html {
 }
 
 section.left {
-  background: #1C2B36;
+  background: #121A20;
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 130px;
+  left: 10px;
   width: 220px;
   bottom: 0;
   z-index: 2;
   box-shadow: 1px 0 0 rgba(255, 255, 255, 0.05);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
   * {
     color: rgb(151, 162, 177);
   }
@@ -188,8 +175,17 @@ section.left {
       width: 100%;
       height: 45px;
       padding-left: 20px;
+      &.rounded {
+        width: 90%;
+        margin: 0 auto;
+        border-radius: 4px;
+        overflow: hidden;
+      }
       &.green {
-        background: rgb(77, 189, 116);
+        background: rgb(164, 212, 18);
+      }
+      &.blue {
+        background: #19AAC7;
       }
       .icon {
         display: inline-block;
@@ -205,7 +201,9 @@ section.left {
         vertical-align: top;
         font-family: "Open Sans", sans-serif;
         line-height: 45px;
-        padding-left: 10px;
+        padding-left: 18px;
+        font-weight: 600;
+        text-transform: uppercase;
       }
     }
   }
@@ -233,14 +231,16 @@ section.left {
     }
   }
   .section-title {
-    padding: 20px 0;
-    margin-left: 20px;
-    font-weight: 600;
-    font-size: 12px;
+    padding: 15px 20px;
+    margin-left: 0;
+    font-weight: 700;
+    font-size: 13px;
     vertical-align: middle;
     color: #FFF;
     font-family: "Open Sans", sans-serif;
     text-transform: uppercase;
+    background: rgb(25, 170, 199);
+    margin-bottom: 15px;
   }
   .locks {
     font-weight: 500;
@@ -249,13 +249,12 @@ section.left {
       width: 100%;
       display: table;
       cursor: pointer;
-      padding: 10px 20px 10px 30px;
+      padding: 10px 20px 10px 20px;
       .light {
         display: inline-block;
         width: 12px;
         height: 12px;
-        border: 2px solid red;
-        border-radius: 100%;
+        border-radius: 2px;
         vertical-align: middle;
       }
       .name {
@@ -268,9 +267,10 @@ section.left {
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
+        font-weight: 600;
       }
       &.active {
-        background: #121A20;
+        background: #2E363C;
         .name {
           color: #FFF;
         }
@@ -289,10 +289,10 @@ section.left {
 
 section.right {
   position: fixed;
-  left: 220px;
-  top: 0;
+  left: 230px;
+  top: 75px;
   bottom: 0;
-  right: 0;
+  right: 10px;
   background: rgb(244, 245, 247);
   z-index: 3;
   @include transition(all 250ms ease-in);
@@ -378,14 +378,13 @@ section.right {
     position: absolute;
     left: 70px;
     right: 0;
-    height: 96px;
     top: 0;
     z-index: 2;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    background: #FFF;
-    padding: 19px 25px;
+    border-bottom: 1px solid #e3e3e3;
+    background: #f0f3f5;
+    padding: 20px;
     .name {
-      font-size: 24px;
+      font-size: 30px;
       font-weight: normal;
       font-family: "Open Sans", sans-serif;
       color: rgba(90, 102, 120, 0.52);
@@ -410,17 +409,18 @@ section.right {
     }
   }
   .sidebar {
-    background: #121A20;
+    background: rgba(240, 243, 245, 1);
     width: 70px;
     height: 100%;
     position: relative;
+    border-right: 1px solid #E3E3E3;
     .icon {
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(107, 116, 118, 0.33);;
       display: block;
       width: 100%;
-      height: 50px;
+      height: 60px;
       font-size: 25px;
-      line-height: 50px;
+      line-height: 60px;
       text-align: center;
       cursor: pointer;
       @include transition(all 250ms ease-in);
@@ -428,14 +428,14 @@ section.right {
         margin-top: 10px;
       }
       &:hover, &.active {
-        color: white;
+        color: #19aac7;
       }
       &.active {
         cursor: default;
       }
       &.bottom {
         position: absolute;
-        bottom: 10px;
+        bottom: 0;
       }
     }
     .monitor {

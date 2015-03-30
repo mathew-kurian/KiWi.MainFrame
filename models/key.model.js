@@ -17,6 +17,7 @@ var KeySchema = Schema({
     expiration: {type: Date, default: new Date(8640000000000000), required: true}
 });
 
+Mongol.path.final(KeySchema, ['lock', 'account']);
 Mongol.statics.list(KeySchema);
 Mongol.statics.create(KeySchema, ['permission']);
 

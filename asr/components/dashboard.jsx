@@ -125,18 +125,18 @@ var Dashboard = React.createClass({
         return (
             <div className = "main">
                 <section className="left">
-                    <div className="header">
-                        <div className="title">{ this.state.title }</div>
-                        <div className="logo"></div>
-                        <div className="message">{ this.state.message }</div>
-                    </div>
                     <div>
                         <div className="group">
-                            <div className="section-title">Active Locks</div>
+                            <div className="clicker blue">
+                                <div className="icon lock"></div>
+                                <div className="label">Active Locks</div>
+                            </div>
+                        </div>
+                        <div className="group">
                             <div className="locks">{ lockItemObjects }</div>
                         </div>
                         <div className="group">
-                            <div className="clicker green">
+                            <div className="clicker green rounded">
                                 <div className="icon plus"></div>
                                 <div className="label">Add Lock</div>
                             </div>
@@ -145,9 +145,6 @@ var Dashboard = React.createClass({
                 </section>
                 <section className={"right " + this.state.lockItemSidebar }>
                     <div className="sidebar">
-                        <div className="monitor">
-                            <div className={ UIUtils.calcLightClasses(this.state.activeLock) }></div>
-                        </div>
                         <div>
                             <div onClick={ showEventFlow } className={ UIUtils.checkJoin("icon dashboard", this.state.flowClass, "lock-event-flow", " active") }></div>
                             <div onClick={ showUserFlow } className={ UIUtils.checkJoin("icon users", this.state.flowClass, "lock-user-flow", " active") }></div>

@@ -40,7 +40,7 @@ module.exports = {
                     });
                 }
                 res.sendOk({lock: lock});
-                sockets.Account.emit('*', event.lock_created, {lock: lock});
+                sockets.Account.emit(req.token.account, event.lock_created, {lock: lock});
             });
         });
     },
@@ -69,7 +69,12 @@ module.exports = {
                 Key.findOne({permission: permission.owner, lock: lock._id}, function (err, key) {
                     if (err) return res.sendErr(status.db_err, err);
                     res.sendOk({info: "registered"});
-                    sockets.Account.emit(key.account, event.lock_registered, {lock: lock});
+                    Key.list({criteria: {lock: lock._id}}, function (err, keys) {
+                        if (err) return;
+                        (keys || []).forEach(function (key) {
+                            sockets.Account.emit(key.account, event.lock_registered, {lock: lock});
+                        });
+                    });
                 });
             });
         });

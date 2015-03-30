@@ -1,9 +1,32 @@
 var crypto = require('crypto');
+var self = module.exports;
 
 module.exports.undef = function (a) {
     return typeof a === "undefined" || a == null;
 };
 
+module.exports.merge = function (obj, fields, key) {
+    key = key || 'obj';
+
+    var updated = {};
+    var save = false;
+    var _obj = self.object.clone(obj);
+
+    // noinspection JSUnresolvedVariable
+    fields.forEach(function (field) {
+        var _value = self.get(obj, field.name);
+        updated[field.name] = false;
+        // noinspection JSUnresolvedVariable
+        if (save |= updated[field.name] = (_value != field.value || (field.testAndSet && _value == field._value)))
+            self.set(obj, field.name, field.value, '-f');
+    });
+
+    var ret_obj = {updated: updated, save: save};
+    ret_obj[key] = obj;
+    ret_obj['_' + key] = _obj;
+
+    return ret_obj;
+};
 
 module.exports.object = {
     clone: function (obj) {

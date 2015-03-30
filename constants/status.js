@@ -5,5 +5,6 @@ module.exports = {
     param_err : 4,
     client_id_err : 5,
     permission_err: 6,
+    last_owner_err: 9,
     ok : 0
 };
