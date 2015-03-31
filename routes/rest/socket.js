@@ -4,7 +4,7 @@ var event = require("./../../constants/event");
 module.exports = {
     open: function (req, res) {
         var secret = sockets.Account.open(req.token._id, req.token.account);
-        res.sendOk({query: "secret=" + secret});
+        res.sendOk({secret: secret});
     },
     close: function (req, res) {
         var count = sockets.Account.close(req.token._id, req.token.account);

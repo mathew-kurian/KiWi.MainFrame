@@ -1,4 +1,5 @@
 var account = require('./account.js');
+var event = require('./../constants/event');
 var url = require('url');
 
 module.exports.install = function (wss) {
@@ -17,7 +18,10 @@ module.exports.install = function (wss) {
         socket.secret = query.secret;
         switch (query.action) {
             case 'account':
-                account.connected(socket);
+                return account.connected(socket);
+            default:
+                socket.send(JSON.stringify({event: event.invalid_action}));
+                return socket.terminate();
         }
     });
 
@@ -26,7 +30,7 @@ module.exports.install = function (wss) {
         var query = url.parse(socket.upgradeReq.url, true).query;
         switch (query.action) {
             case 'account':
-                account.disconnected(socket);
+                return account.disconnected(socket);
         }
     });
 };
