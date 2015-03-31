@@ -4,7 +4,7 @@
 
 var React = require('react');
 
-var LockLiteControls = React.createClass({
+var Controls = React.createClass({
 
     getInitialState: function () {
         return {
@@ -16,8 +16,10 @@ var LockLiteControls = React.createClass({
 
     render: function () {
         return (
-            <div className="section box">
-                <div className="title">Manage</div>
+            <div className="section box"
+                 style={{"max-width": "300px", "border-right": "1px solid #DDD", "padding-right": "20px"}}>
+                <h2>Manage</h2>
+
                 <div className="button">
                     <div className="label">lock door</div>
                 </div>
@@ -33,4 +35,4 @@ var LockLiteControls = React.createClass({
     }
 });
 
-module.exports = LockLiteControls;
+module.exports = Controls;

@@ -13,7 +13,7 @@ body, html {
 
 * {
   box-sizing: border-box;
-  font-family: "Museo Sans", "Open Sans", sans-serif;
+  font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
@@ -110,7 +110,6 @@ body, html {
     line-height: 28px;
     font-size: 10px;
     text-align: center;
-    font-family: "Open Sans", sans-serif;
     text-transform: uppercase;
     font-weight: bold;
   }
@@ -165,7 +164,6 @@ section.left {
   bottom: 0;
   z-index: 2;
   box-shadow: 1px 0 0 rgba(255, 255, 255, 0.05);
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
   * {
     color: rgb(151, 162, 177);
   }
@@ -199,7 +197,6 @@ section.left {
         color: #FFF;
         display: inline-block;
         vertical-align: top;
-        font-family: "Open Sans", sans-serif;
         line-height: 45px;
         padding-left: 18px;
         font-weight: 600;
@@ -262,7 +259,6 @@ section.left {
         margin-left: 10px;
         font-size: 13px;
         vertical-align: middle;
-        font-family: "Open Sans", sans-serif;
         text-transform: capitalize;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -298,81 +294,6 @@ section.right {
   @include transition(all 250ms ease-in);
   &.expand {
     left: 0;
-  }
-  .section {
-    width: 100%;
-    background: #FFF;
-    border-radius: 5px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    .block {
-      display: table;
-      margin-bottom: 10px;
-      width: 100%;
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-    .title {
-      padding-bottom: 10px;
-      vertical-align: middle;
-      text-transform: uppercase;
-      opacity: 1;
-      font-family: "Open Sans", sans-serif;
-      margin-bottom: 14px;
-      border-bottom: 1px solid #DDD;
-      color: #8E8E8E;
-      font-size: 12px;
-      font-weight: bold;
-      &.inline {
-        width: auto;
-        vertical-align: middle;
-        display: table-cell;
-        padding-left: 20px;
-        opacity: 1;
-        font-weight: 600;
-        font-size: 13px;
-        border-bottom: none;
-        padding-bottom: 0;
-        color: #808080;
-        text-transform: none;
-      }
-      &.no-margin {
-        margin: 0;
-      }
-    }
-    &.blue {
-      background: #3BC0C3;
-      .title {
-        color: #FFF;
-        opacity: 0.8;
-        border-color: rgba(255, 255, 255, 0.4);
-      }
-    }
-    &.teal {
-      background: #4DBD74;
-      .title {
-        color: #FFF;
-        opacity: 0.8;
-        border-color: rgba(255, 255, 255, 0.4);
-      }
-    }
-    &.navy {
-      background: #2d333d;
-      .title {
-        color: #FFF;
-        opacity: 0.8;
-        border-color: rgba(255, 255, 255, 0.4);
-      }
-    }
-    &.green {
-      background: #4DBD74;
-      .title {
-        color: #FFF;
-        opacity: 0.8;
-        border-color: rgba(255, 255, 255, 0.4);
-      }
-    }
   }
   .banner {
     position: absolute;
@@ -458,67 +379,38 @@ section.right {
   }
   .content {
     position: absolute;
-    top: 96px;
+    top: 82px;
     left: 70px;
     bottom: 0;
     right: 0;
+    background: #FFF;
     .inset {
       overflow: auto;
       height: 100%;
       width: 100%;
-      padding: 20px;
-      .content-left {
-        margin: 0 !important;
+      padding: 40px;
+    }
+    .section {
+      margin-bottom: 40px;
+      h1, h2, h3 {
+        text-transform: uppercase;
+        font-weight: bold;
       }
-      .content-right {
-        max-width: 325px;
-        min-width: 325px;
-        @media print, screen and (max-width: 960px) {
-          display: none;
-        }
-        .section {
-          .battery {
-            padding: 0;
-            font-size: 59px;
-            text-align: center;
-            color: #FFF;
-            font-weight: 500;
-            font-family: "Open Sans", sans-serif;
-            &:after {
-              content: '%';
-              font-size: 15px;
-              position: relative;
-              top: -10px;
-              opacity: 0.5;
-              left: 5px;
-              font-family: "Proxima Nova", sans-serif;
-            }
-          }
-          .signal {
-            text-align: center;
-            color: #FFF;
-            font-size: 55px;
-            width: 100%;
-            line-height: 80px;
-          }
-          .toggle {
-            margin-bottom: 10px;
-            &.small {
-              width: 70px;
-              display: table-cell;
-              vertical-align: middle;
-            }
-          }
-        }
+      h1 {
+        font-size: 19px;
       }
-      .filler {
-        height: 20px;
+      h2 {
+        font-size: 15px;
       }
     }
+    .filler {
+      height: 20px;
+    }
   }
-  @import 'lock-event-flow';
+  @import 'list';
   @import 'lock-user-flow';
 }
 
 @import 'account';
+@import 'stats-table';
 @import 'notification-center';

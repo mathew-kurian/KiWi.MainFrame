@@ -5,11 +5,12 @@
 var React = require('react');
 var LockItem = require('./lock-item.jsx');
 var LockBanner = require('./lock-banner.jsx');
-var LockEventFlow = require('./widgets/lock-event-flow.jsx');
+var Feed = require('./widgets/feed.jsx');
 var LockUserFlow = require('./widgets/lock-user-flow.jsx');
-var LockLiteControls = require('./widgets/lock-lite-controls.jsx');
+var Controls = require('./widgets/controls.jsx');
 var LockBatteryLevel = require('./widgets/lock-battery-level.jsx');
 var LockSignalStrength = require('./widgets/lock-signal-strength.jsx');
+var Statistcs = require('./widgets/statistics.jsx');
 var UIUtils = require('./../utils/ui-utils');
 var TestDB = require('./../utils/test-utils').TestDB;
 
@@ -87,7 +88,8 @@ var Dashboard = React.createClass({
 
         var lockItemObjects = this.state.locks.map(function (lock) {
             return (
-                <LockItem key={lock._id} lock={lock} onLockFocus={self.onLockFocus} active={ self.state.activeLock && lock._id === self.state.activeLock._id }/>
+                <LockItem key={lock._id} lock={lock} onLockFocus={self.onLockFocus}
+                          active={ self.state.activeLock && lock._id === self.state.activeLock._id }/>
             );
         });
 
@@ -97,9 +99,11 @@ var Dashboard = React.createClass({
                     default:
                         return null;
                     case "lock-event-flow" :
-                        return <LockEventFlow users={ self.state.users || [] } events={ self.state.activeLock.events }/>;
+                        return <Feed users={ self.state.users || [] }
+                                              events={ self.state.activeLock.events }/>;
                     case "lock-user-flow" :
-                        return <LockUserFlow users={ self.state.users || [] } pairedUsers={ self.state.activeLock.pairedUsers } />;
+                        return <LockUserFlow users={ self.state.users || [] }
+                                             pairedUsers={ self.state.activeLock.pairedUsers }/>;
                 }
             }
             return null;
@@ -123,7 +127,7 @@ var Dashboard = React.createClass({
         };
 
         return (
-            <div className = "main">
+            <div className="main">
                 <section className="left">
                     <div>
                         <div className="group">
@@ -146,30 +150,22 @@ var Dashboard = React.createClass({
                 <section className={"right " + this.state.lockItemSidebar }>
                     <div className="sidebar">
                         <div>
-                            <div onClick={ showEventFlow } className={ UIUtils.checkJoin("icon dashboard", this.state.flowClass, "lock-event-flow", " active") }></div>
-                            <div onClick={ showUserFlow } className={ UIUtils.checkJoin("icon users", this.state.flowClass, "lock-user-flow", " active") }></div>
-                            <div onClick={ showSettingsFlow } className={ UIUtils.checkJoin("icon settings", this.state.flowClass, "lock-settings-flow", " active") }></div>
+                            <div onClick={ showEventFlow }
+                                 className={ UIUtils.checkJoin("icon dashboard", this.state.flowClass, "lock-event-flow", " active") }></div>
+                            <div onClick={ showUserFlow }
+                                 className={ UIUtils.checkJoin("icon users", this.state.flowClass, "lock-user-flow", " active") }></div>
+                            <div onClick={ showSettingsFlow }
+                                 className={ UIUtils.checkJoin("icon settings", this.state.flowClass, "lock-settings-flow", " active") }></div>
                             <div onClick={ toggleLockItemSidebar } className="icon menu bottom"></div>
                         </div>
                     </div>
                     { this.state.activeLock ? <LockBanner lock={ this.state.activeLock }/> : null }
                     <div className="content">
-                        <div className="inset flex">
-                            <div className="content-left box">
-                                <div className="flex vertical">{ renderFlow() }</div>
-                                <div className="filler"></div>
-                            </div>
-                            <div className="content-right box">
-                                <div className="flex vertical">
-                                    <div className = "flex">
-                                        <LockLiteControls />
-                                    </div>
-                                    <div className = "flex">
-                                        <LockBatteryLevel />
-                                        <LockSignalStrength />
-                                    </div>
-                                </div>
-                                <div className="filler"></div>
+                        <div className="inset">
+                            <Statistcs />
+                            <div className="flex">
+                                <Controls />
+                                { renderFlow() }
                             </div>
                         </div>
                     </div>
