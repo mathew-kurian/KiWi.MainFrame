@@ -48,19 +48,28 @@ body, html {
 .button, button {
   border: none;
   outline: none;
-  background: #E9545A;
+  background: #19AAC7;
   border-radius: 4px;
   margin-bottom: 10px;
   padding: 14px 12px;
   overflow: hidden;
   position: Relative;
+  text-align: center;
+  .icon {
+    display: inline-block;
+    color: #FFF;
+    line-height: 45px;
+    vertical-align: top;
+    font-size: 16px;
+  }
   .label {
     left: 0;
-    font-size: 12px;
+    font-size: 13px;
     text-transform: uppercase;
     font-weight: 600;
     text-align: center;
     color: #FFF;
+    display: inline-block;
   }
   &.small {
     background: #E7ECEE !important;
@@ -89,16 +98,17 @@ body, html {
 }
 
 .toggle {
-  width: 100%;
-  background: #515F76;
+  width: 80px;
+  background: #C6CBCD;
   border-radius: 30px;
   position: relative;
   .handle {
     width: 28px;
     height: 28px;
     border-radius: 100%;
-    background: #EEE;
-    border: 3px solid #515F76;
+    background: #A4D412;
+    border: 3px solid #FFFFFF;
+    box-shadow: 0 0px 2px 1px rgba(0,0,0,0.2);
   }
   .label {
     position: absolute;
@@ -112,13 +122,6 @@ body, html {
     text-align: center;
     text-transform: uppercase;
     font-weight: bold;
-  }
-  &.green {
-    background: #1DCC6C;
-    .handle {
-      background: #19AE5D;
-      border-color: #1DCC6C;
-    }
   }
 }
 
@@ -288,7 +291,7 @@ section.right {
   left: 230px;
   top: 75px;
   bottom: 0;
-  right: 10px;
+  right: 0;
   background: rgb(244, 245, 247);
   z-index: 3;
   @include transition(all 250ms ease-in);
@@ -340,13 +343,15 @@ section.right {
       display: block;
       width: 100%;
       height: 60px;
-      font-size: 25px;
+      font-size: 31px;
       line-height: 60px;
       text-align: center;
       cursor: pointer;
       @include transition(all 250ms ease-in);
       &:first-child {
-        margin-top: 10px;
+        margin-top: 0;
+        padding-top: 13px;
+        height: 85px;
       }
       &:hover, &.active {
         color: #19aac7;
@@ -388,7 +393,7 @@ section.right {
       overflow: auto;
       height: 100%;
       width: 100%;
-      padding: 40px;
+      padding: 20px 40px;
     }
     .section {
       margin-bottom: 40px;
@@ -408,7 +413,7 @@ section.right {
     }
   }
   @import 'list';
-  @import 'lock-user-flow';
+  @import 'misc';
 }
 
 @import 'account';

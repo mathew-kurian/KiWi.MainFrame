@@ -102,7 +102,7 @@ var React = require('react');
 var LockItem = require('./lock-item.jsx');
 var LockBanner = require('./lock-banner.jsx');
 var Feed = require('./widgets/feed.jsx');
-var LockUserFlow = require('./widgets/lock-user-flow.jsx');
+var Users = require('./widgets/users.jsx');
 var Controls = require('./widgets/controls.jsx');
 var LockBatteryLevel = require('./widgets/lock-battery-level.jsx');
 var LockSignalStrength = require('./widgets/lock-signal-strength.jsx');
@@ -133,16 +133,16 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
 
     onLockNotify: function () {
 
-        var self = this;
-        var activeLock = self.state.activeLock;
-        activeLock.alert = true;
-        self.setState({activeLock: activeLock});
-
-        setTimeout(function () {
-            activeLock = self.state.activeLock;
-            activeLock.alert = false;
-            self.setState({activeLock: activeLock});
-        }, 500);
+        //var self = this;
+        //var activeLock = self.state.activeLock;
+        //activeLock.alert = true;
+        //self.setState({activeLock: activeLock});
+        //
+        //setTimeout(function () {
+        //    activeLock = self.state.activeLock;
+        //    activeLock.alert = false;
+        //    self.setState({activeLock: activeLock});
+        //}, 500);
     },
 
     componentDidMount: function () {
@@ -189,17 +189,26 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
             );
         });
 
-        var renderFlow = function () {
+        var renderSection = function () {
             if (self.state.activeLock) {
                 switch (self.state.flowClass) {
                     default:
                         return null;
                     case "lock-event-flow" :
-                        return Feed({users:  self.state.users || [], 
-                                              events:  self.state.activeLock.events});
+                        return (
+                            React.DOM.div({className: "inset"}, 
+                                Statistcs(null), 
+
+                                React.DOM.div({className: "flex"}, 
+                                    Controls(null), 
+                                    Feed({users:  self.state.users || [], 
+                                          events:  self.state.activeLock.events})
+                                )
+                            )
+                        );
                     case "lock-user-flow" :
-                        return LockUserFlow({users:  self.state.users || [], 
-                                             pairedUsers:  self.state.activeLock.pairedUsers});
+                        return Users({users:  self.state.users || [], 
+                                      pairedUsers:  self.state.activeLock.pairedUsers});
                 }
             }
             return null;
@@ -257,13 +266,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
                     ), 
                      this.state.activeLock ? LockBanner({lock:  this.state.activeLock}) : null, 
                     React.DOM.div({className: "content"}, 
-                        React.DOM.div({className: "inset"}, 
-                            Statistcs(null), 
-                            React.DOM.div({className: "flex"}, 
-                                Controls(null), 
-                                 renderFlow() 
-                            )
-                        )
+                         renderSection() 
                     )
                 )
             )
@@ -273,7 +276,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
 
 module.exports = Dashboard;
 
-},{"./../utils/test-utils":14,"./../utils/ui-utils":15,"./lock-banner.jsx":4,"./lock-item.jsx":5,"./widgets/controls.jsx":8,"./widgets/feed.jsx":9,"./widgets/lock-battery-level.jsx":10,"./widgets/lock-signal-strength.jsx":11,"./widgets/lock-user-flow.jsx":12,"./widgets/statistics.jsx":13,"react":325}],4:[function(require,module,exports){
+},{"./../utils/test-utils":14,"./../utils/ui-utils":15,"./lock-banner.jsx":4,"./lock-item.jsx":5,"./widgets/controls.jsx":8,"./widgets/feed.jsx":9,"./widgets/lock-battery-level.jsx":10,"./widgets/lock-signal-strength.jsx":11,"./widgets/statistics.jsx":12,"./widgets/users.jsx":13,"react":325}],4:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -577,15 +580,18 @@ var Controls = React.createClass({displayName: 'Controls',
                  style: {"max-width": "300px", "border-right": "1px solid #DDD", "padding-right": "20px"}}, 
                 React.DOM.h2(null, "Manage"), 
 
-                React.DOM.div({className: "button"}, 
+                React.DOM.div({className: "button", style: {marginTop: "25px"}}, 
                     React.DOM.div({className: "label"}, "lock door")
                 ), 
                 React.DOM.div({className: "block"}, 
-                    React.DOM.div({className: "toggle-power toggle small inline"}, 
+                    React.DOM.div({className: "toggle-power toggle small", style: {display: "inline-block"}}, 
                         React.DOM.div({className: "label"}, "on"), 
                         React.DOM.div({className: "handle"})
                     ), 
-                    React.DOM.div({className: "title inline"}, "Power")
+                    React.DOM.div({
+                        style: {display: "inline-block", verticalAlign: "top", fontSize: "13px", margin: "4px", marginLeft: "9px", fontWeight: "600", color: "#5A6678"}}, 
+                        "Power"
+                    )
                 )
             )
         )
@@ -612,11 +618,19 @@ var FeedItem = React.createClass({displayName: 'FeedItem',
     render: function () {
 
         return (
-            React.DOM.li({className: "event"}, 
+            React.DOM.li(null, 
+                React.DOM.div({style: {display:"inline-block"}}, 
+                    React.DOM.img({src:  this.props.user ? this.props.user.photo : "", 
+                         height: "24px", width: "24px", style: {"borderRadius":"100%", marginRight:"10px"}})
+                ), 
+                React.DOM.div({style: {display:"inline-block"}}, 
                 React.DOM.span({className: "user emp", 
                       style: {'text-transform':'capitalize'}},  this.props.user ? this.props.user.name.first : "system"), " ", 
-                React.DOM.span(null,  this.props.event.text), 
-                React.DOM.div({className: "small"},  moment(this.props.event.created).fromNow() )
+                    React.DOM.span(null,  this.props.event.text), 
+
+                    React.DOM.div({className: "small"}, "Missouri City," + ' ' +
+                        "TX · ",  moment(this.props.event.created).fromNow() )
+                )
             )
         )
     }
@@ -714,97 +728,6 @@ module.exports = LockSignalStrength;
  */
 
 var React = require('react');
-var moment = require('moment');
-var UIUtils = require('./../../utils/ui-utils');
-
-// inner class
-var UserItem = React.createClass({displayName: 'UserItem',
-
-    getInitialState: function () {
-        return {}
-    },
-
-    render: function () {
-        var self = this;
-
-        var pictureStyle = {
-            'background-image': 'url(' + this.props.user.photo + ')'
-        };
-
-        return (
-            React.DOM.div({className: "section user"}, 
-                React.DOM.div({className: "inner-top"}, 
-                    React.DOM.div({className: "photo", style: pictureStyle }), 
-                    React.DOM.div({className: "details"}, 
-                        React.DOM.div({className: "location"},  this.props.user.location.state), 
-                        React.DOM.div({className: "side"}, 
-                            React.DOM.div({className: "name"},  this.props.user.name.first + " " + this.props.user.name.last), 
-                            React.DOM.div({className: "tag"}, "Owner")
-                        )
-                    ), 
-                    React.DOM.div({className: "button small"}, 
-                        React.DOM.div({className: "label"}, "DISABLE")
-                    )
-                ), 
-                React.DOM.div({className: "inner-bottom"}, 
-                    React.DOM.div({className: "detail mobile box"}, 
-                        React.DOM.span({className: "icon phone"}),  this.props.user.mobile), 
-                    React.DOM.div({className: "detail email box"}, 
-                        React.DOM.span({className: "icon email"}),  this.props.user.email), 
-                    React.DOM.div({className: "detail last-active box"}, 
-                        React.DOM.span({className: "icon clock"}),  moment(this.props.user.created).fromNow() ), 
-                    React.DOM.div({className: "icon menu-dot-horizontal more box"})
-                )
-            )
-        )
-    }
-});
-
-var LockUserFlow = React.createClass({displayName: 'LockUserFlow',
-
-    getInitialState: function () {
-        return {}
-    },
-
-    render: function () {
-        var self = this;
-
-        var userObjects = this.props.pairedUsers.map(function (uid) {
-            return (
-                UserItem({uid: uid, user:  UIUtils.findObjectById(self.props.users, uid) })
-            );
-        });
-
-        return (
-            React.DOM.div({className: "lock-user-flow flow"}, 
-                React.DOM.div({className: "lock-user-add flex"}, 
-                    React.DOM.div({className: "section box"}, 
-                        React.DOM.div({className: "title"}, "Add User"), 
-                        React.DOM.div({className: "flex"}, 
-                            React.DOM.div({className: "input-wrap box"}, 
-                                React.DOM.input({className: "input", placeholder: "@username"}), 
-                                React.DOM.div({className: "description"}, "To provide access to another user, add them to the lock.")
-                            ), 
-                            React.DOM.div({className: "box button small"}, 
-                                React.DOM.div({className: "label"}, "Add")
-                            )
-                        )
-                    )
-                ), 
-                React.DOM.div({className: "flex vertical lock-user-view"}, userObjects )
-            )
-        )
-    }
-});
-
-module.exports = LockUserFlow;
-
-},{"./../../utils/ui-utils":15,"moment":180,"react":325}],13:[function(require,module,exports){
-/**
- * @jsx React.DOM
- */
-
-var React = require('react');
 
 var Statistics = React.createClass({displayName: 'Statistics',
 
@@ -849,7 +772,88 @@ var Statistics = React.createClass({displayName: 'Statistics',
 
 module.exports = Statistics;
 
-},{"react":325}],14:[function(require,module,exports){
+},{"react":325}],13:[function(require,module,exports){
+/**
+ * @jsx React.DOM
+ */
+
+var React = require('react');
+var moment = require('moment');
+var UIUtils = require('./../../utils/ui-utils');
+
+// inner class
+var UserItem = React.createClass({displayName: 'UserItem',
+
+    getInitialState: function () {
+        return {}
+    },
+
+    render: function () {
+        return (
+            React.DOM.div({className: "account-wrapper flex"}, 
+                React.DOM.div({className: "pic", style: {'background-image': 'url(' + this.props.user.photo + ')'}}), 
+                React.DOM.div({className: "name"},  this.props.user.name.first + " " + this.props.user.name.last), 
+                React.DOM.div({className: "more box"}, "1")
+            )
+        )
+    }
+});
+
+var Users = React.createClass({displayName: 'Users',
+
+    getInitialState: function () {
+        return {}
+    },
+
+    render: function () {
+        var self = this;
+
+        var userObjects = this.props.pairedUsers.map(function (uid) {
+            return (
+                UserItem({key: uid, uid: uid, user:  UIUtils.findObjectById(self.props.users, uid) })
+            );
+        });
+
+        return (
+            React.DOM.div(null, 
+                React.DOM.div({style: {background:"#E2E6E9", padding: "20px"}}, 
+                    React.DOM.div({
+                        style: {textAlign:"center",color:"#888", fontSize: "12px",textTransform:"uppercase", "marginLeft": "-70px"}}, 
+                        "manage" + ' ' +
+                        "user settings"
+                    ), 
+                    React.DOM.div({className: "weighted-input"}, 
+                        React.DOM.input({placeholder: "enter a username"}), 
+
+                        React.DOM.div({className: "icon emergency", 
+                             style: {color:"#19AAC7",fontSize:"20px",position:"absolute",right:"17px", top:"13px"}}), 
+                        React.DOM.button({style: {right:"-55px",position:"absolute", top:"6px", padding: "10px"}}, 
+                            React.DOM.div({className: "icon add", style: {lineHeight:"20px"}})
+                        )
+                    )
+                ), 
+                React.DOM.div({style: {position: "absolute", top:"129px", left: 0, right: 0, bottom: 0}}, 
+                    React.DOM.div({className: "inset"}, 
+                        React.DOM.div({className: "flex"}, 
+                            React.DOM.div({className: "section box", 
+                                 style: {"max-width": "400px", "border-right": "1px solid #DDD", "padding-right": "20px", marginLeft: 0}}, 
+                                React.DOM.h2(null, "Accounts"), 
+                                userObjects 
+                            ), 
+                            React.DOM.div({className: "section box"}, 
+                                React.DOM.h2(null, "Details")
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    }
+});
+
+module.exports = Users;
+
+},{"./../../utils/ui-utils":15,"moment":180,"react":325}],14:[function(require,module,exports){
 var ShortId = require('shortid');
 var Chance = require('chance')();
 var randomWords = require('random-words');

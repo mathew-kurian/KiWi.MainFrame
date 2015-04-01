@@ -15,11 +15,19 @@ var FeedItem = React.createClass({
     render: function () {
 
         return (
-            <li className="event">
+            <li>
+                <div style={{display:"inline-block"}}>
+                    <img src={ this.props.user ? this.props.user.photo : "" }
+                         height="24px" width="24px" style={{"borderRadius":"100%", marginRight:"10px"}}/>
+                </div>
+                <div style={{display:"inline-block"}}>
                 <span className="user emp"
                       style={{'text-transform':'capitalize'}}>{ this.props.user ? this.props.user.name.first : "system" }</span>&nbsp;
-                <span>{ this.props.event.text }</span>
-                <div className="small">{ moment(this.props.event.created).fromNow() }</div>
+                    <span>{ this.props.event.text }</span>
+
+                    <div className="small">Missouri City,
+                        TX &middot; { moment(this.props.event.created).fromNow() }</div>
+                </div>
             </li>
         )
     }

@@ -6,7 +6,7 @@ var React = require('react');
 var LockItem = require('./lock-item.jsx');
 var LockBanner = require('./lock-banner.jsx');
 var Feed = require('./widgets/feed.jsx');
-var LockUserFlow = require('./widgets/lock-user-flow.jsx');
+var Users = require('./widgets/users.jsx');
 var Controls = require('./widgets/controls.jsx');
 var LockBatteryLevel = require('./widgets/lock-battery-level.jsx');
 var LockSignalStrength = require('./widgets/lock-signal-strength.jsx');
@@ -37,16 +37,16 @@ var Dashboard = React.createClass({
 
     onLockNotify: function () {
 
-        var self = this;
-        var activeLock = self.state.activeLock;
-        activeLock.alert = true;
-        self.setState({activeLock: activeLock});
-
-        setTimeout(function () {
-            activeLock = self.state.activeLock;
-            activeLock.alert = false;
-            self.setState({activeLock: activeLock});
-        }, 500);
+        //var self = this;
+        //var activeLock = self.state.activeLock;
+        //activeLock.alert = true;
+        //self.setState({activeLock: activeLock});
+        //
+        //setTimeout(function () {
+        //    activeLock = self.state.activeLock;
+        //    activeLock.alert = false;
+        //    self.setState({activeLock: activeLock});
+        //}, 500);
     },
 
     componentDidMount: function () {
@@ -93,17 +93,26 @@ var Dashboard = React.createClass({
             );
         });
 
-        var renderFlow = function () {
+        var renderSection = function () {
             if (self.state.activeLock) {
                 switch (self.state.flowClass) {
                     default:
                         return null;
                     case "lock-event-flow" :
-                        return <Feed users={ self.state.users || [] }
-                                              events={ self.state.activeLock.events }/>;
+                        return (
+                            <div className="inset">
+                                <Statistcs />
+
+                                <div className="flex">
+                                    <Controls />
+                                    <Feed users={ self.state.users || [] }
+                                          events={ self.state.activeLock.events }/>
+                                </div>
+                            </div>
+                        );
                     case "lock-user-flow" :
-                        return <LockUserFlow users={ self.state.users || [] }
-                                             pairedUsers={ self.state.activeLock.pairedUsers }/>;
+                        return <Users users={ self.state.users || [] }
+                                      pairedUsers={ self.state.activeLock.pairedUsers }/>;
                 }
             }
             return null;
@@ -161,13 +170,7 @@ var Dashboard = React.createClass({
                     </div>
                     { this.state.activeLock ? <LockBanner lock={ this.state.activeLock }/> : null }
                     <div className="content">
-                        <div className="inset">
-                            <Statistcs />
-                            <div className="flex">
-                                <Controls />
-                                { renderFlow() }
-                            </div>
-                        </div>
+                        { renderSection() }
                     </div>
                 </section>
             </div>
