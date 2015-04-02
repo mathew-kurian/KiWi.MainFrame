@@ -122,8 +122,8 @@ var LockBanner = React.createClass({displayName: 'LockBanner',
         return (
             React.DOM.div({className: "banner"}, 
                 React.DOM.div({className: "name"}, React.DOM.span({className: "pre"}, "Lock"), " ", React.DOM.span({
-                    className: "cen", contentEditable: "true", 
-                    onInput:  this.onLockRename},  this.props.lock.name), " ",  !this.props.lock._private.registered ?
+                    className: "cen editable", contentEditable: "true", 
+                    onInput:  this.onLockRename},  this.props.lock.name), " ",  !this.props.lock.registered ?
                     React.DOM.span({
                         style: { fontWeight: "bold",fontSize: "14px", opacity: 0.5, textTransform: "uppercase"}}, "unregistered") : null
                 )
@@ -1192,7 +1192,7 @@ module.exports.undef = function (a) {
     return typeof a === "undefined" || a == null;
 };
 
-module.exports.merge = function (obj, fields, key) {
+module.exports.merge = function (obj, fields, key, ignore) {
     key = key || 'obj';
 
     var updated = {};
@@ -1203,6 +1203,7 @@ module.exports.merge = function (obj, fields, key) {
     fields.forEach(function (field) {
         var _value = self.get(obj, field.name);
         updated[field.name] = false;
+        if(ignore.indexOf(field.name) > -1) return;
         // noinspection JSUnresolvedVariable
         if (save |= updated[field.name] = (_value != field.value || (field.testAndSet && _value == field._value)))
             self.set(obj, field.name, field.value, '-f');

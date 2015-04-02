@@ -13,8 +13,6 @@ module.exports = {
         list: function (req, res) {
             Lock.list({}, function (err, locks) {
                 if (err)  return res.sendErr(status.db_err, err);
-                for (var i = 0; i < locks.length; i++)
-                    Mongol.Private.open(locks[i]);
                 res.sendOk({locks: locks});
             });
         }
@@ -26,9 +24,7 @@ module.exports = {
             for (var i = 0; i < keys.length; i++) locks.push(keys[i].lock);
             Lock.list({criteria: {_id: {$in: locks}}}, function (err, locks) {
                 if (err)  return res.sendErr(status.db_err, err);
-                for (var i = 0; i < locks.length; i++)
-                    // FIXME open only the correct ones
-                    Mongol.Private.open(locks[i]);
+                // FIXME open only the correct ones
                 res.sendOk({locks: locks});
             });
         });
@@ -54,7 +50,24 @@ module.exports = {
         if (!Array.isArray(req.query.fields))
             return res.sendErr(status.param_err, "Invalid field type");
 
-        res.sendErr(status.param_err, "Feature under construction");
+        // noinspection JSUnresolvedFunction
+        Lock.findById(req.query.lock, function (err, lock) {
+            if (err) return res.sendErr(status.db_err, err);
+            if (!lock) return res.sendErr(status.db_err, "Account not found");
+
+            var merge_res = tools.merge(lock, req.query.fields, 'lock', ['location', 'locked', 'enabled', 'battery', 'registered', 'serial']);
+
+            if (!merge_res.save) return res.sendOk(merge_res);
+
+            lock.save(function (err) {
+                if (err) return res.sendErr(status.db_err, err);
+                res.sendOk(merge_res);
+                Key.find({lock: lock._id}).distinct("account", function (err, accounts) {
+                    for (var i = 0; i < accounts.length; i++)
+                        sockets.Account.emit(accounts[i], event.lock_model_update, merge_res);
+                });
+            });
+        });
     },
     register: function (req, res) {
         // noinspection JSUnresolvedVariable
@@ -71,10 +84,8 @@ module.exports = {
             if (err) return res.sendErr(status.db_err, err);
             if (!lock) return res.sendErr(status.db_err, "Lock not found");
 
-            Mongol.Private.open(lock);
-            Mongol.Private.set(lock, "registered", true);
-            Mongol.Private.set(lock, "location", req.query.location);
-            Mongol.Private.flush(lock);
+            lock.regisered = true;
+            lock.location = req.query.location;
 
             lock.save(function (err) {
                 if (err) return res.sendErr(status.db_err, err);

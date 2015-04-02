@@ -59,3 +59,14 @@
     margin-left: 0;
     border-radius: 100%;
     height: 30px; }
+
+.editable {
+  -webkit-transition: all 250ms ease-in;
+  -moz-transition: all 250ms ease-in;
+  transition: all 250ms ease-in; }
+  .editable[contenteditable="true"]:active, .editable[contenteditable="true"]:focus {
+    background: #FFF;
+    border: 1px solid #c6cbcd;
+    padding: 4px;
+    border-radius: 5px;
+    outline: none; }

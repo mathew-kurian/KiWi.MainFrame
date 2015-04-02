@@ -5,7 +5,7 @@ module.exports.undef = function (a) {
     return typeof a === "undefined" || a == null;
 };
 
-module.exports.merge = function (obj, fields, key) {
+module.exports.merge = function (obj, fields, key, ignore) {
     key = key || 'obj';
 
     var updated = {};
@@ -16,6 +16,7 @@ module.exports.merge = function (obj, fields, key) {
     fields.forEach(function (field) {
         var _value = self.get(obj, field.name);
         updated[field.name] = false;
+        if(ignore.indexOf(field.name) > -1) return;
         // noinspection JSUnresolvedVariable
         if (save |= updated[field.name] = (_value != field.value || (field.testAndSet && _value == field._value)))
             self.set(obj, field.name, field.value, '-f');
