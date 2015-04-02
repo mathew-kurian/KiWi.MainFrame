@@ -7,6 +7,7 @@ var $ = require('jquery');
 var React = require('react');
 var UIUtils = require('./../utils/ui-utils');
 var Dashboard = require('./dashboard.jsx');
+var AppActions = require('../actions/app-actions');
 var Account = require('./../../models/account.model.raw');
 var ls = global.localStorage;
 
@@ -24,9 +25,6 @@ var Login = React.createClass({
             login_visible: true,
             token: undefined
         }
-    },
-    componentDidMount: function () {
-        this.setState({token: ls ? ls.getItem('token') : undefined});
     },
     handleLogin: function () {
         if (this.state.wait) return;
@@ -47,6 +45,8 @@ var Login = React.createClass({
                     self.setState({wait: false});
                     return notify(res.err);
                 }
+
+                AppActions.login(res.data.token);
 
                 ls.setItem('token', res.data.token);
                 self.setState({token: res.data.token});

@@ -23,7 +23,7 @@ if (typeof window !== 'undefined') {
         event.preventDefault();
     });
 
-    $('.button, button').on('click', function (event) {
+    $('.button, button, .clicker').on('click', function (event) {
         event.preventDefault();
 
         var $div = $('<div/>'),

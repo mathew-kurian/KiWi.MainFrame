@@ -228,15 +228,16 @@ body, html {
     .button.tiny .label, button.tiny .label {
       font-size: 9px !important;
       color: #506470 !important; }
-  .button .ripple-effect, button .ripple-effect {
-    position: absolute;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    background: white;
-    -webkit-animation: ripple-animation 2s;
-    -moz-animation: ripple-animation 2s;
-    animation: ripple-animation 2s; }
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: white;
+  -webkit-animation: ripple-animation 2s;
+  -moz-animation: ripple-animation 2s;
+  animation: ripple-animation 2s; }
 
 .toggle {
   width: 80px;
@@ -306,7 +307,8 @@ section.left {
     section.left .group .clicker {
       width: 100%;
       height: 45px;
-      padding-left: 20px; }
+      padding-left: 20px;
+      cursor: pointer; }
       section.left .group .clicker.rounded {
         width: 90%;
         margin: 0 auto;

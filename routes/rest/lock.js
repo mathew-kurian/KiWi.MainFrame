@@ -6,6 +6,7 @@ var tools = require('./../../libs/tools');
 var Mongol = require('./../../libs/mongol');
 var config = require('./../../config');
 var permission = require('./../../constants/permission');
+var sockets = require('./../../sockets');
 
 module.exports = {
     debug: {
@@ -25,6 +26,9 @@ module.exports = {
             for (var i = 0; i < keys.length; i++) locks.push(keys[i].lock);
             Lock.list({criteria: {_id: {$in: locks}}}, function (err, locks) {
                 if (err)  return res.sendErr(status.db_err, err);
+                for (var i = 0; i < locks.length; i++)
+                    // FIXME open only the correct ones
+                    Mongol.Private.open(locks[i]);
                 res.sendOk({locks: locks});
             });
         });
@@ -35,14 +39,22 @@ module.exports = {
             if (err) return res.sendErr(status.db_err, err);
             Key.create({account: req.token.account, lock: lock._id, permission: permission.owner}, function (err) {
                 if (err) {
-                    return lock.remove(lock._id, function (err) {
+                    return lock.remove(function (err) {
                         if (err) return res.sendErr(status.db_err, err);
                     });
                 }
+
                 res.sendOk({lock: lock});
                 sockets.Account.emit(req.token.account, event.lock_created, {lock: lock});
             });
         });
+    },
+    edit: function (req, res) {
+        // noinspection JSUnresolvedVariable
+        if (!Array.isArray(req.query.fields))
+            return res.sendErr(status.param_err, "Invalid field type");
+
+        res.sendErr(status.param_err, "Feature under construction");
     },
     register: function (req, res) {
         // noinspection JSUnresolvedVariable

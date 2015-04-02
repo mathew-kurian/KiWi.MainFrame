@@ -2,39 +2,54 @@
  * @jsx React.DOM
  */
 
+var Reflux = require('reflux');
 var React = require('react');
-var LockItem = require('./lock-item.jsx');
-var LockBanner = require('./lock-banner.jsx');
+var Banner = require('./banner.jsx');
+var tools = require('./../../libs/tools');
 var Feed = require('./widgets/feed.jsx');
 var Users = require('./widgets/users.jsx');
+var AppActions = require('./../actions/app-actions');
+var LockStore = require('./../stores/lock-store');
 var Controls = require('./widgets/controls.jsx');
-var LockBatteryLevel = require('./widgets/lock-battery-level.jsx');
-var LockSignalStrength = require('./widgets/lock-signal-strength.jsx');
-var Statistcs = require('./widgets/statistics.jsx');
+var Statistics = require('./widgets/statistics.jsx');
 var UIUtils = require('./../utils/ui-utils');
 var TestDB = require('./../utils/test-utils').TestDB;
 
 var tid = 0;
 
-var Dashboard = React.createClass({
-
+var LockItem = React.createClass({
     getInitialState: function () {
         return {
+            active: false,
+            name: "Undefined"
+        }
+    },
+    onLockFocus: function () {
+        this.props.onLockFocus(this.props.lock._id);
+    },
+    render: function () {
+        return (
+            <div className={ "device " + (this.props.active ? "active" : "")} onClick={this.onLockFocus}>
+                <div className={ UIUtils.calcLightClasses(this.props.lock) }></div>
+                <div className="name">{ this.props.lock.name }</div>
+            </div>
+        )
+    }
+});
 
-            // FIXME make client_id a constant - not in config.js
-            client_id: "",
-            token: "",
+var Dashboard = React.createClass({
+    mixins: [Reflux.connect(LockStore, "locks")],
+    getInitialState: function () {
+        return {
             title: "dashboard",
             logo: "hello",
             message: "hello",
             flowClass: "lock-event-flow",
             users: [],
-            locks: [],
             lockItemSidebar: "",
             activeLock: undefined
         };
     },
-
     onLockNotify: function () {
 
         //var self = this;
@@ -48,15 +63,13 @@ var Dashboard = React.createClass({
         //    self.setState({activeLock: activeLock});
         //}, 500);
     },
-
     componentDidMount: function () {
         var self = this;
         var locks = TestDB.getLocks();
         var users = TestDB.getUsers();
 
-        this.setState({locks: locks});
         this.setState({users: users});
-        this.setState({activeLock: locks[parseInt(locks.length * Math.random())]});
+        // this.setState({activeLock: locks[parseInt(locks.length * Math.random())]});
 
         var generateNotifications = function () {
             self.onLockNotify();
@@ -65,33 +78,34 @@ var Dashboard = React.createClass({
 
         generateNotifications();
     },
-
     componentWillUnmount: function () {
         clearTimeout(tid);
     },
-
-    onLockFocus: function (id) {
-        for (var i = 0; i < this.state.locks.length; i++) {
-            if (this.state.locks[i]._id == id) {
-                // turn off last activeLock
-                var activeLock = this.state.activeLock;
-                activeLock.alert = false;
-                this.setState({activeLock: activeLock});
-                // turn on new activeLock
-                return this.setState({activeLock: this.state.locks[i]});
-            }
-        }
+    onLockEdit: function (opts) {
+        AppActions.renameLock(this.state.activeLock._id, opts.name);
     },
+    onLockFocus: function (id) {
+        this.setState({activeLock: this.state.locks[id]});
+    },
+    renderLocks: function () {
+        var locks = [];
 
+        for (var _id in this.state.locks) {
+            var lock = this.state.locks[_id];
+            locks.push(
+                <LockItem key={lock._id} lock={lock} onLockFocus={this.onLockFocus}
+                          active={ this.state.activeLock && lock._id === this.state.activeLock._id }/>
+            );
+        }
+
+        return locks;
+    },
+    handleAddLock: function () {
+        var serial = prompt("Please enter the serial information of your lock. The serial can found in the back of the packaging.", "");
+        if (serial) AppActions.createLock(serial);
+    },
     render: function () {
         var self = this;
-
-        var lockItemObjects = this.state.locks.map(function (lock) {
-            return (
-                <LockItem key={lock._id} lock={lock} onLockFocus={self.onLockFocus}
-                          active={ self.state.activeLock && lock._id === self.state.activeLock._id }/>
-            );
-        });
 
         var renderSection = function () {
             if (self.state.activeLock) {
@@ -101,12 +115,12 @@ var Dashboard = React.createClass({
                     case "lock-event-flow" :
                         return (
                             <div className="inset">
-                                <Statistcs />
+                                <Statistics />
 
                                 <div className="flex">
                                     <Controls />
                                     <Feed users={ self.state.users || [] }
-                                          events={ self.state.activeLock.events }/>
+                                          events={ [] }/>
                                 </div>
                             </div>
                         );
@@ -135,25 +149,51 @@ var Dashboard = React.createClass({
             self.forceUpdate();
         };
 
+        var locks = this.renderLocks();
+
         return (
             <div className="main">
                 <section className="left">
                     <div>
-                        <div className="group">
-                            <div className="clicker blue">
-                                <div className="icon lock"></div>
-                                <div className="label">Active Locks</div>
+                        { locks.length ?
+                            <div>
+                                <div className="group">
+                                    <div className="clicker blue">
+                                        <div className="icon lock"></div>
+                                        <div className="label">Active Locks</div>
+                                    </div>
+                                </div>
+                                <div className="group">
+                                    <div className="locks">{ locks }</div>
+                                </div>
+                            </div> : null
+                        }
+                        { locks.length ?
+                            <div className="group">
+                                <div className="clicker green rounded" onClick={ this.handleAddLock }>
+                                    <div className="icon plus"></div>
+                                    <div className="label">Add Lock</div>
+                                </div>
+                            </div> :
+                            <div className="group" style={{padding:"10px"}}>
+                                <div style={{borderRadius:"4px", background:"#465617",padding:"10px"}}>
+                                    <div>
+                                        <div className="icon emergency"
+                                             style={{fontSize: "20px", marginRight: "8px",color: "rgb(164, 212, 18)"}}></div>
+                                        <span style={{fontWeight: "bold", color: "rgb(164, 212, 18)"}}>Note</span>
+                                    </div>
+                                    <h3 style={{color: "#fff", fontWeight: "normal", fontSize: "11px", textAlign: "center"}}>
+                                        You have no locks at
+                                        the moment</h3>
+
+                                    <div className="clicker green rounded" onClick={ this.handleAddLock }
+                                         style={{margin:0, width: "100%"}}>
+                                        <div className="icon plus"></div>
+                                        <div className="label">Add Lock</div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div className="group">
-                            <div className="locks">{ lockItemObjects }</div>
-                        </div>
-                        <div className="group">
-                            <div className="clicker green rounded">
-                                <div className="icon plus"></div>
-                                <div className="label">Add Lock</div>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </section>
                 <section className={"right " + this.state.lockItemSidebar }>
@@ -168,7 +208,8 @@ var Dashboard = React.createClass({
                             <div onClick={ toggleLockItemSidebar } className="icon menu bottom"></div>
                         </div>
                     </div>
-                    { this.state.activeLock ? <LockBanner lock={ this.state.activeLock }/> : null }
+                    { this.state.activeLock ?
+                        <Banner lock={ this.state.activeLock } onLockEdit={this.onLockEdit}/> : null }
                     <div className="content">
                         { renderSection() }
                     </div>
