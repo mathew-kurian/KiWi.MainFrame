@@ -86,7 +86,10 @@ module.exports = {
         });
     },
     events: function (req, res) {
-
+        Event.list({lock: req.query.lock}, function (err, events) {
+            if (err) return res.sendErr(status.db_err, err);
+            res.sendOk({events: events});
+        });
     },
     register: function (req, res) {
         // noinspection JSUnresolvedVariable

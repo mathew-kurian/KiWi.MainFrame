@@ -117,7 +117,7 @@ module.exports = {
 
                     Event.create({
                         lock: key.lock,
-                        event: event.key_permission_update,
+                        event: event.key_edit,
                         accountSrc: req.token.account,
                         accountDest: edit_key.account
                     }, function (err, event) {
@@ -134,7 +134,7 @@ module.exports = {
                                 (keys || []).forEach(function (paired_key) {
                                     if (paired_key._id == req.query.key) return;
                                     if (!permission.hasAllPairedKeyAccess(paired_key.permission)) return;
-                                    sockets.Account.emit(paired_key.account, event.key_created, {key: key, lock: lock});
+                                    sockets.Account.emit(paired_key.account, event.key_edit, {key: key, lock: lock});
                                     sockets.Account.emit(paired_key.account, event.new_event, event);
                                 });
                             });
