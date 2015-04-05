@@ -118,7 +118,7 @@ module.exports = {
                     Event.create({
                         lock: key.lock,
                         event: event.lock_registered,
-                        accountSrc: req.token.account
+                        accountSrc: 1
                     }, function (err, event) {
                         Key.list({criteria: {lock: lock._id}}, function (err, keys) {
                             if (err) return;

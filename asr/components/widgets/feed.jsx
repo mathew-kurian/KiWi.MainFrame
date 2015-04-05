@@ -38,22 +38,22 @@ var FeedItem = React.createClass({
 
         switch (this.props.event.event) {
             case event.key_remove:
-                if (accountSrcReady) text = "Key access has been revoked";
+                if (accountSrcReady) text = "Key access has been revoked from";
                 break;
             case event.key_created:
-                if (accountSrcReady) text = "Key access has been revoked";
+                if (accountSrcReady) text = "Key access has been granted to";
                 break;
             case event.key_edit:
-                if (accountSrcReady) text = "Key access has been revoked";
+                if (accountSrcReady) text = "Key access has been edited by for";
                 break;
             case event.lock_created:
                 if (accountSrcReady) text = "Lock has been created";
                 break;
             case event.lock_edit:
-                if (accountSrcReady) text = "Key access has been revoked";
+                if (accountSrcReady) text = "Lock has been modified";
                 break;
             case event.lock_registered:
-                if (accountSrcReady) text = "Key access has been revoked";
+                if (accountSrcReady) text = "Lock has been registered";
                 break;
         }
 

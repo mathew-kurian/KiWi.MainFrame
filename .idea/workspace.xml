@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b2bfd14-5911-48ac-b41c-5fd8f8037d7a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asr/stores/account-store.js" afterPath="$PROJECT_DIR$/asr/stores/account-store.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/constants/event.js" afterPath="$PROJECT_DIR$/constants/event.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/event.model.js" afterPath="$PROJECT_DIR$/models/event.model.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asr/components/widgets/feed.jsx" afterPath="$PROJECT_DIR$/asr/components/widgets/feed.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/rest/key.js" afterPath="$PROJECT_DIR$/routes/rest/key.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/rest/lock.js" afterPath="$PROJECT_DIR$/routes/rest/lock.js" />
     </list>
     <ignored path="KiWi.MainFrame.iws" />
@@ -26,7 +24,7 @@
     <favorites_list name="KiWi.MainFrame" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6134398">
+    <splitter split-orientation="horizontal" split-proportion="0.58882236">
       <split-first>
         <leaf>
           <file leaf-file-name="app.scss" pinned="false" current-in-tab="false">
@@ -168,8 +166,8 @@
           <file leaf-file-name="feed.jsx" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/asr/components/widgets/feed.jsx">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.11861744">
-                  <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.4941084">
+                  <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -183,16 +181,26 @@
             <entry file="file://$PROJECT_DIR$/routes/rest/lock.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="125" column="39" selection-start-line="125" selection-start-column="39" selection-end-line="125" selection-end-column="39" />
+                  <caret line="120" column="37" selection-start-line="120" selection-start-column="37" selection-end-line="120" selection-end-column="37" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="key.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="event.model.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/models/event.model.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.08012569">
+                  <caret line="6" column="14" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="14" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="key.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/routes/rest/key.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.81461114">
+                <state vertical-scroll-proportion="0.0">
                   <caret line="136" column="87" selection-start-line="136" selection-start-column="87" selection-end-line="136" selection-end-column="87" />
                   <folding />
                 </state>
@@ -229,16 +237,6 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="account.scss" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/sass/account.scss">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-7.769231">
-                  <caret line="64" column="22" selection-start-line="64" selection-start-column="22" selection-end-line="64" selection-end-column="22" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="event.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/constants/event.js">
               <provider selected="true" editor-type-id="text-editor">
@@ -249,11 +247,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="event.model.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/models/event.model.js">
+          <file leaf-file-name="account.scss" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/sass/account.scss">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="6" column="14" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="14" />
+                <state vertical-scroll-proportion="-7.769231">
+                  <caret line="64" column="22" selection-start-line="64" selection-start-column="22" selection-end-line="64" selection-end-column="22" />
                   <folding />
                 </state>
               </provider>
@@ -334,12 +332,12 @@
         <option value="$PROJECT_DIR$/asr/components/banner.jsx" />
         <option value="$PROJECT_DIR$/sass/misc.scss" />
         <option value="$PROJECT_DIR$/routes/rest/account.js" />
-        <option value="$PROJECT_DIR$/models/event.model.js" />
         <option value="$PROJECT_DIR$/constants/event.js" />
-        <option value="$PROJECT_DIR$/routes/rest/lock.js" />
         <option value="$PROJECT_DIR$/asr/stores/account-store.js" />
         <option value="$PROJECT_DIR$/routes/rest/key.js" />
         <option value="$PROJECT_DIR$/asr/components/widgets/feed.jsx" />
+        <option value="$PROJECT_DIR$/routes/rest/lock.js" />
+        <option value="$PROJECT_DIR$/models/event.model.js" />
       </list>
     </option>
   </component>
@@ -1173,14 +1171,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/event.model.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="14" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/key.model.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1205,22 +1195,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/constants/event.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/rest/lock.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="125" column="39" selection-start-line="125" selection-start-column="39" selection-end-line="125" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/rest/account.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1237,18 +1211,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/constants/event.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routes/rest/key.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.81461114">
+        <state vertical-scroll-proportion="0.0">
           <caret line="136" column="87" selection-start-line="136" selection-start-column="87" selection-end-line="136" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/rest/lock.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="120" column="37" selection-start-line="120" selection-start-column="37" selection-end-line="120" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/event.model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08012569">
+          <caret line="6" column="14" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/asr/components/widgets/feed.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11861744">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.4941084">
+          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
           <folding />
         </state>
       </provider>
