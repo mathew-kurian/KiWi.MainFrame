@@ -34,7 +34,7 @@ var Login = React.createClass({
         self.setState({wait: true});
 
         $.ajax({
-            url: 'http://kiwi.t.proxylocal.com/rest/account/login?' +
+            url: '/rest/account/login?' +
             'client_id=' + this.state.client_id +
             '&username=' + this.state.username +
             '&password=' + this.state.password,
@@ -67,7 +67,7 @@ var Login = React.createClass({
         self.setState({wait: true});
 
         $.ajax({
-            url: 'http://kiwi.t.proxylocal.com/rest/account/create?' + '' +
+            url: '/rest/account/create?' + '' +
             'client_id=' + this.state.client_id +
             '&name[first]=' + this.state.name.first +
             '&name[last]=' + this.state.name.last +
