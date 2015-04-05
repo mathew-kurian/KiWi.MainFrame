@@ -6,6 +6,14 @@ var status = require('./../../constants/status');
 var tools = require('./../../libs/tools');
 
 module.exports = {
+    debug: {
+        list: function (req, res) {
+            Account.list({}, function (err, accounts) {
+                if (err)  return res.sendErr(status.db_err, err);
+                res.sendOk({accounts: accounts});
+            });
+        }
+    },
     create: function (req, res) {
         Account.create(req.query, function (err, account) {
             if (err) return res.sendErr(status.db_err, err);
@@ -39,14 +47,6 @@ module.exports = {
                 sockets.Account.emit(account, event.account_login, undefined, "Login detected");
             });
         });
-    },
-    debug: {
-        list: function (req, res) {
-            Account.list({}, function (err, accounts) {
-                if (err)  return res.sendErr(status.db_err, err);
-                res.sendOk({accounts: accounts});
-            });
-        }
     },
     edit: function (req, res) {
         // noinspection JSUnresolvedVariable

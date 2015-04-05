@@ -1,5 +1,6 @@
 var Key = require('./../../models/key.model');
 var Lock = require('./../../models/lock.model');
+var Event = require('./../../models/event.model');
 var status = require('./../../constants/status');
 var sockets = require('./../../sockets');
 var event = require('./../../constants/event');
@@ -40,13 +41,26 @@ module.exports = {
 
                     Key.create({account: account._id, expires: expires, lock: key.lock}, function (err, key) {
                         if (err) return res.sendErr(status.db_err, err);
-                        Key.list({criteria: key.lock}, function (err, keys) {
-                            if (err) return res.sendErr(status.db_err, err);
-                            res.sendOk({key: key});
-                            (keys || []).forEach(function (paired_key) {
-                                if (paired_key._id == req.query.key) return;
-                                if (!permission.hasAllPairedKeyAccess(paired_key.permission)) return;
-                                sockets.Account.emit(account._id, event.key_add, {key: key, lock: lock});
+
+                        Event.create({
+                            lock: key.lock,
+                            event: event.key_add,
+                            accountSrc: req.token.account,
+                            accountDest: account._id
+                        }, function (err, event) {
+                            if (err) return;
+
+                            Key.list({criteria: key.lock}, function (err, keys) {
+                                if (err) return res.sendErr(status.db_err, err);
+
+                                res.sendOk({key: key});
+
+                                (keys || []).forEach(function (paired_key) {
+                                    if (paired_key._id == req.query.key) return;
+                                    if (!permission.hasAllPairedKeyAccess(paired_key.permission)) return;
+                                    sockets.Account.emit(paired_key.account, event.key_add, {key: key, lock: lock});
+                                    sockets.Account.emit(paired_key.account, event.new_event, event);
+                                });
                             });
                         });
                     });
@@ -100,10 +114,31 @@ module.exports = {
                     var merge_res = tools.merge(edit_key, req.query.fields, 'key');
 
                     if (!merge_res.save) return res.sendOk(merge_res);
+                    
+                    Event.create({
+                        lock: key.lock,
+                        event: event.key_permission_update,
+                        accountSrc: req.token.account,
+                        accountDest: edit_key.account
+                    }, function (err, event) {
+                        if (err) return;
 
-                    edit_key.save(function (err, key) {
-                        if (err) return res.sendErr(status.db_err, err);
-                        return res.sendOk(merge_res);
+                        edit_key.save(function (err, key) {
+                            if (err) return res.sendErr(status.db_err, err);
+
+                            Key.list({criteria: key.lock}, function (err, keys) {
+                                if (err) return res.sendErr(status.db_err, err);
+
+                                res.sendOk(merge_res);
+
+                                (keys || []).forEach(function (paired_key) {
+                                    if (paired_key._id == req.query.key) return;
+                                    if (!permission.hasAllPairedKeyAccess(paired_key.permission)) return;
+                                    sockets.Account.emit(paired_key.account, event.key_add, {key: key, lock: lock});
+                                    sockets.Account.emit(paired_key.account, event.new_event, event);
+                                });
+                            });
+                        });
                     });
                 });
             });
@@ -148,6 +183,35 @@ module.exports = {
                 Key.remove(req.query.remove_key, function (err, key) {
                     if (err) return res.sendErr(status.db_err, err);
                     res.sendOk({key: key});
+
+                    Lock.findById(key.lock, function (err, lock) {
+                        if (err) return res.sendErr(status.db_err, err);
+                        if (!lock) return res.sendErr(status.db_err, "Lock not found");
+
+                        Event.create({
+                            lock: key.lock,
+                            event: event.key_remove,
+                            accountSrc: req.token.account,
+                            accountDest: key.account
+                        }, function (err, event) {
+                            if (err) return;
+
+                            Key.list({criteria: key.lock}, function (err, keys) {
+                                if (err) return res.sendErr(status.db_err, err);
+
+                                res.sendOk({key: key});
+
+                                var dest = keys || [];
+                                dest.push(key.account);
+                                dest.forEach(function (paired_key) {
+                                    if (paired_key._id == req.query.key) return;
+                                    if (!permission.hasAllPairedKeyAccess(paired_key.permission)) return;
+                                    sockets.Account.emit(paired_key.account, event.key_remove, {key: key, lock: lock});
+                                    sockets.Account.emit(paired_key.account, event.new_event, event);
+                                });
+                            });
+                        });
+                    });
                 });
             });
         });

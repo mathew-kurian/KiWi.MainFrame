@@ -11,5 +11,6 @@ module.exports = {
     account_login: 10,
     lock_created: 11,
     lock_registered: 12,
-    invalid_action: 13
+    invalid_action: 13,
+    new_event: 14
 };

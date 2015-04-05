@@ -4,7 +4,8 @@ var Schema = Mongol.Extend.Timestamp(mongoose.Schema);
 
 var EventSchema = Schema({
     lock: Schema.Types.ObjectId,
-    user: Schema.Types.ObjectId,
+    accountSrc: Schema.Types.ObjectId,
+    accountDest: Schema.Types.ObjectId,
     text: {type: String, trim: true}
 });
 

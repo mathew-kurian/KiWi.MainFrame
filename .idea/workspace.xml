@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b2bfd14-5911-48ac-b41c-5fd8f8037d7a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/app.css" afterPath="$PROJECT_DIR$/public/css/app.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asr/components/banner.jsx" afterPath="$PROJECT_DIR$/asr/components/banner.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/bundle.js" afterPath="$PROJECT_DIR$/public/js/bundle.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/rest/lock.js" afterPath="$PROJECT_DIR$/routes/rest/lock.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/lock.model.js" afterPath="$PROJECT_DIR$/models/lock.model.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/misc.css" afterPath="$PROJECT_DIR$/public/css/misc.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sass/misc.scss" afterPath="$PROJECT_DIR$/sass/misc.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/tools.js" afterPath="$PROJECT_DIR$/libs/tools.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/rest/account.js" afterPath="$PROJECT_DIR$/routes/rest/account.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/constants/event.js" afterPath="$PROJECT_DIR$/constants/event.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/event.model.js" afterPath="$PROJECT_DIR$/models/event.model.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/rest/key.js" afterPath="$PROJECT_DIR$/routes/rest/key.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="KiWi.MainFrame.iws" />
@@ -30,23 +26,23 @@
     <favorites_list name="KiWi.MainFrame" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5362546">
+    <splitter split-orientation="horizontal" split-proportion="0.2937063">
       <split-first>
         <leaf>
           <file leaf-file-name="app.scss" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/sass/app.scss">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-27.615385">
+                <state vertical-scroll-proportion="0.0">
                   <caret line="89" column="1" selection-start-line="89" selection-start-column="1" selection-end-line="89" selection-end-column="1" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="misc.scss" pinned="false" current-in-tab="true">
+          <file leaf-file-name="misc.scss" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/sass/misc.scss">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.13645418">
+                <state vertical-scroll-proportion="-14.615385">
                   <caret line="35" column="24" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
                   <folding />
                 </state>
@@ -58,7 +54,36 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
                   <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
-                  <folding />
+                  <folding>
+                    <marker date="1427960667417" expanded="true" signature="887:1152" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="2911:3081" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="3720:4102" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="3824:4067" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="3932:4028" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="4205:4334" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="5075:8838" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="5114:7610" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="5161:7583" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="5236:5807" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="5274:5602" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="5334:5563" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="5635:5772" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="5910:6254" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="5966:6219" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="6285:7530" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="6366:7495" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="6474:6835" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="6520:6677" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="6872:7078" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="7116:7456" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="7627:8819" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="7708:8526" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="7758:8499" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="7792:7964" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="7993:8159" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="8188:8365" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427960667417" expanded="true" signature="8696:8792" placeholder="&lt;xml/&gt;" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -110,16 +135,21 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
                   <caret line="20" column="43" selection-start-line="20" selection-start-column="43" selection-end-line="20" selection-end-column="43" />
-                  <folding />
+                  <folding>
+                    <marker date="1427963104876" expanded="true" signature="385:879" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427963104876" expanded="true" signature="426:860" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427963104876" expanded="true" signature="482:637" placeholder="&lt;xml/&gt;" />
+                    <marker date="1427963104876" expanded="true" signature="690:828" placeholder="&lt;xml/&gt;" />
+                  </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="account.js" pinned="false" current-in-tab="false">
+          <file leaf-file-name="account.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/routes/rest/account.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="69" column="11" selection-start-line="55" selection-start-column="8" selection-end-line="69" selection-end-column="11" />
+                <state vertical-scroll-proportion="0.17203456">
+                  <caret line="15" column="6" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
                   <folding />
                 </state>
               </provider>
@@ -167,6 +197,26 @@
               </provider>
             </entry>
           </file>
+          <file leaf-file-name="socket.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/routes/rest/socket.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="token.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/routes/rest/token.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="0" column="47" selection-start-line="0" selection-start-column="47" selection-end-line="0" selection-end-column="47" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="response.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/node_modules/express/lib/response.js">
               <provider selected="true" editor-type-id="text-editor">
@@ -187,16 +237,6 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="account-store.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/asr/stores/account-store.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="lock.model.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/models/lock.model.js">
               <provider selected="true" editor-type-id="text-editor">
@@ -207,43 +247,41 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="key.js" pinned="false" current-in-tab="false">
+          <file leaf-file-name="key.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/routes/rest/key.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="65" column="38" selection-start-line="65" selection-start-column="38" selection-end-line="65" selection-end-column="38" />
+                <state vertical-scroll-proportion="0.66771406">
+                  <caret line="116" column="20" selection-start-line="116" selection-start-column="20" selection-end-line="116" selection-end-column="20" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="bootstrap.jsx" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/asr/bootstrap.jsx">
+          <file leaf-file-name="event.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/constants/event.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="34" column="39" selection-start-line="34" selection-start-column="39" selection-end-line="34" selection-end-column="39" />
-                  <folding>
-                    <marker date="1427960667157" expanded="true" signature="202:1285" placeholder="{...}" />
-                  </folding>
+                  <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+                  <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="event.model.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/models/event.model.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="6" column="14" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="14" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/routes/rest/index.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.34660193">
-                  <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="mongol.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/libs/mongol.js">
-              <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="127" column="4" selection-start-line="127" selection-start-column="4" selection-end-line="127" selection-end-column="4" />
+                  <caret line="68" column="14" selection-start-line="68" selection-start-column="14" selection-end-line="68" selection-end-column="14" />
                   <folding />
                 </state>
               </provider>
@@ -259,7 +297,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/sass/login.scss" />
         <option value="$PROJECT_DIR$/models/account.model.raw.js" />
         <option value="$PROJECT_DIR$/models/account.model..js" />
         <option value="$PROJECT_DIR$/models/account.model.js" />
@@ -270,15 +307,12 @@
         <option value="$PROJECT_DIR$/asr/app.jsx" />
         <option value="$PROJECT_DIR$/sass/notification-center.scss" />
         <option value="$PROJECT_DIR$/sass/account.scss" />
-        <option value="$PROJECT_DIR$/routes/rest/account.js" />
         <option value="$PROJECT_DIR$/constants/status.js" />
-        <option value="$PROJECT_DIR$/routes/rest/key.js" />
         <option value="$PROJECT_DIR$/asr/components/lock-banner.jsx" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/routes/rest/socket.js" />
         <option value="$PROJECT_DIR$/views/rest-socket-dashboard.jade" />
         <option value="$PROJECT_DIR$/sockets/index.js" />
-        <option value="$PROJECT_DIR$/constants/event.js" />
         <option value="$PROJECT_DIR$/sockets/account.js" />
         <option value="$PROJECT_DIR$/sass/statistics.scss" />
         <option value="$PROJECT_DIR$/asr/components/widgets/statistics.jsx" />
@@ -310,6 +344,10 @@
         <option value="$PROJECT_DIR$/sass/app.scss" />
         <option value="$PROJECT_DIR$/asr/components/banner.jsx" />
         <option value="$PROJECT_DIR$/sass/misc.scss" />
+        <option value="$PROJECT_DIR$/routes/rest/account.js" />
+        <option value="$PROJECT_DIR$/models/event.model.js" />
+        <option value="$PROJECT_DIR$/constants/event.js" />
+        <option value="$PROJECT_DIR$/routes/rest/key.js" />
       </list>
     </option>
   </component>
@@ -361,8 +399,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="363" />
-    <option name="width" value="2196" />
+    <option name="x" value="279" />
+    <option name="width" value="2281" />
     <option name="height" value="1410" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -388,8 +426,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -620,6 +656,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -724,16 +762,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="363" y="0" width="2196" height="1410" extended-state="0" />
+    <frame x="279" y="0" width="2281" height="1410" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1206422" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.11611479" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Grunt " active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1867794" sideWeight="0.47928995" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1867794" sideWeight="0.47928995" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -837,13 +875,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/rest/token.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="47" selection-start-line="0" selection-start-column="47" selection-end-line="0" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -935,7 +966,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.15239044">
           <caret line="9" column="18" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -943,7 +973,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -959,15 +988,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="26" column="16" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/event.model.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -975,7 +995,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -983,14 +1002,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/rest/socket.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
           <folding />
         </state>
       </provider>
@@ -1007,16 +1018,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="34" column="39" selection-start-line="34" selection-start-column="39" selection-end-line="34" selection-end-column="39" />
-          <folding>
-            <marker date="1427960667157" expanded="true" signature="202:1285" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/rest/key.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="65" column="38" selection-start-line="65" selection-start-column="38" selection-end-line="65" selection-end-column="38" />
           <folding />
         </state>
       </provider>
@@ -1113,22 +1114,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/constants/event.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.013354281">
-          <caret line="1" column="4" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/rest/account.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="69" column="11" selection-start-line="55" selection-start-column="8" selection-end-line="69" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/libs/tools.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1149,6 +1134,71 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33300972">
           <caret line="412" column="0" selection-start-line="412" selection-start-column="0" selection-end-line="412" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sass/app.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="89" column="1" selection-start-line="89" selection-start-column="1" selection-end-line="89" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asr/components/dashboard.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+          <folding>
+            <marker date="1427960667417" expanded="true" signature="887:1152" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="2911:3081" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="3720:4102" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="3824:4067" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="3932:4028" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="4205:4334" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="5075:8838" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="5114:7610" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="5161:7583" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="5236:5807" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="5274:5602" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="5334:5563" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="5635:5772" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="5910:6254" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="5966:6219" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="6285:7530" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="6366:7495" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="6474:6835" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="6520:6677" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="6872:7078" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="7116:7456" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="7627:8819" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="7708:8526" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="7758:8499" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="7792:7964" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="7993:8159" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="8188:8365" placeholder="&lt;xml/&gt;" />
+            <marker date="1427960667417" expanded="true" signature="8696:8792" placeholder="&lt;xml/&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asr/components/banner.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="43" selection-start-line="20" selection-start-column="43" selection-end-line="20" selection-end-column="43" />
+          <folding>
+            <marker date="1427963104876" expanded="true" signature="385:879" placeholder="&lt;xml/&gt;" />
+            <marker date="1427963104876" expanded="true" signature="426:860" placeholder="&lt;xml/&gt;" />
+            <marker date="1427963104876" expanded="true" signature="482:637" placeholder="&lt;xml/&gt;" />
+            <marker date="1427963104876" expanded="true" signature="690:828" placeholder="&lt;xml/&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sass/misc.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.615385">
+          <caret line="35" column="24" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -1161,42 +1211,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sass/app.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-27.615385">
-          <caret line="89" column="1" selection-start-line="89" selection-start-column="1" selection-end-line="89" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/asr/components/dashboard.jsx">
+    <entry file="file://$PROJECT_DIR$/routes/rest/socket.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/asr/components/banner.jsx">
+    <entry file="file://$PROJECT_DIR$/routes/rest/account.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17203456">
+          <caret line="15" column="6" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/rest/token.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="43" selection-start-line="20" selection-start-column="43" selection-end-line="20" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sass/misc.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13645418">
-          <caret line="35" column="24" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
+          <caret line="0" column="47" selection-start-line="0" selection-start-column="47" selection-end-line="0" selection-end-column="47" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/rest/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34660193">
-          <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="68" column="14" selection-start-line="68" selection-start-column="14" selection-end-line="68" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/event.model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="14" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/constants/event.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/rest/key.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.66771406">
+          <caret line="116" column="20" selection-start-line="116" selection-start-column="20" selection-end-line="116" selection-end-column="20" />
           <folding />
         </state>
       </provider>
