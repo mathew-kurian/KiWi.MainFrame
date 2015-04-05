@@ -1,7 +1,7 @@
 module.exports = {
     account_model_update: 1,
-    lock_model_update: 2,
-    key_add: 3,
+    lock_edit: 2,
+    key_created: 3,
     key_remove: 4,
     key_permission_update: 5,
     debug: 6,

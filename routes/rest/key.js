@@ -44,7 +44,7 @@ module.exports = {
 
                         Event.create({
                             lock: key.lock,
-                            event: event.key_add,
+                            event: event.key_created,
                             accountSrc: req.token.account,
                             accountDest: account._id
                         }, function (err, event) {
@@ -58,7 +58,7 @@ module.exports = {
                                 (keys || []).forEach(function (paired_key) {
                                     if (paired_key._id == req.query.key) return;
                                     if (!permission.hasAllPairedKeyAccess(paired_key.permission)) return;
-                                    sockets.Account.emit(paired_key.account, event.key_add, {key: key, lock: lock});
+                                    sockets.Account.emit(paired_key.account, event.key_created, {key: key, lock: lock});
                                     sockets.Account.emit(paired_key.account, event.new_event, event);
                                 });
                             });
@@ -114,7 +114,7 @@ module.exports = {
                     var merge_res = tools.merge(edit_key, req.query.fields, 'key');
 
                     if (!merge_res.save) return res.sendOk(merge_res);
-                    
+
                     Event.create({
                         lock: key.lock,
                         event: event.key_permission_update,
@@ -134,7 +134,7 @@ module.exports = {
                                 (keys || []).forEach(function (paired_key) {
                                     if (paired_key._id == req.query.key) return;
                                     if (!permission.hasAllPairedKeyAccess(paired_key.permission)) return;
-                                    sockets.Account.emit(paired_key.account, event.key_add, {key: key, lock: lock});
+                                    sockets.Account.emit(paired_key.account, event.key_created, {key: key, lock: lock});
                                     sockets.Account.emit(paired_key.account, event.new_event, event);
                                 });
                             });

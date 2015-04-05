@@ -3,7 +3,7 @@ var Key = require('./../../models/key.model');
 var status = require('./../../constants/status');
 var event = require('./../../constants/event');
 var tools = require('./../../libs/tools');
-var Mongol = require('./../../libs/mongol');
+var Event = require('./../../models/event.model');
 var config = require('./../../config');
 var permission = require('./../../constants/permission');
 var sockets = require('./../../sockets');
@@ -40,8 +40,15 @@ module.exports = {
                     });
                 }
 
-                res.sendOk({lock: lock});
-                sockets.Account.emit(req.token.account, event.lock_created, {lock: lock});
+                Event.create({
+                    lock: key.lock,
+                    event: event.lock_created,
+                    accountSrc: req.token.account
+                }, function (err, event) {
+                    res.sendOk({lock: lock});
+                    sockets.Account.emit(req.token.account, event.lock_created, {lock: lock})
+                    sockets.Account.emit(req.token.account, event.new_event, event)
+                });
             });
         });
     },
@@ -62,12 +69,24 @@ module.exports = {
             lock.save(function (err) {
                 if (err) return res.sendErr(status.db_err, err);
                 res.sendOk(merge_res);
-                Key.find({lock: lock._id}).distinct("account", function (err, accounts) {
-                    for (var i = 0; i < accounts.length; i++)
-                        sockets.Account.emit(accounts[i], event.lock_model_update, merge_res);
+
+                Event.create({
+                    lock: key.lock,
+                    event: event.lock_edit,
+                    accountSrc: req.token.account
+                }, function (err, event) {
+                    Key.find({lock: lock._id}).distinct("account", function (err, accounts) {
+                        for (var i = 0; i < accounts.length; i++) {
+                            sockets.Account.emit(accounts[i], event.lock_edit, merge_res);
+                            sockets.Account.emit(accounts[i], event.new_event, event);
+                        }
+                    });
                 });
             });
         });
+    },
+    events: function (req, res) {
+
     },
     register: function (req, res) {
         // noinspection JSUnresolvedVariable
@@ -92,10 +111,18 @@ module.exports = {
                 Key.findOne({permission: permission.owner, lock: lock._id}, function (err, key) {
                     if (err) return res.sendErr(status.db_err, err);
                     res.sendOk({info: "registered"});
-                    Key.list({criteria: {lock: lock._id}}, function (err, keys) {
-                        if (err) return;
-                        (keys || []).forEach(function (key) {
-                            sockets.Account.emit(key.account, event.lock_registered, {lock: lock});
+
+                    Event.create({
+                        lock: key.lock,
+                        event: event.lock_registered,
+                        accountSrc: req.token.account
+                    }, function (err, event) {
+                        Key.list({criteria: {lock: lock._id}}, function (err, keys) {
+                            if (err) return;
+                            (keys || []).forEach(function (key) {
+                                sockets.Account.emit(key.account, event.lock_registered, {lock: lock});
+                                sockets.Account.emit(key.account, event.new_event, event);
+                            });
                         });
                     });
                 });
