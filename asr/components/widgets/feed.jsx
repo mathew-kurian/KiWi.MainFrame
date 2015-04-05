@@ -47,13 +47,13 @@ var FeedItem = React.createClass({
                 if (accountSrcReady) text = "Key access has been edited by for";
                 break;
             case event.lock_created:
-                if (accountSrcReady) text = "Lock has been created";
+                if (accountSrcReady) text = "Lock has been created by";
                 break;
             case event.lock_edit:
-                if (accountSrcReady) text = "Lock has been modified";
+                if (accountSrcReady) text = "Lock has been edited by";
                 break;
             case event.lock_registered:
-                if (accountSrcReady) text = "Lock has been registered";
+                if (accountSrcReady) text = "Lock has been registered by";
                 break;
         }
 

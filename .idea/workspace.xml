@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b2bfd14-5911-48ac-b41c-5fd8f8037d7a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/event.model.js" afterPath="$PROJECT_DIR$/models/event.model.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asr/components/widgets/feed.jsx" afterPath="$PROJECT_DIR$/asr/components/widgets/feed.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/rest/lock.js" afterPath="$PROJECT_DIR$/routes/rest/lock.js" />
     </list>
     <ignored path="KiWi.MainFrame.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -166,8 +164,8 @@
           <file leaf-file-name="feed.jsx" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/asr/components/widgets/feed.jsx">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.4941084">
-                  <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.520817">
+                  <caret line="51" column="33" selection-start-line="51" selection-start-column="33" selection-end-line="51" selection-end-column="33" />
                   <folding />
                 </state>
               </provider>
@@ -335,9 +333,9 @@
         <option value="$PROJECT_DIR$/constants/event.js" />
         <option value="$PROJECT_DIR$/asr/stores/account-store.js" />
         <option value="$PROJECT_DIR$/routes/rest/key.js" />
-        <option value="$PROJECT_DIR$/asr/components/widgets/feed.jsx" />
         <option value="$PROJECT_DIR$/routes/rest/lock.js" />
         <option value="$PROJECT_DIR$/models/event.model.js" />
+        <option value="$PROJECT_DIR$/asr/components/widgets/feed.jsx" />
       </list>
     </option>
   </component>
@@ -1245,8 +1243,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/asr/components/widgets/feed.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4941084">
-          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.520817">
+          <caret line="51" column="33" selection-start-line="51" selection-start-column="33" selection-end-line="51" selection-end-column="33" />
           <folding />
         </state>
       </provider>
