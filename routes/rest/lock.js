@@ -96,7 +96,7 @@ module.exports = {
         if (!Array.isArray(req.query.location) || req.query.location.length !== 2)
             return res.sendErr(status.param_err, "Invalid location");
 
-        var password = tools.crypto.symmetric.decrypt(req.query.password, config.registration_algorithm, config.registration_password);
+        var password = tools.crypto.symmetric.decrypt(req.query.password, config.registration_algorithm, config.registration_symmetric_key);
 
         if (config.registration_password !== password)
             return res.sendErr(status.key_err, "Encryption key invalid");

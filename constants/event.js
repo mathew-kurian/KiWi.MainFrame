@@ -12,5 +12,11 @@ module.exports = {
     lock_created: 11,
     lock_registered: 12,
     invalid_action: 13,
-    new_event: 14
+    new_event: 14,
+    lock_lock_command: 15,
+    lock_unlock_command: 16,
+    lock_lock_command_fail: 17,
+    lock_lock_command_success: 18,
+    lock_unlock_command_fail: 19,
+    lock_unlock_command_success: 20
 };
