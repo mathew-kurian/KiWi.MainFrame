@@ -76,7 +76,7 @@ var isLoggedIn = function (req, res, next) {
 
 router.get('/account/create', account.create);
 router.get('/account/login', account.login);
-router.get('/account/info', account.info);
+router.get('/account/info', isLoggedIn, account.info);
 router.get('/account/edit', isLoggedIn, account.edit);
 router.get('/account/debug/list', account.debug.list);
 
