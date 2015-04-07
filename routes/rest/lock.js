@@ -33,7 +33,7 @@ module.exports = {
         // noinspection JSUnresolvedVariable
         Lock.create({serial: req.query.serial}, function (err, lock) {
             if (err) return res.sendErr(status.db_err, err);
-            Key.create({account: req.token.account, lock: lock._id, permission: permission.owner}, function (err) {
+            Key.create({account: req.token.account, lock: lock._id, permission: permission.owner}, function (err, key) {
                 if (err) {
                     return lock.remove(function (err) {
                         if (err) return res.sendErr(status.db_err, err);
@@ -107,7 +107,8 @@ module.exports = {
             if (!lock) return res.sendErr(status.db_err, "Lock not found");
 
             lock.regisered = true;
-            lock.location = req.query.location;
+         // FIXME
+         //   lock.location = req.query.location;
 
             lock.save(function (err) {
                 if (err) return res.sendErr(status.db_err, err);

@@ -396,7 +396,7 @@ var Login = React.createClass({displayName: 'Login',
         self.setState({wait: true});
 
         $.ajax({
-            url: 'http://kiwi.t.proxylocal.com/rest/account/login?' +
+            url: '/rest/account/login?' +
             'client_id=' + this.state.client_id +
             '&username=' + this.state.username +
             '&password=' + this.state.password,
@@ -429,7 +429,7 @@ var Login = React.createClass({displayName: 'Login',
         self.setState({wait: true});
 
         $.ajax({
-            url: 'http://kiwi.t.proxylocal.com/rest/account/create?' + '' +
+            url: '/rest/account/create?' + '' +
             'client_id=' + this.state.client_id +
             '&name[first]=' + this.state.name.first +
             '&name[last]=' + this.state.name.last +
@@ -1235,6 +1235,7 @@ module.exports = {
     default_lock_name: "MyKiWi",
     default_client_id: "dev",
     max_sockets_per_token: 3,
+    max_sockets_per_lock: 1,
     private_field_symmetric_key: ShortId.generate(),
     private_field_algorithm: 'aes-256-ctr'
 };
@@ -1254,7 +1255,13 @@ module.exports = {
     lock_created: 11,
     lock_registered: 12,
     invalid_action: 13,
-    new_event: 14
+    new_event: 14,
+    lock_lock_command: 15,
+    lock_unlock_command: 16,
+    lock_lock_command_fail: 17,
+    lock_lock_command_success: 18,
+    lock_unlock_command_fail: 19,
+    lock_unlock_command_success: 20
 };
 },{}],21:[function(require,module,exports){
 var crypto = require('crypto');
@@ -1275,7 +1282,7 @@ module.exports.merge = function (obj, fields, key, ignore) {
     fields.forEach(function (field) {
         var _value = self.get(obj, field.name);
         updated[field.name] = false;
-        if(ignore.indexOf(field.name) > -1) return;
+        if (ignore.indexOf(field.name) > -1) return;
         // noinspection JSUnresolvedVariable
         if (save |= updated[field.name] = (_value != field.value || (field.testAndSet && _value == field._value)))
             self.set(obj, field.name, field.value, '-f');
@@ -1310,11 +1317,19 @@ module.exports.crypto = {
     symmetric: {
         decrypt: function (text, algo, pass) {
             var decipher = crypto.createDecipher(algo, pass);
-            return decipher.update(text, 'hex', 'utf8') + decipher.final('utf8');
+            try {
+                return decipher.update(text || "", 'hex', 'utf8') + decipher.final('utf8');
+            } catch (e) {
+                return "";
+            }
         },
         encrypt: function (text, algo, pass) {
             var cipher = crypto.createCipher(algo, pass);
-            return cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
+            try {
+                return cipher.update(text || "", 'utf8', 'hex') + cipher.final('hex');
+            } catch (e) {
+                return "";
+            }
         }
     }
 };
@@ -15690,8 +15705,68 @@ arguments[4][69][0].apply(exports,arguments)
 },{"../hash":110,"dup":69}],115:[function(require,module,exports){
 arguments[4][70][0].apply(exports,arguments)
 },{"dup":70,"inherits":165}],116:[function(require,module,exports){
-arguments[4][71][0].apply(exports,arguments)
-},{"dup":71}],117:[function(require,module,exports){
+module.exports={
+  "name": "elliptic",
+  "version": "1.0.1",
+  "description": "EC cryptography",
+  "main": "lib/elliptic.js",
+  "scripts": {
+    "test": "mocha --reporter=spec test/*-test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:indutny/elliptic"
+  },
+  "keywords": [
+    "EC",
+    "Elliptic",
+    "curve",
+    "Cryptography"
+  ],
+  "author": {
+    "name": "Fedor Indutny",
+    "email": "fedor@indutny.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/indutny/elliptic/issues"
+  },
+  "homepage": "https://github.com/indutny/elliptic",
+  "devDependencies": {
+    "browserify": "^3.44.2",
+    "mocha": "^1.18.2",
+    "uglify-js": "^2.4.13"
+  },
+  "dependencies": {
+    "bn.js": "^1.0.0",
+    "brorand": "^1.0.1",
+    "hash.js": "^1.0.0",
+    "inherits": "^2.0.1"
+  },
+  "gitHead": "17dc013761dd1efcfb868e2b06b0b897627b40be",
+  "_id": "elliptic@1.0.1",
+  "_shasum": "d180376b66a17d74995c837796362ac4d22aefe3",
+  "_from": "elliptic@>=1.0.0 <2.0.0",
+  "_npmVersion": "1.4.28",
+  "_npmUser": {
+    "name": "indutny",
+    "email": "fedor@indutny.com"
+  },
+  "maintainers": [
+    {
+      "name": "indutny",
+      "email": "fedor@indutny.com"
+    }
+  ],
+  "dist": {
+    "shasum": "d180376b66a17d74995c837796362ac4d22aefe3",
+    "tarball": "http://registry.npmjs.org/elliptic/-/elliptic-1.0.1.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-1.0.1.tgz"
+}
+
+},{}],117:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 var inherits = require('inherits')

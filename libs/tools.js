@@ -16,7 +16,7 @@ module.exports.merge = function (obj, fields, key, ignore) {
     fields.forEach(function (field) {
         var _value = self.get(obj, field.name);
         updated[field.name] = false;
-        if(ignore.indexOf(field.name) > -1) return;
+        if (ignore.indexOf(field.name) > -1) return;
         // noinspection JSUnresolvedVariable
         if (save |= updated[field.name] = (_value != field.value || (field.testAndSet && _value == field._value)))
             self.set(obj, field.name, field.value, '-f');
@@ -51,11 +51,19 @@ module.exports.crypto = {
     symmetric: {
         decrypt: function (text, algo, pass) {
             var decipher = crypto.createDecipher(algo, pass);
-            return decipher.update(text, 'hex', 'utf8') + decipher.final('utf8');
+            try {
+                return decipher.update(text || "", 'hex', 'utf8') + decipher.final('utf8');
+            } catch (e) {
+                return "";
+            }
         },
         encrypt: function (text, algo, pass) {
             var cipher = crypto.createCipher(algo, pass);
-            return cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
+            try {
+                return cipher.update(text || "", 'utf8', 'hex') + cipher.final('hex');
+            } catch (e) {
+                return "";
+            }
         }
     }
 };
