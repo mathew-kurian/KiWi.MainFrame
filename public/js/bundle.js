@@ -221,10 +221,10 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
         clearTimeout(tid);
     },
     onLockEdit: function (opts) {
-        AppActions.renameLock(this.state.activeLock._id, opts.name);
+        AppActions.renameLock(this.state.activeLock, opts.name);
     },
     onLockFocus: function (id) {
-        this.setState({activeLock: this.state.locks[id]});
+        this.setState({activeLock: id});
     },
     renderLocks: function () {
         var locks = [];
@@ -233,7 +233,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
             var lock = this.state.locks[_id];
             locks.push(
                 LockItem({key: lock._id, lock: lock, onLockFocus: this.onLockFocus, 
-                          active:  this.state.activeLock && lock._id === this.state.activeLock._id})
+                          active:  this.state.activeLock && lock._id === this.state.activeLock})
             );
         }
 
@@ -257,7 +257,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
                                 Statistics(null), 
 
                                 React.DOM.div({className: "flex"}, 
-                                    Controls({lock: self.state.activeLock}), 
+                                    Controls({lock: self.state.locks[self.state.activeLock]}), 
                                     Feed({users:  self.state.users || [], 
                                           events: [] })
                                 )
@@ -265,7 +265,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
                         );
                     case "lock-user-flow" :
                         return Users({users:  self.state.users || [], 
-                                      pairedUsers:  self.state.activeLock.pairedUsers});
+                                      pairedUsers: [] });
                 }
             }
             return null;
@@ -348,7 +348,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
                         )
                     ), 
                      this.state.activeLock ?
-                        Banner({lock:  this.state.activeLock, onLockEdit: this.onLockEdit}) : null, 
+                        Banner({lock:  this.state.locks[this.state.activeLock], onLockEdit: this.onLockEdit}) : null, 
                     React.DOM.div({className: "content"}, 
                          renderSection() 
                     )
@@ -550,8 +550,6 @@ var NotificationCenter = React.createClass({displayName: 'NotificationCenter',
         var event = {};
         var id = _id || ShortId.generate();
 
-        console.log(arguments);
-
         event[id] = {
             status: status,
             msg: msg,
@@ -617,9 +615,9 @@ var Controls = React.createClass({displayName: 'Controls',
                  style: {"max-width": "300px", "border-right": "1px solid #DDD", "padding-right": "20px"}}, 
                 React.DOM.h2(null, "Manage"), 
 
-                React.DOM.div({className: "button", style: {marginTop: "25px"}}, 
-                    React.DOM.div({className: "label", 
-                         onClick:  this.handleLock},  this.props.lock.locked ? "unlock" : "lock", " " + ' ' +
+                React.DOM.div({className: "button", style: {marginTop: "25px"}, 
+                     onClick:  this.handleLock}, 
+                    React.DOM.div({className: "label"},  this.props.lock.locked ? "unlock" : "lock", " " + ' ' +
                         "door"
                     )
                 ), 
@@ -939,7 +937,9 @@ module.exports = Users;
 },{"./../../utils/ui-utils":18,"moment":184,"react":329}],14:[function(require,module,exports){
 var Reflux = require('reflux');
 var AppActions = require('./../actions/app-actions');
+var LockStore = require('./lock-store')
 var $ = require('jquery');
+var event = require('./../../constants/event')
 
 var AccountStore = Reflux.createStore({
     accounts: {},
@@ -961,6 +961,23 @@ var AccountStore = Reflux.createStore({
             AccountStore._onLogin = 0;
             AccountStore.trigger(AccountStore.accounts);
         });
+
+        $.get('/rest/socket/open?client_id=dev&action=account&token=' + AccountStore.token, function (res) {
+            var socket = new WebSocket('ws://' + window.location.host + '/socket?secret=' + res.data.secret + '&action=account');
+            socket.onmessage = function (msg) {
+                var data = JSON.parse(msg.data);
+                switch(data.event){
+                    case event.new_event: return notify(JSON.stringify(event));
+                    case event.lock_manual:
+                    case event.lock_lock_command_fail:
+                    case event.lock_lock_command_success:
+                    case event.lock_unlock_command_fail:
+                    case event.lock_unlock_command_success:
+                    case event.lock_registered:
+                    case event.lock_unregistered: LockStore.forceUpdate(data.data.lock);
+                }
+            }
+        });
     },
     getAccount: function (account) {
         if (AccountStore.accounts[account]) return AccountStore.accounts[account];
@@ -977,7 +994,7 @@ var AccountStore = Reflux.createStore({
 });
 
 module.exports = AccountStore;
-},{"./../actions/app-actions":1,"jquery":183,"reflux":338}],15:[function(require,module,exports){
+},{"./../../constants/event":20,"./../actions/app-actions":1,"./lock-store":16,"jquery":183,"reflux":338}],15:[function(require,module,exports){
 
 },{}],16:[function(require,module,exports){
 var Reflux = require('reflux');
@@ -988,6 +1005,13 @@ var LockStore = Reflux.createStore({
     locks: {},
     token: undefined,
     listenables: [AppActions],
+
+    forceUpdate: function (lock) {
+        console.log(lock);
+
+        LockStore.locks[lock._id] = lock;
+        LockStore.trigger(LockStore.locks);
+    },
 
     _onLogin: 0,
     onLogin: function (token) {
@@ -1023,7 +1047,7 @@ var LockStore = Reflux.createStore({
     },
 
     _onLock: 0,
-    onLock: function(id){
+    onLock: function (id) {
         if (LockStore._onLock++) return;
         $.get("/rest/lock/lock?client_id=dev&token=" + LockStore.token + "&lock=" + id, function (res) {
             if (res.status) {
@@ -1036,7 +1060,7 @@ var LockStore = Reflux.createStore({
     },
 
     _onUnlock: 0,
-    onUnlock: function(id){
+    onUnlock: function (id) {
         if (LockStore._onUnlock++) return;
         $.get("/rest/lock/unlock?client_id=dev&token=" + LockStore.token + "&lock=" + id, function (res) {
             if (res.status) {
@@ -15748,8 +15772,68 @@ arguments[4][69][0].apply(exports,arguments)
 },{"../hash":110,"dup":69}],115:[function(require,module,exports){
 arguments[4][70][0].apply(exports,arguments)
 },{"dup":70,"inherits":165}],116:[function(require,module,exports){
-arguments[4][71][0].apply(exports,arguments)
-},{"dup":71}],117:[function(require,module,exports){
+module.exports={
+  "name": "elliptic",
+  "version": "1.0.1",
+  "description": "EC cryptography",
+  "main": "lib/elliptic.js",
+  "scripts": {
+    "test": "mocha --reporter=spec test/*-test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:indutny/elliptic"
+  },
+  "keywords": [
+    "EC",
+    "Elliptic",
+    "curve",
+    "Cryptography"
+  ],
+  "author": {
+    "name": "Fedor Indutny",
+    "email": "fedor@indutny.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/indutny/elliptic/issues"
+  },
+  "homepage": "https://github.com/indutny/elliptic",
+  "devDependencies": {
+    "browserify": "^3.44.2",
+    "mocha": "^1.18.2",
+    "uglify-js": "^2.4.13"
+  },
+  "dependencies": {
+    "bn.js": "^1.0.0",
+    "brorand": "^1.0.1",
+    "hash.js": "^1.0.0",
+    "inherits": "^2.0.1"
+  },
+  "gitHead": "17dc013761dd1efcfb868e2b06b0b897627b40be",
+  "_id": "elliptic@1.0.1",
+  "_shasum": "d180376b66a17d74995c837796362ac4d22aefe3",
+  "_from": "elliptic@>=1.0.0 <2.0.0",
+  "_npmVersion": "1.4.28",
+  "_npmUser": {
+    "name": "indutny",
+    "email": "fedor@indutny.com"
+  },
+  "maintainers": [
+    {
+      "name": "indutny",
+      "email": "fedor@indutny.com"
+    }
+  ],
+  "dist": {
+    "shasum": "d180376b66a17d74995c837796362ac4d22aefe3",
+    "tarball": "http://registry.npmjs.org/elliptic/-/elliptic-1.0.1.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-1.0.1.tgz"
+}
+
+},{}],117:[function(require,module,exports){
 (function (Buffer){
 'use strict';
 var inherits = require('inherits')

@@ -19,17 +19,17 @@ var MessageHandler = function (serial) {
                 lock.locked = v;
                 lock.save(function (err) {
                     if (err) return console.error(err);
-                    Key.find({lock: lock._id}).distinct('account', function (err, keys) {
+                    Key.find({lock: lock._id}).distinct('account', function (err, accounts) {
                         if (err) return console.error(err);
                         Event.create({
                             lock: lock._id,
                             event: e,
                             accountSrc: 1
-                        }, function (err, event) {
+                        }, function (err, _event) {
                             if (err) return console.error(err);
-                            (keys || []).forEach(function (key) {
-                                _sockets.Account.emit(key.account, e, {lock: lock});
-                                _sockets.Account.emit(key.account, event.new_event, event);
+                            (accounts || []).forEach(function (account) {
+                                _sockets.Account.emit(account, e, {lock: lock});
+                                _sockets.Account.emit(account, event.new_event, {event: _event});
                             });
                         });
                     });
@@ -47,7 +47,7 @@ var MessageHandler = function (serial) {
             case event.lock_lock_command_success:
             case event.lock_unlock_command_fail:
             case event.lock_unlock_command_success:
-                return updateLock(data.event, data.state);
+                return updateLock(data.event, data.locked);
         }
     }
 };
@@ -60,17 +60,17 @@ var register = function (serial, reg) {
         lock.registered = reg;
         lock.save(function (err) {
             if (err) return res.error(err);
-            Key.find({lock: lock._id}).distinct('account', function (err, keys) {
+            Key.find({lock: lock._id}).distinct('account', function (err, accounts) {
                 if (err) return console.error(err);
                 Event.create({
                     lock: lock._id,
                     event: event.lock_registered,
                     accountSrc: 1
-                }, function (err, event) {
+                }, function (err, _event) {
                     if (err) return;
-                    (keys || []).forEach(function (key) {
-                        _sockets.Account.emit(key.account, reg ? event.lock_registered : event.lock_unregistered, {lock: lock});
-                        _sockets.Account.emit(key.account, event.new_event, event);
+                    (accounts || []).forEach(function (account) {
+                        _sockets.Account.emit(account, reg ? event.lock_registered : event.lock_unregistered, {lock: lock});
+                        _sockets.Account.emit(account, event.new_event, {event: _event});
                     });
                 });
             });

@@ -201,7 +201,8 @@ body, html {
   padding: 14px 12px;
   overflow: hidden;
   position: Relative;
-  text-align: center; }
+  text-align: center;
+  cursor: pointer; }
   .button .icon, button .icon {
     display: inline-block;
     color: #FFF;

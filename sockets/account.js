@@ -75,9 +75,10 @@ module.exports.emit = function (account, event, data, msg) {
     }
 
     if (!sockets[account]) return;
+    var d = JSON.stringify({event: event, msg: msg, data: data});
     for (var token in sockets[account]) {
         var socketInfo = sockets[account][token];
         for (var i = 0; i < socketInfo.sockets.length; i++)
-            socketInfo.sockets[i].send(JSON.stringify({event: event, msg: msg, data: data}));
+            socketInfo.sockets[i].send(d);
     }
 };

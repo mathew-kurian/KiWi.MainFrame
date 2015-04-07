@@ -82,10 +82,10 @@ var Dashboard = React.createClass({
         clearTimeout(tid);
     },
     onLockEdit: function (opts) {
-        AppActions.renameLock(this.state.activeLock._id, opts.name);
+        AppActions.renameLock(this.state.activeLock, opts.name);
     },
     onLockFocus: function (id) {
-        this.setState({activeLock: this.state.locks[id]});
+        this.setState({activeLock: id});
     },
     renderLocks: function () {
         var locks = [];
@@ -94,7 +94,7 @@ var Dashboard = React.createClass({
             var lock = this.state.locks[_id];
             locks.push(
                 <LockItem key={lock._id} lock={lock} onLockFocus={this.onLockFocus}
-                          active={ this.state.activeLock && lock._id === this.state.activeLock._id }/>
+                          active={ this.state.activeLock && lock._id === this.state.activeLock }/>
             );
         }
 
@@ -118,7 +118,7 @@ var Dashboard = React.createClass({
                                 <Statistics />
 
                                 <div className="flex">
-                                    <Controls lock={self.state.activeLock}/>
+                                    <Controls lock={self.state.locks[self.state.activeLock]}/>
                                     <Feed users={ self.state.users || [] }
                                           events={ [] }/>
                                 </div>
@@ -126,7 +126,7 @@ var Dashboard = React.createClass({
                         );
                     case "lock-user-flow" :
                         return <Users users={ self.state.users || [] }
-                                      pairedUsers={ self.state.activeLock.pairedUsers }/>;
+                                      pairedUsers={ [] }/>;
                 }
             }
             return null;
@@ -209,7 +209,7 @@ var Dashboard = React.createClass({
                         </div>
                     </div>
                     { this.state.activeLock ?
-                        <Banner lock={ this.state.activeLock } onLockEdit={this.onLockEdit}/> : null }
+                        <Banner lock={ this.state.locks[this.state.activeLock] } onLockEdit={this.onLockEdit}/> : null }
                     <div className="content">
                         { renderSection() }
                     </div>

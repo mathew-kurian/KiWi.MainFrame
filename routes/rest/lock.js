@@ -44,10 +44,10 @@ module.exports = {
                     lock: key.lock,
                     event: event.lock_created,
                     accountSrc: req.token.account
-                }, function (err, event) {
+                }, function (err, _event) {
                     res.sendOk({lock: lock});
                     sockets.Account.emit(req.token.account, event.lock_created, {lock: lock})
-                    sockets.Account.emit(req.token.account, event.new_event, event)
+                    sockets.Account.emit(req.token.account, event.new_event, _event)
                 });
             });
         });
@@ -74,11 +74,11 @@ module.exports = {
                     lock: lock._id,
                     event: event.lock_edit,
                     accountSrc: req.token.account
-                }, function (err, event) {
+                }, function (err, _event) {
                     Key.find({lock: lock._id}).distinct("account", function (err, accounts) {
                         for (var i = 0; i < accounts.length; i++) {
                             sockets.Account.emit(accounts[i], event.lock_edit, merge_res);
-                            sockets.Account.emit(accounts[i], event.new_event, event);
+                            sockets.Account.emit(accounts[i], event.new_event, _event);
                         }
                     });
                 });

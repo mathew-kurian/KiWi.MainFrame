@@ -7,6 +7,13 @@ var LockStore = Reflux.createStore({
     token: undefined,
     listenables: [AppActions],
 
+    forceUpdate: function (lock) {
+        console.log(lock);
+
+        LockStore.locks[lock._id] = lock;
+        LockStore.trigger(LockStore.locks);
+    },
+
     _onLogin: 0,
     onLogin: function (token) {
         if (LockStore._onLogin++) return;
@@ -41,7 +48,7 @@ var LockStore = Reflux.createStore({
     },
 
     _onLock: 0,
-    onLock: function(id){
+    onLock: function (id) {
         if (LockStore._onLock++) return;
         $.get("/rest/lock/lock?client_id=dev&token=" + LockStore.token + "&lock=" + id, function (res) {
             if (res.status) {
@@ -54,7 +61,7 @@ var LockStore = Reflux.createStore({
     },
 
     _onUnlock: 0,
-    onUnlock: function(id){
+    onUnlock: function (id) {
         if (LockStore._onUnlock++) return;
         $.get("/rest/lock/unlock?client_id=dev&token=" + LockStore.token + "&lock=" + id, function (res) {
             if (res.status) {

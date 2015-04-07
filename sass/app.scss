@@ -55,6 +55,7 @@ body, html {
   overflow: hidden;
   position: Relative;
   text-align: center;
+  cursor: pointer;
   .icon {
     display: inline-block;
     color: #FFF;
@@ -109,7 +110,7 @@ body, html {
     border-radius: 100%;
     background: #A4D412;
     border: 3px solid #FFFFFF;
-    box-shadow: 0 0px 2px 1px rgba(0,0,0,0.2);
+    box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.2);
   }
   .label {
     position: absolute;

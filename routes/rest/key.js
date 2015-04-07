@@ -47,7 +47,7 @@ module.exports = {
                             event: event.key_created,
                             accountSrc: req.token.account,
                             accountDest: account._id
-                        }, function (err, event) {
+                        }, function (err, _event) {
                             if (err) return;
 
                             Key.list({criteria: key.lock}, function (err, keys) {
@@ -59,7 +59,7 @@ module.exports = {
                                     if (paired_key._id == req.query.key) return;
                                     if (!permission.hasAllPairedKeyAccess(paired_key.permission)) return;
                                     sockets.Account.emit(paired_key.account, event.key_created, {key: key, lock: lock});
-                                    sockets.Account.emit(paired_key.account, event.new_event, event);
+                                    sockets.Account.emit(paired_key.account, event.new_event, _event);
                                 });
                             });
                         });
@@ -120,7 +120,7 @@ module.exports = {
                         event: event.key_edit,
                         accountSrc: req.token.account,
                         accountDest: edit_key.account
-                    }, function (err, event) {
+                    }, function (err, _event) {
                         if (err) return;
 
                         edit_key.save(function (err, key) {
@@ -135,7 +135,7 @@ module.exports = {
                                     if (paired_key._id == req.query.key) return;
                                     if (!permission.hasAllPairedKeyAccess(paired_key.permission)) return;
                                     sockets.Account.emit(paired_key.account, event.key_edit, {key: key, lock: lock});
-                                    sockets.Account.emit(paired_key.account, event.new_event, event);
+                                    sockets.Account.emit(paired_key.account, event.new_event, _event);
                                 });
                             });
                         });
@@ -193,7 +193,7 @@ module.exports = {
                             event: event.key_remove,
                             accountSrc: req.token.account,
                             accountDest: key.account
-                        }, function (err, event) {
+                        }, function (err, _event) {
                             if (err) return;
 
                             Key.list({criteria: key.lock}, function (err, keys) {
@@ -207,7 +207,7 @@ module.exports = {
                                     if (paired_key._id == req.query.key) return;
                                     if (!permission.hasAllPairedKeyAccess(paired_key.permission)) return;
                                     sockets.Account.emit(paired_key.account, event.key_remove, {key: key, lock: lock});
-                                    sockets.Account.emit(paired_key.account, event.new_event, event);
+                                    sockets.Account.emit(paired_key.account, event.new_event, _event);
                                 });
                             });
                         });

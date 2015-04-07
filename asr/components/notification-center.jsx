@@ -38,8 +38,6 @@ var NotificationCenter = React.createClass({
         var event = {};
         var id = _id || ShortId.generate();
 
-        console.log(arguments);
-
         event[id] = {
             status: status,
             msg: msg,

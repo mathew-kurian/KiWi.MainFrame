@@ -28,9 +28,9 @@ var Controls = React.createClass({
                  style={{"max-width": "300px", "border-right": "1px solid #DDD", "padding-right": "20px"}}>
                 <h2>Manage</h2>
 
-                <div className="button" style={{marginTop: "25px"}}>
-                    <div className="label"
-                         onClick={ this.handleLock }>{ this.props.lock.locked ? "unlock" : "lock"}&nbsp;
+                <div className="button" style={{marginTop: "25px"}}
+                     onClick={ this.handleLock }>
+                    <div className="label">{ this.props.lock.locked ? "unlock" : "lock"}&nbsp;
                         door
                     </div>
                 </div>
