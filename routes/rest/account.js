@@ -51,7 +51,8 @@ module.exports = {
 
             new Token({account: account._id}).save(function (err, token) {
                 if (err) return res.sendErr(status.db_err, err);
-                res.sendOk({token: token._id});
+                delete account.password;
+                res.sendOk({token: token._id, account: account});
                 sockets.Account.emit(account, event.account_login, undefined, "Login detected");
             });
         });
