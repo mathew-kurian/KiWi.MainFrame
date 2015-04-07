@@ -53,6 +53,8 @@ router.use(function (req, res, next) {
 });
 
 var isLoggedIn = function (req, res, next) {
+    if (req.query.action === 'lock') return next();
+
     // noinspection JSUnresolvedFunction, JSUnresolvedVariable
     Token.findById(req.query.token, function (err, token) {
         if (err) return res.sendErr(status.db_err, err);
@@ -80,7 +82,6 @@ router.get('/account/debug/list', account.debug.list);
 router.get('/lock/list', isLoggedIn, lock.list);
 router.get('/lock/create', isLoggedIn, lock.create);
 router.get('/lock/edit', isLoggedIn, lock.edit);
-router.get('/lock/register', lock.register);
 router.get('/lock/debug/list', lock.debug.list);
 
 router.get('/keys/create', isLoggedIn, key.create);

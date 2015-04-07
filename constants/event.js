@@ -18,5 +18,6 @@ module.exports = {
     lock_lock_command_fail: 17,
     lock_lock_command_success: 18,
     lock_unlock_command_fail: 19,
-    lock_unlock_command_success: 20
+    lock_unlock_command_success: 20,
+    invalid_password: 21
 };

@@ -1,8 +1,39 @@
 var ShortId = require('ShortId');
 var config = require('./../config');
 var event = require('./../constants/event');
+var tools = require('./../libs/tools')
+var Lock = require('./../models/lock.model');
+var Event = require('./../models/event.model');
+var Key = require('./../models/key.model');
+var _sockets = require('./index');
 var sockets = {};
 var socketsBySecret = {};
+
+var register = function (serial, reg) {
+    // noinspection JSUnresolvedFunction, JSUnresolvedVariable
+    Lock.findOne({serial: serial}, function (err, lock) {
+        if (err) return console.error(err);
+        if (!lock) return console.error("Lock not found");
+        lock.regisered = reg;
+        lock.save(function (err) {
+            if (err) return res.error(err);
+            Key.find({lock: lock._id}).distinct('account', function (err, keys) {
+                if (err) return console.error(err);
+                Event.create({
+                    lock: lock._id,
+                    event: event.lock_registered,
+                    accountSrc: 1
+                }, function (err, event) {
+                    if (err) return;
+                    (keys || []).forEach(function (key) {
+                        _sockets.Account.emit(key.account, event.lock_registered, {lock: lock});
+                        _sockets.Account.emit(key.account, event.new_event, event);
+                    });
+                });
+            });
+        });
+    });
+}
 
 function SocketInfo(serial) {
     this.serial = serial;
@@ -41,18 +72,34 @@ module.exports.close = function (serial) {
 };
 
 module.exports.connected = function (socket) {
-    var socketInfo = socketsBySecret[socket.secret];
-    if (!socketInfo || socketInfo.sockets.length >= config.max_sockets_per_lock) {
-        console.log("socket disconnecting id:%s secret:%s", socket.id, socket.secret);
-        socket.send(JSON.stringify({event: event.disconnected, msg: "Connection count > 3"}));
+
+    var password = tools.crypto.symmetric.decrypt(socket.query.password,
+        config.registration_algorithm, config.registration_symmetric_key);
+
+    var socketInfo = socketsBySecret[socket.query.secret];
+
+    if (!socketInfo || password !== config.registration_password) {
+        console.log("socket disconnecting secret:%s", socket.query.secret);
+        socket.send(JSON.stringify({event: event.invalid_password, msg: "Connection count > 1"}));
         socket.terminate();
         return;
     }
 
-    console.log("socket connected id:%s secret:%s", socket.id, socket.secret);
+    if(socketInfo.sockets.length >= config.max_sockets_per_lock){
+        console.log("socket disconnecting secret:%s", socket.query.secret);
+        var _socket = socketInfo.sockets[0];
+        try {
+            _socket.send(JSON.stringify({event: event.invalid_password, msg: "Connection count > 1"}));
+            _socket.terminate();
+        } catch(e) {
+            console.error(e);
+        }
+    }
 
+    register(socketInfo.serial, true);
+
+    console.log("socket connected secret:%s", socket.secret);
     socketInfo.sockets.push(socket);
-
     socket.send(JSON.stringify({event: event.connected}));
 };
 
@@ -62,6 +109,8 @@ module.exports.disconnected = function (socket) {
     for (var i = 0; i < socketInfo.sockets.length; i++)
         if (socketInfo.sockets[i].id == socket.id)
             socketInfo.sockets.splice(--i, 1);
+
+    register(socketInfo.serial, false);
 
     console.error("Critical error: deleted socket id cannot be found. Security issue?")
 };
