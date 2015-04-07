@@ -71,7 +71,7 @@ module.exports = {
                 res.sendOk(merge_res);
 
                 Event.create({
-                    lock: key.lock,
+                    lock: lock._id,
                     event: event.lock_edit,
                     accountSrc: req.token.account
                 }, function (err, event) {
