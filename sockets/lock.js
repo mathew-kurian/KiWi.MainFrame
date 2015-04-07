@@ -171,5 +171,6 @@ module.exports.emit = function (serial, event, data, msg) {
     if (!sockets[serial]) return;
     var socketInfo = sockets[serial];
     for (var i = 0; i < socketInfo.sockets.length; i++)
-        socketInfo.sockets[i].send(JSON.stringify({event: event, msg: msg, data: data}));
+        try { socketInfo.sockets[i].send(JSON.stringify({event: event, msg: msg, data: data})); }
+        catch(e) { console.error(e); }
 };
