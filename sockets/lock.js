@@ -9,12 +9,55 @@ var _sockets = require('./index');
 var sockets = {};
 var socketsBySecret = {};
 
+var MessageHandler = function (serial) {
+    return function (msg, flags) {
+
+        var updateLock = function (e, v) {
+            Lock.findOne({serial: serial}, function (err, lock) {
+                if (err) return console.error(err);
+                if (!lock) return console.error("Lock not found");
+                lock.locked = v;
+                lock.save(function (err) {
+                    if (err) return console.error(err);
+                    Key.find({lock: lock._id}).distinct('account', function (err, keys) {
+                        if (err) return console.error(err);
+                        Event.create({
+                            lock: lock._id,
+                            event: e,
+                            accountSrc: 1
+                        }, function (err, event) {
+                            if (err) return console.error(err);
+                            (keys || []).forEach(function (key) {
+                                _sockets.Account.emit(key.account, e, {lock: lock});
+                                _sockets.Account.emit(key.account, event.new_event, event);
+                            });
+                        });
+                    });
+                });
+            });
+        };
+
+        var data = JSON.parse(msg);
+
+        console.log(data);
+
+        switch (data.event) {
+            case event.lock_manual:
+            case event.lock_lock_command_fail:
+            case event.lock_lock_command_success:
+            case event.lock_unlock_command_fail:
+            case event.lock_unlock_command_success:
+                return updateLock(data.event, data.state);
+        }
+    }
+};
+
 var register = function (serial, reg) {
     // noinspection JSUnresolvedFunction, JSUnresolvedVariable
     Lock.findOne({serial: serial}, function (err, lock) {
         if (err) return console.error(err);
         if (!lock) return console.error("Lock not found");
-        lock.regisered = reg;
+        lock.registered = reg;
         lock.save(function (err) {
             if (err) return res.error(err);
             Key.find({lock: lock._id}).distinct('account', function (err, keys) {
@@ -26,7 +69,7 @@ var register = function (serial, reg) {
                 }, function (err, event) {
                     if (err) return;
                     (keys || []).forEach(function (key) {
-                        _sockets.Account.emit(key.account, event.lock_registered, {lock: lock});
+                        _sockets.Account.emit(key.account, reg ? event.lock_registered : event.lock_unregistered, {lock: lock});
                         _sockets.Account.emit(key.account, event.new_event, event);
                     });
                 });
@@ -85,20 +128,23 @@ module.exports.connected = function (socket) {
         return;
     }
 
-    if(socketInfo.sockets.length >= config.max_sockets_per_lock){
+    if (socketInfo.sockets.length >= config.max_sockets_per_lock) {
         console.log("socket disconnecting secret:%s", socket.query.secret);
-        var _socket = socketInfo.sockets[0];
         try {
-            _socket.send(JSON.stringify({event: event.invalid_password, msg: "Connection count > 1"}));
+            var _socket = socketInfo.sockets[0];
+            _socket.send(JSON.stringify({event: event.disconnected, msg: "Connection count > 1"}));
             _socket.terminate();
-        } catch(e) {
+        } catch (e) {
             console.error(e);
         }
     }
 
+    // prepare handler
+    socket.on('message', new MessageHandler(socketInfo.serial));
+
     register(socketInfo.serial, true);
 
-    console.log("socket connected secret:%s", socket.secret);
+    console.log("socket connected secret:%s", socket.query.secret);
     socketInfo.sockets.push(socket);
     socket.send(JSON.stringify({event: event.connected}));
 };

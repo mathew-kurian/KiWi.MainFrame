@@ -52,7 +52,7 @@ module.exports.connected = function (socket) {
         return;
     }
 
-    console.log("socket connected secret:%s", socket.secret);
+    console.log("socket connected secret:%s", socket.query.secret);
     socketInfo.sockets.push(socket);
     socket.send(JSON.stringify({event: event.connected}));
 };

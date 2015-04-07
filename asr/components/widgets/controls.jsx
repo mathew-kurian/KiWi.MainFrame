@@ -3,6 +3,7 @@
  */
 
 var React = require('react');
+var AppActions = require('../../actions/app-actions')
 
 var Controls = React.createClass({
 
@@ -14,6 +15,13 @@ var Controls = React.createClass({
         }
     },
 
+    handleLock: function () {
+        if (this.props.lock.locked)
+            AppActions.unlock(this.props.lock._id);
+        else
+            AppActions.lock(this.props.lock._id);
+    },
+
     render: function () {
         return (
             <div className="section box"
@@ -21,7 +29,10 @@ var Controls = React.createClass({
                 <h2>Manage</h2>
 
                 <div className="button" style={{marginTop: "25px"}}>
-                    <div className="label">lock door</div>
+                    <div className="label"
+                         onClick={ this.handleLock }>{ this.props.lock.locked ? "unlock" : "lock"}&nbsp;
+                        door
+                    </div>
                 </div>
                 <div className="block">
                     <div className="toggle-power toggle small" style={{display: "inline-block"}}>

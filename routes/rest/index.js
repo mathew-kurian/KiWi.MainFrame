@@ -83,6 +83,8 @@ router.get('/account/debug/list', account.debug.list);
 router.get('/lock/list', isLoggedIn, lock.list);
 router.get('/lock/create', isLoggedIn, lock.create);
 router.get('/lock/edit', isLoggedIn, lock.edit);
+router.get('/lock/lock', isLoggedIn, lock.lock);
+router.get('/lock/unlock', isLoggedIn, lock.unlock);
 router.get('/lock/debug/list', lock.debug.list);
 
 router.get('/keys/create', isLoggedIn, key.create);

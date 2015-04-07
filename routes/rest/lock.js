@@ -85,6 +85,32 @@ module.exports = {
             });
         });
     },
+    lock: function(req, res){
+      Lock.findById(req.query.lock, function(err, lock){
+          if (err) return res.sendErr(status.db_err, err);
+          if (!lock) return res.sendErr(status.db_err, "Lock not found");
+
+          if(lock.registered){
+              sockets.Lock.emit(lock.serial, event.lock_lock_command);
+              res.sendOk({info: "Command issued"});
+          } else {
+              res.sendErr(event.lock_register_err, "Lock is not registered");
+          }
+      });
+    },
+    unlock: function(req, res){
+        Lock.findById(req.query.lock, function(err, lock){
+            if (err) return res.sendErr(status.db_err, err);
+            if (!lock) return res.sendErr(status.db_err, "Lock not found");
+
+            if(lock.registered){
+                sockets.Lock.emit(lock.serial, event.lock_unlock_command);
+                res.sendOk({info: "Command issued"});
+            } else {
+                res.sendErr(event.lock_register_err, "Lock is not registered");
+            }
+        });
+    },
     events: function (req, res) {
         Event.list({lock: req.query.lock}, function (err, events) {
             if (err) return res.sendErr(status.db_err, err);

@@ -4,7 +4,9 @@ var Reflux = require('reflux');
 module.exports = Reflux.createActions([
     "createLock",
     "login",
-    "renameLock"
+    "renameLock",
+    "lock",
+    "unlock"
 ]);
 },{"reflux":338}],2:[function(require,module,exports){
 /**
@@ -255,7 +257,7 @@ var Dashboard = React.createClass({displayName: 'Dashboard',
                                 Statistics(null), 
 
                                 React.DOM.div({className: "flex"}, 
-                                    Controls(null), 
+                                    Controls({lock: self.state.activeLock}), 
                                     Feed({users:  self.state.users || [], 
                                           events: [] })
                                 )
@@ -590,6 +592,7 @@ module.exports = NotificationCenter;
  */
 
 var React = require('react');
+var AppActions = require('../../actions/app-actions')
 
 var Controls = React.createClass({displayName: 'Controls',
 
@@ -601,6 +604,13 @@ var Controls = React.createClass({displayName: 'Controls',
         }
     },
 
+    handleLock: function () {
+        if (this.props.lock.locked)
+            AppActions.unlock(this.props.lock._id);
+        else
+            AppActions.lock(this.props.lock._id);
+    },
+
     render: function () {
         return (
             React.DOM.div({className: "section box", 
@@ -608,7 +618,10 @@ var Controls = React.createClass({displayName: 'Controls',
                 React.DOM.h2(null, "Manage"), 
 
                 React.DOM.div({className: "button", style: {marginTop: "25px"}}, 
-                    React.DOM.div({className: "label"}, "lock door")
+                    React.DOM.div({className: "label", 
+                         onClick:  this.handleLock},  this.props.lock.locked ? "unlock" : "lock", " " + ' ' +
+                        "door"
+                    )
                 ), 
                 React.DOM.div({className: "block"}, 
                     React.DOM.div({className: "toggle-power toggle small", style: {display: "inline-block"}}, 
@@ -627,7 +640,7 @@ var Controls = React.createClass({displayName: 'Controls',
 
 module.exports = Controls;
 
-},{"react":329}],9:[function(require,module,exports){
+},{"../../actions/app-actions":1,"react":329}],9:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -1009,6 +1022,32 @@ var LockStore = Reflux.createStore({
         });
     },
 
+    _onLock: 0,
+    onLock: function(id){
+        if (LockStore._onLock++) return;
+        $.get("/rest/lock/lock?client_id=dev&token=" + LockStore.token + "&lock=" + id, function (res) {
+            if (res.status) {
+                LockStore._onLock = 0;
+                return notify(res.msg);
+            }
+
+            LockStore._onLock = 0;
+        });
+    },
+
+    _onUnlock: 0,
+    onUnlock: function(id){
+        if (LockStore._onUnlock++) return;
+        $.get("/rest/lock/unlock?client_id=dev&token=" + LockStore.token + "&lock=" + id, function (res) {
+            if (res.status) {
+                LockStore._onUnlock = 0;
+                return notify(res.msg);
+            }
+
+            LockStore._onUnlock = 0;
+        });
+    },
+
     _onRenameLockTid: 0,
     onRenameLock: function (id, name) {
         LockStore.locks[id].name = name;
@@ -1262,7 +1301,10 @@ module.exports = {
     lock_lock_command_success: 18,
     lock_unlock_command_fail: 19,
     lock_unlock_command_success: 20,
-    invalid_password: 21
+    invalid_password: 21,
+    lock_register_err: 22,
+    lock_unregistered: 23,
+    lock_manual: 24
 };
 },{}],21:[function(require,module,exports){
 var crypto = require('crypto');

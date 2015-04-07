@@ -118,7 +118,7 @@ var Dashboard = React.createClass({
                                 <Statistics />
 
                                 <div className="flex">
-                                    <Controls />
+                                    <Controls lock={self.state.activeLock}/>
                                     <Feed users={ self.state.users || [] }
                                           events={ [] }/>
                                 </div>
