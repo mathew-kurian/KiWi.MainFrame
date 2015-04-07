@@ -1,12 +1,34 @@
 var Account = require('./../../models/account.model');
+var sockets = require('./../../sockets');
+var event = require('./../../constants/event');
 var Token = require('./../../models/token.model');
 var status = require('./../../constants/status');
 var tools = require('./../../libs/tools');
 
 module.exports = {
+    debug: {
+        list: function (req, res) {
+            Account.list({}, function (err, accounts) {
+                if (err)  return res.sendErr(status.db_err, err);
+                res.sendOk({accounts: accounts});
+            });
+        }
+    },
     create: function (req, res) {
         Account.create(req.query, function (err, account) {
             if (err) return res.sendErr(status.db_err, err);
+            res.sendOk({account: account});
+            Account.count({}, function (err, c) {
+                if (err) return;
+                sockets.Account.emit('*', event.account_created, {count: c});
+            });
+        });
+    },
+    info: function (req, res) {
+        var _account = req.query.account || req.token.account;
+        Account.findById(_account, function (err, account) {
+            if (err) return res.sendErr(status.db_err, err);
+            delete account.password;
             res.sendOk({account: account});
         });
     },
@@ -27,24 +49,15 @@ module.exports = {
             if (err) return res.sendErr(status.db_err, err);
             if (!account) return res.sendErr(status.db_err, "Account not found");
 
-            new Token({
-                account: account._id
-            }).save(function (err, token) {
-                    if (err) return res.sendErr(status.db_err, err);
-                    res.sendOk({token: token._id});
-                });
+            new Token({account: account._id}).save(function (err, token) {
+                if (err) return res.sendErr(status.db_err, err);
+                delete account.password;
+                res.sendOk({token: token._id, account: account});
+                sockets.Account.emit(account, event.account_login, undefined, "Login detected");
+            });
         });
     },
-    debug: {
-        list: function (req, res) {
-            Account.list({}, function (err, accounts) {
-                if (err)  return res.sendErr(status.db_err, err);
-                res.sendOk({accounts: accounts});
-            });
-        }
-    },
     edit: function (req, res) {
-
         // noinspection JSUnresolvedVariable
         if (!Array.isArray(req.query.fields))
             return res.sendErr(status.param_err, "Invalid field type");
@@ -54,24 +67,14 @@ module.exports = {
             if (err) return res.sendErr(status.db_err, err);
             if (!account) return res.sendErr(status.db_err, "Account not found");
 
-            var updated = {};
-            var save = false;
-            var _account = tools.object.clone(account);
+            var merge_res = tools.merge(account, req.query.fields, 'account');
 
-            // noinspection JSUnresolvedVariable
-            req.query.fields.forEach(function (field) {
-                var _value = tools.get(account, field.name);
-                updated[field.name] = false;
-                // noinspection JSUnresolvedVariable
-                if (save |= updated[field.name] = (!field.testAndSet || (field.testAndSet && _value == field._value)))
-                    tools.set(account, field.name, field.value, '-f');
-            });
-
-            if (!save) return res.sendOk({updated: updated, _account: _account, account: account});
+            if (!merge_res.save) return res.sendOk(merge_res);
 
             account.save(function (err) {
                 if (err) return res.sendErr(status.db_err, err);
-                res.sendOk({updated: updated, _account: _account, account: account});
+                res.sendOk(merge_res);
+                sockets.Account.emit(req.token.account, event.account_model_update, merge_res);
             });
         });
     }

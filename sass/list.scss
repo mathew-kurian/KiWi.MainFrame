@@ -1,0 +1,19 @@
+
+.list {
+  padding: 0;
+  li {
+    border-bottom: 1px solid #EDEDED;
+    text-align: left;
+    padding: 10px 10px 10px 0;
+    font-size: 13px;
+    list-style: none;
+    .emp {
+      font-weight:bold;
+      color: #555;
+    }
+    .small {
+      color: #939393;
+      font-size: 11px;
+    }
+  }
+}

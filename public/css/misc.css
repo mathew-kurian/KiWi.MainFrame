@@ -1,0 +1,72 @@
+.weighted-input {
+  display: block;
+  background-color: #fff;
+  text-align: center;
+  border-radius: 2.5px;
+  box-shadow: 0 2px 0 0 #bfbfbf;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  margin: 10px auto;
+  width: 80%;
+  left: -20px;
+  max-width: 700px;
+  padding: 12px 50px 12px 10px; }
+  .weighted-input input {
+    font-size: 19px;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    text-align: center; }
+
+.account-wrapper {
+  padding: 11px;
+  border-top: 1px solid #EEE;
+  position: relative;
+  -webkit-transition: all 250ms ease-in;
+  -moz-transition: all 250ms ease-in;
+  transition: all 250ms ease-in; }
+  .account-wrapper:hover {
+    background: #F2f2f2;
+    border-radius: 50px; }
+  .account-wrapper:hover + .account-wrapper {
+    border-color: transparent; }
+  .account-wrapper:first-of-type {
+    border-top: none; }
+  .account-wrapper .more {
+    background: #efc72d;
+    font-weight: 600;
+    color: #FFF;
+    position: absolute;
+    text-align: center;
+    width: 25px;
+    font-size: 13px;
+    border-radius: 100%;
+    height: 25px;
+    line-height: 25px;
+    right: 10px;
+    top: 15px; }
+  .account-wrapper .name {
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 30px; }
+  .account-wrapper .pic {
+    width: 30px;
+    background-size: cover;
+    margin-left: 0;
+    border-radius: 100%;
+    height: 30px; }
+
+.editable {
+  -webkit-transition: all 250ms ease-in;
+  -moz-transition: all 250ms ease-in;
+  transition: all 250ms ease-in; }
+  .editable[contenteditable="true"]:active, .editable[contenteditable="true"]:focus {
+    background: #FFF;
+    border: 1px solid #c6cbcd;
+    padding: 4px;
+    border-radius: 5px;
+    outline: none; }

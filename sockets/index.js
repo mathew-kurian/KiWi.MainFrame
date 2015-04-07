@@ -1,32 +1,36 @@
 var account = require('./account.js');
+var lock = require('./lock.js');
+var event = require('./../constants/event');
+var url = require('url');
 
-module.exports.install = function (io) {
-    io.use(function (socket, next) {
-        socket.secret = socket.request._query['secret'];
-        socket.action = socket.request._query['action'];
+module.exports.install = function (wss) {
 
-        // FIXME stop handling request if secret OR action == null
-
-        next();
-    });
-
-    io.on('connection', function (socket) {
-        switch (socket.action) {
+    wss.on('connection', function (socket) {
+        socket.query = url.parse(socket.upgradeReq.url, true).query;
+        switch (socket.query.action) {
             case 'account':
-                account.connected(socket);
+                return account.connected(socket);
+            case 'lock':
+                return lock.connected(socket);
+            default:
+                socket.send(JSON.stringify({event: event.invalid_action}));
+                return socket.terminate();
         }
     });
 
-
-    io.on('disconnect', function (socket) {
-        switch (socket.action) {
+    wss.on('disconnect', function (socket) {
+       socket.query = url.parse(socket.upgradeReq.url, true).query;
+        switch (socket.query.action) {
             case 'account':
-                account.disconnected(socket);
+                return account.disconnected(socket);
+            case 'lock':
+                return lock.disconnected(socket);
         }
     });
 };
 
 module.exports.Account = require("./account.js");
+module.exports.Lock = require("./lock.js");
 
 
 

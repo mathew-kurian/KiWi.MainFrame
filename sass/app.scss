@@ -5,7 +5,7 @@
 $divider: rgba(255, 255, 255, 0.15);
 
 body, html {
-  background: none;
+  background: #1d3444;
   margin: 0;
   padding: 0;
   border: none;
@@ -13,38 +13,24 @@ body, html {
 
 * {
   box-sizing: border-box;
-  font-family: "Museo Sans", "Open Sans", sans-serif;
+  font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .light {
-
+  opacity: 0.5;
   @include transition(all 250ms ease-in);
-
   &.red {
-    border-color: #c10000 !important;
-
-    &.on {
-      background: red;
-      box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px red;
-    }
+    background: #DA3610 !important;
   }
   &.blue {
-    border-color: rgb(110, 237, 250) !important;
-
-    &.on {
-      background: #6eedfa;
-      box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px #6eedfa;
-    }
-
+    background: #00BFDD !important;
   }
   &.green {
-    border-color: rgb(105, 180, 48) !important;
-
-    &.on {
-      background: rgb(118, 201, 55);
-      box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 15px 1px rgb(118, 201, 55);
-    }
+    background: #8DCA35 !important;
+  }
+  &.on {
+    opacity: 1 !important;
   }
 }
 
@@ -62,19 +48,29 @@ body, html {
 .button, button {
   border: none;
   outline: none;
-  background: #E9545A;
+  background: #19AAC7;
   border-radius: 4px;
   margin-bottom: 10px;
   padding: 14px 12px;
   overflow: hidden;
   position: Relative;
+  text-align: center;
+  cursor: pointer;
+  .icon {
+    display: inline-block;
+    color: #FFF;
+    line-height: 45px;
+    vertical-align: top;
+    font-size: 16px;
+  }
   .label {
     left: 0;
-    font-size: 12px;
+    font-size: 13px;
     text-transform: uppercase;
     font-weight: 600;
     text-align: center;
     color: #FFF;
+    display: inline-block;
   }
   &.small {
     background: #E7ECEE !important;
@@ -92,27 +88,29 @@ body, html {
       color: #506470 !important;
     }
   }
-  .ripple-effect {
-    position: absolute;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    background: white;
-    @include animation(ripple-animation 2s);
-  }
+}
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: white;
+  @include animation(ripple-animation 2s);
 }
 
 .toggle {
-  width: 100%;
-  background: #515F76;
+  width: 80px;
+  background: #C6CBCD;
   border-radius: 30px;
   position: relative;
   .handle {
     width: 28px;
     height: 28px;
     border-radius: 100%;
-    background: #EEE;
-    border: 3px solid #515F76;
+    background: #A4D412;
+    border: 3px solid #FFFFFF;
+    box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.2);
   }
   .label {
     position: absolute;
@@ -124,16 +122,8 @@ body, html {
     line-height: 28px;
     font-size: 10px;
     text-align: center;
-    font-family: "Open Sans", sans-serif;
     text-transform: uppercase;
     font-weight: bold;
-  }
-  &.green {
-    background: #1DCC6C;
-    .handle {
-      background: #19AE5D;
-      border-color: #1DCC6C;
-    }
   }
 }
 
@@ -171,10 +161,10 @@ body, html {
 }
 
 section.left {
-  background: #1C2B36;
+  background: #121A20;
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 130px;
+  left: 10px;
   width: 220px;
   bottom: 0;
   z-index: 2;
@@ -188,8 +178,18 @@ section.left {
       width: 100%;
       height: 45px;
       padding-left: 20px;
+      cursor: pointer;
+      &.rounded {
+        width: 90%;
+        margin: 0 auto;
+        border-radius: 4px;
+        overflow: hidden;
+      }
       &.green {
-        background: rgb(77, 189, 116);
+        background: rgb(164, 212, 18);
+      }
+      &.blue {
+        background: #19AAC7;
       }
       .icon {
         display: inline-block;
@@ -203,9 +203,10 @@ section.left {
         color: #FFF;
         display: inline-block;
         vertical-align: top;
-        font-family: "Open Sans", sans-serif;
         line-height: 45px;
-        padding-left: 10px;
+        padding-left: 18px;
+        font-weight: 600;
+        text-transform: uppercase;
       }
     }
   }
@@ -233,14 +234,16 @@ section.left {
     }
   }
   .section-title {
-    padding: 20px 0;
-    margin-left: 20px;
-    font-weight: 600;
-    font-size: 12px;
+    padding: 15px 20px;
+    margin-left: 0;
+    font-weight: 700;
+    font-size: 13px;
     vertical-align: middle;
     color: #FFF;
     font-family: "Open Sans", sans-serif;
     text-transform: uppercase;
+    background: rgb(25, 170, 199);
+    margin-bottom: 15px;
   }
   .locks {
     font-weight: 500;
@@ -249,13 +252,12 @@ section.left {
       width: 100%;
       display: table;
       cursor: pointer;
-      padding: 10px 20px 10px 30px;
+      padding: 10px 20px 10px 20px;
       .light {
         display: inline-block;
         width: 12px;
         height: 12px;
-        border: 2px solid red;
-        border-radius: 100%;
+        border-radius: 2px;
         vertical-align: middle;
       }
       .name {
@@ -263,14 +265,14 @@ section.left {
         margin-left: 10px;
         font-size: 13px;
         vertical-align: middle;
-        font-family: "Open Sans", sans-serif;
         text-transform: capitalize;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
+        font-weight: 600;
       }
       &.active {
-        background: #121A20;
+        background: #2E363C;
         .name {
           color: #FFF;
         }
@@ -289,8 +291,8 @@ section.left {
 
 section.right {
   position: fixed;
-  left: 220px;
-  top: 0;
+  left: 230px;
+  top: 75px;
   bottom: 0;
   right: 0;
   background: rgb(244, 245, 247);
@@ -299,93 +301,17 @@ section.right {
   &.expand {
     left: 0;
   }
-  .section {
-    width: 100%;
-    background: #FFF;
-    border-radius: 5px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    .block {
-      display: table;
-      margin-bottom: 10px;
-      width: 100%;
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-    .title {
-      padding-bottom: 10px;
-      vertical-align: middle;
-      text-transform: uppercase;
-      opacity: 1;
-      font-family: "Open Sans", sans-serif;
-      margin-bottom: 14px;
-      border-bottom: 1px solid #DDD;
-      color: #8E8E8E;
-      font-size: 12px;
-      font-weight: bold;
-      &.inline {
-        width: auto;
-        vertical-align: middle;
-        display: table-cell;
-        padding-left: 20px;
-        opacity: 1;
-        font-weight: 600;
-        font-size: 13px;
-        border-bottom: none;
-        padding-bottom: 0;
-        color: #808080;
-        text-transform: none;
-      }
-      &.no-margin {
-        margin: 0;
-      }
-    }
-    &.blue {
-      background: #3BC0C3;
-      .title {
-        color: #FFF;
-        opacity: 0.8;
-        border-color: rgba(255, 255, 255, 0.4);
-      }
-    }
-    &.teal {
-      background: #4DBD74;
-      .title {
-        color: #FFF;
-        opacity: 0.8;
-        border-color: rgba(255, 255, 255, 0.4);
-      }
-    }
-    &.navy {
-      background: #2d333d;
-      .title {
-        color: #FFF;
-        opacity: 0.8;
-        border-color: rgba(255, 255, 255, 0.4);
-      }
-    }
-    &.green {
-      background: #4DBD74;
-      .title {
-        color: #FFF;
-        opacity: 0.8;
-        border-color: rgba(255, 255, 255, 0.4);
-      }
-    }
-  }
   .banner {
     position: absolute;
     left: 70px;
     right: 0;
-    height: 96px;
     top: 0;
     z-index: 2;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    background: #FFF;
-    padding: 19px 25px;
+    border-bottom: 1px solid #e3e3e3;
+    background: #f0f3f5;
+    padding: 20px;
     .name {
-      font-size: 24px;
+      font-size: 30px;
       font-weight: normal;
       font-family: "Open Sans", sans-serif;
       color: rgba(90, 102, 120, 0.52);
@@ -410,32 +336,35 @@ section.right {
     }
   }
   .sidebar {
-    background: #121A20;
+    background: rgba(240, 243, 245, 1);
     width: 70px;
     height: 100%;
     position: relative;
+    border-right: 1px solid #E3E3E3;
     .icon {
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(107, 116, 118, 0.33);;
       display: block;
       width: 100%;
-      height: 50px;
-      font-size: 25px;
-      line-height: 50px;
+      height: 60px;
+      font-size: 31px;
+      line-height: 60px;
       text-align: center;
       cursor: pointer;
       @include transition(all 250ms ease-in);
       &:first-child {
-        margin-top: 10px;
+        margin-top: 0;
+        padding-top: 13px;
+        height: 85px;
       }
       &:hover, &.active {
-        color: white;
+        color: #19aac7;
       }
       &.active {
         cursor: default;
       }
       &.bottom {
         position: absolute;
-        bottom: 10px;
+        bottom: 0;
       }
     }
     .monitor {
@@ -458,67 +387,38 @@ section.right {
   }
   .content {
     position: absolute;
-    top: 96px;
+    top: 82px;
     left: 70px;
     bottom: 0;
     right: 0;
+    background: #FFF;
     .inset {
       overflow: auto;
       height: 100%;
       width: 100%;
-      padding: 20px;
-      .content-left {
-        margin: 0 !important;
+      padding: 20px 40px;
+    }
+    .section {
+      margin-bottom: 40px;
+      h1, h2, h3 {
+        text-transform: uppercase;
+        font-weight: bold;
       }
-      .content-right {
-        max-width: 325px;
-        min-width: 325px;
-        @media print, screen and (max-width: 960px) {
-          display: none;
-        }
-        .section {
-          .battery {
-            padding: 0;
-            font-size: 59px;
-            text-align: center;
-            color: #FFF;
-            font-weight: 500;
-            font-family: "Open Sans", sans-serif;
-            &:after {
-              content: '%';
-              font-size: 15px;
-              position: relative;
-              top: -10px;
-              opacity: 0.5;
-              left: 5px;
-              font-family: "Proxima Nova", sans-serif;
-            }
-          }
-          .signal {
-            text-align: center;
-            color: #FFF;
-            font-size: 55px;
-            width: 100%;
-            line-height: 80px;
-          }
-          .toggle {
-            margin-bottom: 10px;
-            &.small {
-              width: 70px;
-              display: table-cell;
-              vertical-align: middle;
-            }
-          }
-        }
+      h1 {
+        font-size: 19px;
       }
-      .filler {
-        height: 20px;
+      h2 {
+        font-size: 15px;
       }
     }
+    .filler {
+      height: 20px;
+    }
   }
-  @import 'lock-event-flow';
-  @import 'lock-user-flow';
+  @import 'list';
+  @import 'misc';
 }
 
 @import 'account';
+@import 'stats-table';
 @import 'notification-center';

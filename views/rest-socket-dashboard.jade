@@ -64,28 +64,25 @@ html
 script.
     $("#open").click(function (e) {
         e.preventDefault();
-        $.get("/rest/socket/open?token=#{token}&client_id=#{client_id}", function (data) {
-            var socket = _socket = io(window.location.origin, {
-                query: data.data.query + "&action=account",
-                forceNew: true
-            });
-            socket.on('*', function (msg) {
-                appendTextArea("WebSocket", msg);
-            });
+        $.get("/rest/socket/open?token=#{token}&client_id=#{client_id}", function (res) {
+            var socket = new WebSocket('ws://' + window.location.host + '/socket?secret=' + res.data.secret + '&action=account');
+            socket.onmessage = function (msg) {
+                appendTextArea("WebSocket", JSON.parse(msg.data));
+            }
         });
     });
 
     $("#emit").click(function (e) {
         e.preventDefault();
-        $.get("/rest/socket/debug/emit?token=#{token}&client_id=#{client_id}&content=" + $("#content").val(), function (data) {
-            appendTextArea("Http-Get", data);
+        $.get("/rest/socket/debug/emit?token=#{token}&client_id=#{client_id}&content=" + $("#content").val(), function (res) {
+            appendTextArea("Http-Get", res);
         });
     });
 
     $("#close").click(function (e) {
         e.preventDefault();
-        $.get("/rest/socket/close?token=#{token}&client_id=#{client_id}", function (data) {
-            appendTextArea("Http-Get", data);
+        $.get("/rest/socket/close?token=#{token}&client_id=#{client_id}", function (res) {
+            appendTextArea("Http-Get", res);
         });
     });
 

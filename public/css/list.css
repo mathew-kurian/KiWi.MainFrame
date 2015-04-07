@@ -1,0 +1,14 @@
+.list {
+  padding: 0; }
+  .list li {
+    border-bottom: 1px solid #EDEDED;
+    text-align: left;
+    padding: 10px 10px 10px 0;
+    font-size: 13px;
+    list-style: none; }
+    .list li .emp {
+      font-weight: bold;
+      color: #555; }
+    .list li .small {
+      color: #939393;
+      font-size: 11px; }

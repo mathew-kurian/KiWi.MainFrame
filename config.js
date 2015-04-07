@@ -9,6 +9,7 @@ module.exports = {
     default_lock_name: "MyKiWi",
     default_client_id: "dev",
     max_sockets_per_token: 3,
+    max_sockets_per_lock: 1,
     private_field_symmetric_key: ShortId.generate(),
     private_field_algorithm: 'aes-256-ctr'
 };

@@ -6,7 +6,14 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: #fff;
+  background: #1c3445;
+  background: -moz-radial-gradient(center, ellipse cover, #1b4c6d 0%, #1c3445 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #1b4c6d), color-stop(100%, #1c3445));
+  background: -webkit-radial-gradient(center, ellipse cover, #1b4c6d 0%, #1c3445 100%);
+  background: -o-radial-gradient(center, ellipse cover, #1b4c6d 0%, #1c3445 100%);
+  background: -ms-radial-gradient(center, ellipse cover, #1b4c6d 0%, #1c3445 100%);
+  background: radial-gradient(ellipse at center, #1b4c6d 0%, #1c3445 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1b4c6d', endColorstr='#1c3445', GradientType=1);
   * {
     font-family: "Open Sans", sans-serif;
   }
@@ -17,7 +24,7 @@
     .title {
       font-size: 30px;
       font-family: "Open Sans", sans-serif;
-      color: rgba(244, 103, 86, 1);
+      color: #A5D512;
       font-weight: bold;
       margin-bottom: 10px;
       &.small {
@@ -35,7 +42,7 @@
       color: #777;
       a {
         text-decoration: none;
-        color: rgba(244, 103, 86, 1);
+        color: #A5D512;
       }
       &.center {
         text-align: center;
@@ -55,6 +62,8 @@
       width: 500px;
       margin: 20px auto 40px;
       padding: 30px;
+      background: #fff;
+      border-radius: 5px;
       @media print, screen and (max-width: 720px) {
         width: 100%;
       }
@@ -72,7 +81,7 @@
       outline: none;
       @include transition(all 250ms ease-in);
       margin: 0 0 10px;
-      border: none;
+      border: 1px solid rgba(0, 0, 0, 0.11);
       padding: 16px;
       font-size: 14px;
       border-radius: 5px;
@@ -101,10 +110,9 @@
     }
     button {
       color: #FFF;
-      background: rgba(127, 184, 218, 1);
+      background: #19AAC7;
       width: 100%;
       font-weight: bold;
-      border-radius: 50px;
       margin: 10px auto 20px;
       .label {
         font-size: 15px;

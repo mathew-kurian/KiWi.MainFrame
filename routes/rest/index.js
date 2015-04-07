@@ -12,13 +12,13 @@ var router = express.Router();
 
 router.use(function (req, res, next) {
 
-    res.sendJson = function (status, err, data) {
+    res.sendJson = function (status, msg, data) {
         res.header('Content-Type', 'application/json');
-        res.json({status: status, err: err, data: data});
+        res.json({status: status, msg: msg, data: data});
     };
 
-    res.sendErr = function (status, err) {
-        res.sendJson(status, err);
+    res.sendErr = function (status, msg) {
+        res.sendJson(status, msg);
     };
 
     res.sendOk = function (data) {
@@ -53,6 +53,8 @@ router.use(function (req, res, next) {
 });
 
 var isLoggedIn = function (req, res, next) {
+    if (req.query.action === 'lock') return next();
+
     // noinspection JSUnresolvedFunction, JSUnresolvedVariable
     Token.findById(req.query.token, function (err, token) {
         if (err) return res.sendErr(status.db_err, err);
@@ -74,12 +76,15 @@ var isLoggedIn = function (req, res, next) {
 
 router.get('/account/create', account.create);
 router.get('/account/login', account.login);
+router.get('/account/info', isLoggedIn, account.info);
 router.get('/account/edit', isLoggedIn, account.edit);
 router.get('/account/debug/list', account.debug.list);
 
 router.get('/lock/list', isLoggedIn, lock.list);
 router.get('/lock/create', isLoggedIn, lock.create);
-router.get('/lock/register', isLoggedIn, lock.register);
+router.get('/lock/edit', isLoggedIn, lock.edit);
+router.get('/lock/lock', isLoggedIn, lock.lock);
+router.get('/lock/unlock', isLoggedIn, lock.unlock);
 router.get('/lock/debug/list', lock.debug.list);
 
 router.get('/keys/create', isLoggedIn, key.create);
