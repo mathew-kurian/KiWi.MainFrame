@@ -24,6 +24,14 @@ module.exports = {
             });
         });
     },
+    info: function (req, res) {
+        var _account = req.query.account || req.token.account;
+        Account.findById(_account, function (err, account) {
+            if (err) return res.sendErr(status.db_err, err);
+            delete account.password;
+            res.sendOk({account: account});
+        });
+    },
     login: function (req, res) {
         var query = {};
 
