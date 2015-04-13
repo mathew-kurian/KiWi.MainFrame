@@ -13273,7 +13273,7 @@ module.exports={
   "gitHead": "17dc013761dd1efcfb868e2b06b0b897627b40be",
   "_id": "elliptic@1.0.1",
   "_shasum": "d180376b66a17d74995c837796362ac4d22aefe3",
-  "_from": "elliptic@>=1.0.0-0 <2.0.0-0",
+  "_from": "elliptic@>=1.0.0 <2.0.0",
   "_npmVersion": "1.4.28",
   "_npmUser": {
     "name": "indutny",
@@ -15813,7 +15813,7 @@ module.exports={
   "gitHead": "17dc013761dd1efcfb868e2b06b0b897627b40be",
   "_id": "elliptic@1.0.1",
   "_shasum": "d180376b66a17d74995c837796362ac4d22aefe3",
-  "_from": "elliptic@>=1.0.0-0 <2.0.0-0",
+  "_from": "elliptic@>=1.0.0 <2.0.0",
   "_npmVersion": "1.4.28",
   "_npmUser": {
     "name": "indutny",
@@ -18746,6 +18746,7 @@ process.browser = true;
 process.env = {};
 process.argv = [];
 process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
 
 function noop() {}
 
@@ -52329,15 +52330,35 @@ module.exports = require('./lib/React');
 'use strict';
 
 /**
+ * Representation of a single EventEmitter function.
+ *
+ * @param {Function} fn Event handler to be called.
+ * @param {Mixed} context Context for function execution.
+ * @param {Boolean} once Only emit once
+ * @api private
+ */
+function EE(fn, context, once) {
+  this.fn = fn;
+  this.context = context;
+  this.once = once || false;
+}
+
+/**
  * Minimal EventEmitter interface that is molded against the Node.js
  * EventEmitter interface.
  *
  * @constructor
  * @api public
  */
-function EventEmitter() {
-  this._events = {};
-}
+function EventEmitter() { /* Nothing to set */ }
+
+/**
+ * Holds the assigned EventEmitters by name.
+ *
+ * @type {Object}
+ * @private
+ */
+EventEmitter.prototype._events = undefined;
 
 /**
  * Return a list of assigned event listeners.
@@ -52347,7 +52368,14 @@ function EventEmitter() {
  * @api public
  */
 EventEmitter.prototype.listeners = function listeners(event) {
-  return Array.apply(this, this._events[event] || []);
+  if (!this._events || !this._events[event]) return [];
+  if (this._events[event].fn) return [this._events[event].fn];
+
+  for (var i = 0, l = this._events[event].length, ee = new Array(l); i < l; i++) {
+    ee[i] = this._events[event][i].fn;
+  }
+
+  return ee;
 };
 
 /**
@@ -52361,50 +52389,45 @@ EventEmitter.prototype.emit = function emit(event, a1, a2, a3, a4, a5) {
   if (!this._events || !this._events[event]) return false;
 
   var listeners = this._events[event]
-    , length = listeners.length
     , len = arguments.length
-    , fn = listeners[0]
     , args
     , i;
 
-  if (1 === length) {
-    if (fn.__EE3_once) this.removeListener(event, fn);
+  if ('function' === typeof listeners.fn) {
+    if (listeners.once) this.removeListener(event, listeners.fn, true);
 
     switch (len) {
-      case 1:
-        fn.call(fn.__EE3_context || this);
-      break;
-      case 2:
-        fn.call(fn.__EE3_context || this, a1);
-      break;
-      case 3:
-        fn.call(fn.__EE3_context || this, a1, a2);
-      break;
-      case 4:
-        fn.call(fn.__EE3_context || this, a1, a2, a3);
-      break;
-      case 5:
-        fn.call(fn.__EE3_context || this, a1, a2, a3, a4);
-      break;
-      case 6:
-        fn.call(fn.__EE3_context || this, a1, a2, a3, a4, a5);
-      break;
-
-      default:
-        for (i = 1, args = new Array(len -1); i < len; i++) {
-          args[i - 1] = arguments[i];
-        }
-
-        fn.apply(fn.__EE3_context || this, args);
+      case 1: return listeners.fn.call(listeners.context), true;
+      case 2: return listeners.fn.call(listeners.context, a1), true;
+      case 3: return listeners.fn.call(listeners.context, a1, a2), true;
+      case 4: return listeners.fn.call(listeners.context, a1, a2, a3), true;
+      case 5: return listeners.fn.call(listeners.context, a1, a2, a3, a4), true;
+      case 6: return listeners.fn.call(listeners.context, a1, a2, a3, a4, a5), true;
     }
-  } else {
+
     for (i = 1, args = new Array(len -1); i < len; i++) {
       args[i - 1] = arguments[i];
     }
 
-    for (i = 0; i < length; fn = listeners[++i]) {
-      if (fn.__EE3_once) this.removeListener(event, fn);
-      fn.apply(fn.__EE3_context || this, args);
+    listeners.fn.apply(listeners.context, args);
+  } else {
+    var length = listeners.length
+      , j;
+
+    for (i = 0; i < length; i++) {
+      if (listeners[i].once) this.removeListener(event, listeners[i].fn, true);
+
+      switch (len) {
+        case 1: listeners[i].fn.call(listeners[i].context); break;
+        case 2: listeners[i].fn.call(listeners[i].context, a1); break;
+        case 3: listeners[i].fn.call(listeners[i].context, a1, a2); break;
+        default:
+          if (!args) for (j = 1, args = new Array(len -1); j < len; j++) {
+            args[j - 1] = arguments[j];
+          }
+
+          listeners[i].fn.apply(listeners[i].context, args);
+      }
     }
   }
 
@@ -52420,11 +52443,16 @@ EventEmitter.prototype.emit = function emit(event, a1, a2, a3, a4, a5) {
  * @api public
  */
 EventEmitter.prototype.on = function on(event, fn, context) {
-  if (!this._events) this._events = {};
-  if (!this._events[event]) this._events[event] = [];
+  var listener = new EE(fn, context || this);
 
-  fn.__EE3_context = context;
-  this._events[event].push(fn);
+  if (!this._events) this._events = {};
+  if (!this._events[event]) this._events[event] = listener;
+  else {
+    if (!this._events[event].fn) this._events[event].push(listener);
+    else this._events[event] = [
+      this._events[event], listener
+    ];
+  }
 
   return this;
 };
@@ -52438,8 +52466,18 @@ EventEmitter.prototype.on = function on(event, fn, context) {
  * @api public
  */
 EventEmitter.prototype.once = function once(event, fn, context) {
-  fn.__EE3_once = true;
-  return this.on(event, fn, context);
+  var listener = new EE(fn, context || this, true);
+
+  if (!this._events) this._events = {};
+  if (!this._events[event]) this._events[event] = listener;
+  else {
+    if (!this._events[event].fn) this._events[event].push(listener);
+    else this._events[event] = [
+      this._events[event], listener
+    ];
+  }
+
+  return this;
 };
 
 /**
@@ -52447,25 +52485,34 @@ EventEmitter.prototype.once = function once(event, fn, context) {
  *
  * @param {String} event The event we want to remove.
  * @param {Function} fn The listener that we need to find.
+ * @param {Boolean} once Only remove once listeners.
  * @api public
  */
-EventEmitter.prototype.removeListener = function removeListener(event, fn) {
+EventEmitter.prototype.removeListener = function removeListener(event, fn, once) {
   if (!this._events || !this._events[event]) return this;
 
   var listeners = this._events[event]
     , events = [];
 
-  for (var i = 0, length = listeners.length; i < length; i++) {
-    if (fn && listeners[i] !== fn) {
-      events.push(listeners[i]);
+  if (fn) {
+    if (listeners.fn && (listeners.fn !== fn || (once && !listeners.once))) {
+      events.push(listeners);
+    }
+    if (!listeners.fn) for (var i = 0, length = listeners.length; i < length; i++) {
+      if (listeners[i].fn !== fn || (once && !listeners[i].once)) {
+        events.push(listeners[i]);
+      }
     }
   }
 
   //
   // Reset the array, or remove it completely if we have no more listeners.
   //
-  if (events.length) this._events[event] = events;
-  else this._events[event] = null;
+  if (events.length) {
+    this._events[event] = events.length === 1 ? events[0] : events;
+  } else {
+    delete this._events[event];
+  }
 
   return this;
 };
@@ -52479,7 +52526,7 @@ EventEmitter.prototype.removeListener = function removeListener(event, fn) {
 EventEmitter.prototype.removeAllListeners = function removeAllListeners(event) {
   if (!this._events) return this;
 
-  if (event) this._events[event] = null;
+  if (event) delete this._events[event];
   else this._events = {};
 
   return this;
@@ -52505,8 +52552,10 @@ EventEmitter.EventEmitter = EventEmitter;
 EventEmitter.EventEmitter2 = EventEmitter;
 EventEmitter.EventEmitter3 = EventEmitter;
 
-try { module.exports = EventEmitter; }
-catch (e) {}
+//
+// Expose the module.
+//
+module.exports = EventEmitter;
 
 },{}],331:[function(require,module,exports){
 exports.createdStores = [];
@@ -52538,12 +52587,14 @@ module.exports = {
      * @returns {Boolean} The result of a recursive search among `this.subscriptions`
      */
     hasListener: function(listenable) {
-        var i = 0,
-            listener;
+        var i = 0, j, listener, listenables;
         for (;i < (this.subscriptions||[]).length; ++i) {
-            listener = this.subscriptions[i].listenable;
-            if (listener === listenable || listener.hasListener && listener.hasListener(listenable)) {
-                return true;
+            listenables = [].concat(this.subscriptions[i].listenable);
+            for (j = 0; j < listenables.length; j++){
+                listener = listenables[j];
+                if (listener === listenable || listener.hasListener && listener.hasListener(listenable)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -52666,6 +52717,7 @@ module.exports = {
      * It will be invoked with the last emission from each listenable.
      * @param {...Publishers} publishers Publishers that should be tracked.
      * @param {Function|String} callback The method to call when all publishers have emitted
+     * @returns {Object} A subscription obj where `stop` is an unsub function and `listenable` is an array of listenables
      */
     joinTrailing: maker("last"),
 
@@ -52674,6 +52726,7 @@ module.exports = {
      * It will be invoked with the first emission from each listenable.
      * @param {...Publishers} publishers Publishers that should be tracked.
      * @param {Function|String} callback The method to call when all publishers have emitted
+     * @returns {Object} A subscription obj where `stop` is an unsub function and `listenable` is an array of listenables
      */
     joinLeading: maker("first"),
 
@@ -52682,6 +52735,7 @@ module.exports = {
      * It will be invoked with all emission from each listenable.
      * @param {...Publishers} publishers Publishers that should be tracked.
      * @param {Function|String} callback The method to call when all publishers have emitted
+     * @returns {Object} A subscription obj where `stop` is an unsub function and `listenable` is an array of listenables
      */
     joinConcat: maker("all"),
 
@@ -52690,6 +52744,7 @@ module.exports = {
      * If a callback triggers twice before that happens, an error is thrown.
      * @param {...Publishers} publishers Publishers that should be tracked.
      * @param {Function|String} callback The method to call when all publishers have emitted
+     * @returns {Object} A subscription obj where `stop` is an unsub function and `listenable` is an array of listenables
      */
     joinStrict: maker("strict"),
 };
@@ -52964,6 +53019,7 @@ exports.__keep = require('./Keep');
  */
 
 var slice = Array.prototype.slice,
+    _ = require("./utils"),
     createStore = require("./createStore"),
     strategyMethodNames = {
         strict: "joinStrict",
@@ -52995,6 +53051,7 @@ exports.staticJoinCreator = function(strategy){
  */
 exports.instanceJoinCreator = function(strategy){
     return function(/* listenables..., callback*/){
+        _.throwIf(arguments.length < 3,'Cannot create a join with less than 2 listenables!');
         var listenables = slice.call(arguments),
             callback = listenables.pop(),
             numberOfListenables = listenables.length,
@@ -53003,15 +53060,34 @@ exports.instanceJoinCreator = function(strategy){
                 callback: this[callback]||callback,
                 listener: this,
                 strategy: strategy
-            };
-        for (var i = 0; i < numberOfListenables; i++) {
-            this.listenTo(listenables[i],newListener(i,join));
+            }, i, cancels = [], subobj;
+        for (i = 0; i < numberOfListenables; i++) {
+            _.throwIf(this.validateListening(listenables[i]));
+        }
+        for (i = 0; i < numberOfListenables; i++) {
+            cancels.push(listenables[i].listen(newListener(i,join),this));
         }
         reset(join);
+        subobj = {listenable: listenables};
+        subobj.stop = makeStopper(subobj,cancels,this);
+        this.subscriptions = (this.subscriptions || []).concat(subobj);
+        return subobj;
     };
 };
 
 // ---- internal join functions ----
+
+function makeStopper(subobj,cancels,context){
+    return function() {
+        var i, subs = context.subscriptions;
+            index = (subs ? subs.indexOf(subobj) : -1);
+        _.throwIf(index === -1,'Tried to remove join already gone from subscriptions list!');
+        for(i=0;i < cancels.length; i++){
+            cancels[i]();
+        }
+        subs.splice(index, 1);
+    };
+}
 
 function reset(join) {
     join.listenablesEmitted = new Array(join.numberOfListenables);
@@ -53045,7 +53121,7 @@ function emitIfAllListenablesEmitted(join) {
     reset(join);
 }
 
-},{"./createStore":337}],340:[function(require,module,exports){
+},{"./createStore":337,"./utils":342}],340:[function(require,module,exports){
 var Reflux = require('../src');
 
 
