@@ -154,6 +154,8 @@ body, html {
     background: #00BFDD !important; }
   .light.green {
     background: #8DCA35 !important; }
+    .light.green.on {
+      box-shadow: 0 0 20px #c5ea53; }
   .light.on {
     opacity: 1 !important; }
 

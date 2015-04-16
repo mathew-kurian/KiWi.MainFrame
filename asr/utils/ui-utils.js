@@ -6,20 +6,13 @@ module.exports = {
         var lightCls = "light";
 
         if (lock) {
-            switch (lock.powerState) {
-                default:
-                case 0:
-                    lightCls += " red";
-                    break;
-                case 1:
-                    lightCls += " green";
-                    break;
-                case 2:
-                    lightCls += " blue";
-                    break;
+            if(lock.registered){
+                lightCls += " green";
+            } else {
+                lightCls += " red";
             }
 
-            if (lock.alert) {
+            if (lock.bounce) {
                 lightCls += " on";
             }
         }

@@ -18,7 +18,7 @@ module.exports.install = function (wss) {
         }
     });
 
-    wss.on('disconnect', function (socket) {
+    wss.on('close', function (socket) {
        socket.query = url.parse(socket.upgradeReq.url, true).query;
         switch (socket.query.action) {
             case 'account':

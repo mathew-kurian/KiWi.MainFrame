@@ -38,6 +38,9 @@ var AccountStore = Reflux.createStore({
                     case event.lock_unlock_command_success:
                     case event.lock_registered:
                     case event.lock_unregistered: LockStore.forceUpdate(data.data.lock);
+                        break;
+                        case event.bounce:
+                            LockStore.bounce(data.data.lock._id);
                 }
             }
         });

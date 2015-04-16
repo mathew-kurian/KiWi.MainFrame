@@ -14,6 +14,18 @@ var LockStore = Reflux.createStore({
         LockStore.trigger(LockStore.locks);
     },
 
+    bounce: function(id){
+        if(LockStore.locks[id]) {
+            clearTimeout(LockStore.locks[id].bounce_timeout);
+            LockStore.locks[id].bounce = true;
+            LockStore.locks[id].bounce_timeout = setTimeout(function(){
+                LockStore.locks[id].bounce = false;
+                LockStore.trigger(LockStore.locks);
+            }, 1000);
+        }
+        LockStore.trigger(LockStore.locks);
+    },
+
     _onLogin: 0,
     onLogin: function (token) {
         if (LockStore._onLogin++) return;
