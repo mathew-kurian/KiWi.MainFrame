@@ -79,7 +79,9 @@ module.exports.emit = function (account, event, data, msg) {
     for (var token in sockets[account]) {
         var socketInfo = sockets[account][token];
         for (var i = 0; i < socketInfo.sockets.length; i++)
-            try { socketInfo.sockets[i].send(d); } catch(e){
+            try {
+                socketInfo.sockets[i].send(d);
+            } catch (e) {
                 console.error(e);
             }
     }

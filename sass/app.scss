@@ -28,6 +28,9 @@ body, html {
   }
   &.green {
     background: #8DCA35 !important;
+    &.on {
+      box-shadow: 0 0 20px rgb(197, 234, 83);
+    }
   }
   &.on {
     opacity: 1 !important;

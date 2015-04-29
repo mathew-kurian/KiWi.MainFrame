@@ -11,5 +11,6 @@ module.exports = {
     max_sockets_per_token: 3,
     max_sockets_per_lock: 1,
     private_field_symmetric_key: ShortId.generate(),
-    private_field_algorithm: 'aes-256-ctr'
+    private_field_algorithm: 'aes-256-ctr',
+    bounce_delay: 8000
 };

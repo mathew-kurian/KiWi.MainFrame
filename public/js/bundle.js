@@ -975,6 +975,9 @@ var AccountStore = Reflux.createStore({
                     case event.lock_unlock_command_success:
                     case event.lock_registered:
                     case event.lock_unregistered: LockStore.forceUpdate(data.data.lock);
+                        break;
+                        case event.bounce:
+                            LockStore.bounce(data.data.lock._id);
                 }
             }
         });
@@ -1010,6 +1013,18 @@ var LockStore = Reflux.createStore({
         console.log(lock);
 
         LockStore.locks[lock._id] = lock;
+        LockStore.trigger(LockStore.locks);
+    },
+
+    bounce: function(id){
+        if(LockStore.locks[id]) {
+            clearTimeout(LockStore.locks[id].bounce_timeout);
+            LockStore.locks[id].bounce = true;
+            LockStore.locks[id].bounce_timeout = setTimeout(function(){
+                LockStore.locks[id].bounce = false;
+                LockStore.trigger(LockStore.locks);
+            }, 1000);
+        }
         LockStore.trigger(LockStore.locks);
     },
 
@@ -1212,20 +1227,13 @@ module.exports = {
         var lightCls = "light";
 
         if (lock) {
-            switch (lock.powerState) {
-                default:
-                case 0:
-                    lightCls += " red";
-                    break;
-                case 1:
-                    lightCls += " green";
-                    break;
-                case 2:
-                    lightCls += " blue";
-                    break;
+            if(lock.registered){
+                lightCls += " green";
+            } else {
+                lightCls += " red";
             }
 
-            if (lock.alert) {
+            if (lock.bounce) {
                 lightCls += " on";
             }
         }
@@ -1300,7 +1308,8 @@ module.exports = {
     max_sockets_per_token: 3,
     max_sockets_per_lock: 1,
     private_field_symmetric_key: ShortId.generate(),
-    private_field_algorithm: 'aes-256-ctr'
+    private_field_algorithm: 'aes-256-ctr',
+    bounce_delay: 8000
 };
 
 },{"shortid":346}],20:[function(require,module,exports){
@@ -1328,7 +1337,8 @@ module.exports = {
     invalid_password: 21,
     lock_register_err: 22,
     lock_unregistered: 23,
-    lock_manual: 24
+    lock_manual: 24,
+    bounce: 25
 };
 },{}],21:[function(require,module,exports){
 var crypto = require('crypto');
