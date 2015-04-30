@@ -46,7 +46,7 @@ module.exports = {
             tools.set(obj, key, value, "-f");
             context.setState(obj);
 
-            if (opts.change) opts.change();
+            if (opts && opts.change) opts.change();
         }
     },
     logEvent: function () {

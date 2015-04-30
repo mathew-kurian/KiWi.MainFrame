@@ -6,6 +6,7 @@ var React = require('react');
 var moment = require('moment');
 var event = require('./../../../constants/event');
 var AccountStore = require('./../../stores/account-store');
+var util = require('util');
 
 // inner class
 var FeedItem = React.createClass({
@@ -18,58 +19,88 @@ var FeedItem = React.createClass({
 
         var accountSrc = this.props.event.accountSrc;
         var accountDest = this.props.event.accountDest;
-        var text = "Loading";
-        var photo = "";
-        var first = "";
+        var text = "";
 
-        if (accountSrc) accountSrc = AccountStore.getAccount(accountSrc);
+        if (!accountSrc) return ( <div></div>);
+
+        if (accountSrc && accountSrc != 1) accountSrc = AccountStore.getAccount(accountSrc);
         if (accountDest) accountDest = AccountStore.getAccount(accountDest);
 
-        var accountSrcReady = !!accountSrc._id;
-        var accountDestReady = !!accountDest._id;
+        if (accountSrc == 1) {
+            accountSrc = {
+                name: {first: "System"},
+                photo: "https://cdn2.iconfinder.com/data/icons/web-icons/512/Gear-512.png"
+            }
+        }
 
-        if (accountSrc == "1") {
-            photo = "System";
-            first = "System";
-        } else if (accountSrcReady) {
-            photo = accountSrc.photo;
-            first = accountSrc.name.first;
+        if (!accountSrc) {
+            accountSrc = {
+                name: {first: "Loading..."},
+                last: "",
+                photo: "http://jimpunk.net/Loading/wp-content/uploads/loading18.gif"
+            }
+        }
+
+        if (!accountDest) {
+            accountDest = {
+                name: {first: "Loading..."},
+                last: "",
+                photo: "http://jimpunk.net/Loading/wp-content/uploads/loading18.gif"
+            }
         }
 
         switch (this.props.event.event) {
             case event.key_remove:
-                if (accountSrcReady) text = "Key access has been revoked from";
+                text = util.format("Key access has been revoked from %s by %s", accountSrc.name.first, accountDest.name.first);
                 break;
             case event.key_created:
-                if (accountSrcReady) text = "Key access has been granted to";
+                text = util.format("Key access has been granted to %s by %s", accountDest.name.first, accountSrc.name.first);
                 break;
             case event.key_edit:
-                if (accountSrcReady) text = "Key access has been edited by for";
+                text = util.format("Key access has been edited by for %s by %s", accountSrc.name.first, accountDest.name.first);
                 break;
             case event.lock_created:
-                if (accountSrcReady) text = "Lock has been created by";
+                text = util.format("Lock created by %s", accountSrc.name.first);
                 break;
             case event.lock_edit:
-                if (accountSrcReady) text = "Lock has been edited by";
+                text = util.format("Lock edited by %s", accountSrc.name.first);
+                break;
+            case event.lock_unlock_command_success:
+                text = util.format("Unlock command received by base station successfully");
+                break;
+            case event.lock_unlock_command_fail:
+                text = util.format("Unlock command received by base station but failed");
+                break;
+            case event.lock_unlock_command:
+                text = util.format("Unlocked by %s", accountSrc.name.first);
+                break;
+            case event.lock_lock_command:
+                text = util.format("Locked by %s", accountSrc.name.first);
+                break;
+            case event.lock_lock_command_success:
+                text = util.format("Lock command received by base station successfully");
+                break;
+            case event.lock_lock_command_fail:
+                text = util.format("Unlock command received by base station but failed");
                 break;
             case event.lock_registered:
-                if (accountSrcReady) text = "Lock has been registered by";
+                text = util.format("Lock registered by base station");
                 break;
         }
 
         return (
             <li>
                 <div style={{display:"inline-block"}}>
-                    <img src={ photo }
+                    <img src={ accountSrc.photo }
                          height="24px" width="24px" style={{"borderRadius":"100%", marginRight:"10px"}}/>
                 </div>
                 <div style={{display:"inline-block"}}>
                 <span className="user emp"
-                      style={{'text-transform':'capitalize'}}>{ first }</span>&nbsp;
+                      style={{'text-transform':'capitalize'}}>{ accountSrc.first }</span>&nbsp;
                     <span>{ text }</span>
 
                     <div className="small">Austin,
-                        TX &middot; { moment(this.props.event.created).fromNow() }</div>
+                        TX &middot; { moment(this.props.event.created).fromNow() } &middot; { "E" + this.props.event.event }</div>
                 </div>
             </li>
         )
@@ -81,23 +112,13 @@ var Feed = React.createClass({
     getInitialState: function () {
         return {}
     },
-
     render: function () {
 
         var self = this;
 
-        var findUsernameById = function (id) {
-            for (var i = 0; i < self.props.users.length; i++) {
-                var user = self.props.users[i];
-                if (user._id == id) {
-                    return user;
-                }
-            }
-        };
-
         var eventObjects = this.props.events.map(function (event) {
             return (
-                <FeedItem key={event._id} event={event} user={ findUsernameById(event.user) }/>
+                <FeedItem key={event._id} event={event}/>
             );
         });
 

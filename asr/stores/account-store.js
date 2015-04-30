@@ -1,8 +1,9 @@
 var Reflux = require('reflux');
 var AppActions = require('./../actions/app-actions');
-var LockStore = require('./lock-store')
+var LockStore = require('./lock-store');
 var $ = require('jquery');
-var event = require('./../../constants/event')
+var event = require('./../../constants/event');
+var EventStore = require('./event-store');
 
 var AccountStore = Reflux.createStore({
     accounts: {},
@@ -30,7 +31,9 @@ var AccountStore = Reflux.createStore({
             socket.onmessage = function (msg) {
                 var data = JSON.parse(msg.data);
                 switch(data.event){
-                    case event.new_event: return notify(JSON.stringify(event));
+                    case event.new_event:
+                        EventStore.addEvent(data);
+                        return notify(JSON.stringify(data.event));
                     case event.lock_manual:
                     case event.lock_lock_command_fail:
                     case event.lock_lock_command_success:

@@ -14,11 +14,11 @@ var LockStore = Reflux.createStore({
         LockStore.trigger(LockStore.locks);
     },
 
-    bounce: function(id){
-        if(LockStore.locks[id]) {
+    bounce: function (id) {
+        if (LockStore.locks[id]) {
             clearTimeout(LockStore.locks[id].bounce_timeout);
             LockStore.locks[id].bounce = true;
-            LockStore.locks[id].bounce_timeout = setTimeout(function(){
+            LockStore.locks[id].bounce_timeout = setTimeout(function () {
                 LockStore.locks[id].bounce = false;
                 LockStore.trigger(LockStore.locks);
             }, 1000);
@@ -100,6 +100,45 @@ var LockStore = Reflux.createStore({
                 notify("Locked renamed to `" + name + "`");
             });
         }, 1000);
+    },
+
+    addKey: function (lock, account) {
+        $.get("/rest/keys/create", {
+            client_id: "dev",
+            lock: lock,
+            token: LockStore.token,
+            account: account
+        }, function (res) {
+            if (res.status) {
+                return notify(res.msg);
+            }
+            notify("Key added");
+        });
+    },
+
+    _peers: {},
+    getPeers: function (lock) {
+        if (!this._peers[lock]) {
+            $.get("/rest/keys/peers", {client_id: "dev", token: LockStore.token, lock: lock}, function (res) {
+                if (res.status) {
+                    return notify(res.msg);
+                }
+
+                LockStore._peers[lock] = res.data.keys;
+                LockStore.trigger(LockStore.locks);
+                notify("Received peers");
+            });
+        }
+
+        var accounts = [];
+
+        if (this._peers[lock]) {
+            for (var k in this._peers[lock]) {
+                accounts.push(this._peers[lock][k].account);
+            }
+        }
+
+        return accounts;
     }
 });
 

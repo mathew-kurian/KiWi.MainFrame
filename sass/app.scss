@@ -29,7 +29,7 @@ body, html {
   &.green {
     background: #8DCA35 !important;
     &.on {
-      box-shadow: 0 0 20px rgb(197, 234, 83);
+      box-shadow:0 0 50px 20px rgba(193, 255, 0, 0.19), 0 0 20px #c5ea53;
     }
   }
   &.on {
@@ -166,9 +166,9 @@ body, html {
 section.left {
   background: #121A20;
   position: fixed;
-  top: 130px;
-  left: 10px;
-  width: 220px;
+  top: 0px;
+  left: 0px;
+  width: 230px;
   bottom: 0;
   z-index: 2;
   box-shadow: 1px 0 0 rgba(255, 255, 255, 0.05);
@@ -295,7 +295,7 @@ section.left {
 section.right {
   position: fixed;
   left: 230px;
-  top: 75px;
+  top: 0px;
   bottom: 0;
   right: 0;
   background: rgb(244, 245, 247);
