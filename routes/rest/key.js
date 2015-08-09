@@ -1,5 +1,6 @@
 var Key = require('./../../models/key.model');
 var Lock = require('./../../models/lock.model');
+var Account = require('./../../models/account.model');
 var Event = require('./../../models/event.model');
 var status = require('./../../constants/status');
 var sockets = require('./../../sockets');
@@ -19,11 +20,11 @@ module.exports = {
         // noinspection JSUnresolvedVariable
         var expires = new Date(req.query.expires);
 
-        if (expires.getTime() <= Date.now() || isNaN(expires.getTime()))
-            return res.sendErr(status.param_err, "Invalid date");
+        //if (req.query.expires && (expires.getTime() <= Date.now() || isNaN(expires.getTime())))
+        //    return res.sendErr(status.param_err, "Invalid date");
 
         // noinspection JSUnresolvedFunction, JSUnresolvedVariable
-        Key.findOneById(req.query.key, function (err, key) {
+        Key.findOne({account: req.token.account, lock: req.query.lock}, function (err, key) {
             if (err) return res.sendErr(status.db_err, err);
             if (!key) return res.sendErr(status.db_err, "Key not found");
 
@@ -31,7 +32,7 @@ module.exports = {
                 return res.sendErr(status.permission_err, "Access denied");
 
             // noinspection JSUnresolvedFunction, JSUnresolvedVariable
-            User.findOneById(req.query.account, function (err, account) {
+            Account.findOne({username: req.query.account}, function (err, account) {
                 if (err) return res.sendErr(status.db_err, err);
                 if (!account) return res.sendErr(status.db_err, "Account not found");
 
@@ -70,7 +71,7 @@ module.exports = {
     },
     list: function (req, res) {
         // noinspection JSUnresolvedFunction, JSUnresolvedVariable
-        Key.findOneById(req.query.key, function (err, key) {
+        Key.findOne({account: req.token.account, lock: req.query.lock}, function (err, key) {
             if (err) return res.sendErr(status.db_err, err);
             if (!key) return res.sendErr(status.db_err, "Key not found");
 
@@ -90,7 +91,7 @@ module.exports = {
             return res.sendErr(status.param_err, "Invalid field type");
 
         // noinspection JSUnresolvedFunction, JSUnresolvedVariable
-        Key.findOneById(req.query.key, function (err, key) {
+        Key.findOne({account: req.token.account, lock: req.query.lock}, function (err, key) {
             if (err) return res.sendErr(status.db_err, err);
             if (!key) return res.sendErr(status.db_err, "Key not found");
 
@@ -146,7 +147,7 @@ module.exports = {
     },
     peers: function (req, res) {
         // noinspection JSUnresolvedFunction, JSUnresolvedVariable
-        Key.findOneById(req.query.key, function (err, key) {
+        Key.findOne({account: req.token.account, lock: req.query.lock}, function (err, key) {
             if (err) return res.sendErr(status.db_err, err);
             if (!key) return res.sendErr(status.db_err, "Key not found");
 
@@ -164,7 +165,7 @@ module.exports = {
     },
     remove: function (req, res) {
         // noinspection JSUnresolvedFunction, JSUnresolvedVariable
-        Key.findOneById(req.query.key, function (err, key) {
+        Key.findOne({account: req.token.account, lock: req.query.lock}, function (err, key) {
             if (err) return res.sendErr(status.db_err, err);
             if (!key) return res.sendErr(status.db_err, "Key not found");
 

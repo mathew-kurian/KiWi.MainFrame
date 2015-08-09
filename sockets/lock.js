@@ -9,7 +9,7 @@ var _sockets = require('./index');
 var sockets = {};
 var socketsBySecret = {};
 
-var MessageHandler = function (serial) {
+var MessageHandler = function (serial, _socket) {
     return function (msg, flags) {
 
         var updateLock = function (e, v) {
@@ -37,11 +37,39 @@ var MessageHandler = function (serial) {
             });
         };
 
+        var bounceLock = function () {
+            Lock.findOne({serial: serial}, function (err, lock) {
+                if (err) return console.error(err);
+                if (!lock) return console.error("Lock not found");
+                Key.find({lock: lock._id}).distinct('account', function (err, accounts) {
+                    if (err) return console.error(err);
+                    (accounts || []).forEach(function (account) {
+                        _sockets.Account.emit(account, event.bounce, {lock: lock});
+                    });
+                });
+            });
+        };
+
         var data = JSON.parse(msg);
 
         console.log(data);
 
         switch (data.event) {
+            case event.bounce:
+                try {
+                    _socket.send(JSON.stringify({event: event.bounce}));
+                } catch (e) {
+                    console.error(e);
+                }
+                var socketInfo = sockets[serial];
+                if (socketInfo) {
+                    clearInterval(socketInfo.bounce_timeout);
+                    socketInfo.bounce_timeout = setTimeout(function () {
+                        // FIXME
+                        // register(serial, false);
+                    }, config.bounce_delay * 2);
+                }
+                return bounceLock();
             case event.lock_manual:
             case event.lock_lock_command_fail:
             case event.lock_lock_command_success:
@@ -85,7 +113,11 @@ function SocketInfo(serial) {
 }
 
 module.exports.open = function (serial) {
-    if (sockets[serial]) return sockets[serial].secret;
+    if (sockets[serial]) {
+        clearInterval(sockets[serial].bounce_timeout);
+        return sockets[serial].secret;
+    }
+
     var socketInfo = new SocketInfo(serial);
     sockets[serial] = socketInfo;
     socketsBySecret[socketInfo.secret] = socketInfo;
@@ -107,6 +139,8 @@ module.exports.close = function (serial) {
         console.log("socket disconnecting id:%s", socket.id);
         socket.terminate();
     }
+
+    clearInterval(socketInfo.bounce_timeout);
 
     delete sockets[serial];
     delete socketsBySecret[socketInfo.secret];
@@ -140,7 +174,7 @@ module.exports.connected = function (socket) {
     }
 
     // prepare handler
-    socket.on('message', new MessageHandler(socketInfo.serial));
+    socket.on('message', new MessageHandler(socketInfo.serial, socket));
 
     register(socketInfo.serial, true);
 
@@ -171,5 +205,10 @@ module.exports.emit = function (serial, event, data, msg) {
     if (!sockets[serial]) return;
     var socketInfo = sockets[serial];
     for (var i = 0; i < socketInfo.sockets.length; i++)
-        socketInfo.sockets[i].send(JSON.stringify({event: event, msg: msg, data: data}));
+        try {
+            socketInfo.sockets[i].send(JSON.stringify({event: event, msg: msg, data: data}));
+        }
+        catch (e) {
+            console.error(e);
+        }
 };

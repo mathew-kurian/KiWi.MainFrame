@@ -5,6 +5,8 @@
 var React = require('react');
 var moment = require('moment');
 var UIUtils = require('./../../utils/ui-utils');
+var LockStore = require('./../../stores/lock-store');
+var AccountStore = require('./../../stores/account-store');
 
 // inner class
 var UserItem = React.createClass({
@@ -30,12 +32,15 @@ var Users = React.createClass({
         return {}
     },
 
+    handleClick: function(){
+        LockStore.addKey(this.props.lock, this.state.newUser);
+    },
     render: function () {
         var self = this;
-
-        var userObjects = this.props.pairedUsers.map(function (uid) {
+        var peers = LockStore.getPeers(this.props.lock);
+        var userObjects = !peers ? <div></div> : peers.map(function (uid) {
             return (
-                <UserItem key={uid} uid={uid} user={ UIUtils.findObjectById(self.props.users, uid) }/>
+                <UserItem key={uid} uid={uid} user={ AccountStore.getAccount(uid) }/>
             );
         });
 
@@ -48,11 +53,11 @@ var Users = React.createClass({
                         user settings
                     </div>
                     <div className="weighted-input">
-                        <input placeholder="enter a username"/>
+                        <input placeholder="enter a username" onChange={UIUtils.validate(this, 'newUser') }/>
 
                         <div className="icon emergency"
                              style={{color:"#19AAC7",fontSize:"20px",position:"absolute",right:"17px", top:"13px"}}></div>
-                        <button style={{right:"-55px",position:"absolute", top:"6px", padding: "10px"}}>
+                        <button style={{right:"-55px",position:"absolute", top:"6px", padding: "10px"}} onClick={this.handleClick}>
                             <div className="icon add" style={{lineHeight:"20px"}}></div>
                         </button>
                     </div>
@@ -61,12 +66,9 @@ var Users = React.createClass({
                     <div className="inset">
                         <div className="flex">
                             <div className="section box"
-                                 style={{"max-width": "400px", "border-right": "1px solid #DDD", "padding-right": "20px", marginLeft: 0}}>
+                                 style={{smarginLeft: 0}}>
                                 <h2>Accounts</h2>
                                 { userObjects }
-                            </div>
-                            <div className="section box">
-                                <h2>Details</h2>
                             </div>
                         </div>
                     </div>

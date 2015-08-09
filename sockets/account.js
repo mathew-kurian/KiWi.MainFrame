@@ -67,18 +67,23 @@ module.exports.disconnected = function (socket) {
     console.error("Critical error: deleted socket id cannot be found. Security issue?")
 };
 
-module.exports.emit = function (account, event, data, msg) {
+module.exports.emit = function (account, e, data, msg) {
     if (account === '*') {
         for (var a in sockets)
-            module.exports.emit(a, event, data, msg);
+            module.exports.emit(a, e, data, msg);
         return;
     }
 
     if (!sockets[account]) return;
-    var d = JSON.stringify({event: event, msg: msg, data: data});
+    var d = JSON.stringify({event: e, msg: msg, data: data});
+    console.log(d);
     for (var token in sockets[account]) {
         var socketInfo = sockets[account][token];
         for (var i = 0; i < socketInfo.sockets.length; i++)
-            socketInfo.sockets[i].send(d);
+            try {
+                socketInfo.sockets[i].send(d);
+            } catch (a) {
+                console.error(a);
+            }
     }
 };

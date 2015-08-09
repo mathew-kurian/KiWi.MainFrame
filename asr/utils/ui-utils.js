@@ -6,20 +6,13 @@ module.exports = {
         var lightCls = "light";
 
         if (lock) {
-            switch (lock.powerState) {
-                default:
-                case 0:
-                    lightCls += " red";
-                    break;
-                case 1:
-                    lightCls += " green";
-                    break;
-                case 2:
-                    lightCls += " blue";
-                    break;
+            if(lock.registered){
+                lightCls += " green";
+            } else {
+                lightCls += " red";
             }
 
-            if (lock.alert) {
+            if (lock.bounce) {
                 lightCls += " on";
             }
         }
@@ -53,7 +46,7 @@ module.exports = {
             tools.set(obj, key, value, "-f");
             context.setState(obj);
 
-            if (opts.change) opts.change();
+            if (opts && opts.change) opts.change();
         }
     },
     logEvent: function () {

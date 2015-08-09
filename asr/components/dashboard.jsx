@@ -10,6 +10,8 @@ var Feed = require('./widgets/feed.jsx');
 var Users = require('./widgets/users.jsx');
 var AppActions = require('./../actions/app-actions');
 var LockStore = require('./../stores/lock-store');
+var EventStore = require('./../stores/event-store');
+var AccountStore = require('./../stores/account-store');
 var Controls = require('./widgets/controls.jsx');
 var Statistics = require('./widgets/statistics.jsx');
 var UIUtils = require('./../utils/ui-utils');
@@ -38,7 +40,7 @@ var LockItem = React.createClass({
 });
 
 var Dashboard = React.createClass({
-    mixins: [Reflux.connect(LockStore, "locks")],
+    mixins: [Reflux.connect(LockStore, "locks"), Reflux.connect(EventStore, "events"), Reflux.connect(AccountStore, "accounts")],
     getInitialState: function () {
         return {
             title: "dashboard",
@@ -120,13 +122,14 @@ var Dashboard = React.createClass({
                                 <div className="flex">
                                     <Controls lock={self.state.locks[self.state.activeLock]}/>
                                     <Feed users={ self.state.users || [] }
-                                          events={ [] }/>
+                                          events={ EventStore.getEvents(self.state.activeLock) }/>
                                 </div>
                             </div>
                         );
                     case "lock-user-flow" :
                         return <Users users={ self.state.users || [] }
-                                      pairedUsers={ [] }/>;
+                                      pairedUsers={ [] }
+                                      lock={ self.state.activeLock } />;
                 }
             }
             return null;

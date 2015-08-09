@@ -5,5 +5,6 @@ module.exports = Reflux.createActions([
     "login",
     "renameLock",
     "lock",
-    "unlock"
+    "unlock",
+    "addKey"
 ]);

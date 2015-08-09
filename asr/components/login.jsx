@@ -9,7 +9,6 @@ var UIUtils = require('./../utils/ui-utils');
 var Dashboard = require('./dashboard.jsx');
 var AppActions = require('../actions/app-actions');
 var Account = require('./../../models/account.model.raw');
-var ls = global.localStorage;
 
 var Login = React.createClass({
     getInitialState: function () {
@@ -48,7 +47,7 @@ var Login = React.createClass({
 
                 AppActions.login(res.data.token);
 
-                ls.setItem('token', res.data.token);
+                global.localStorage.setItem('token', res.data.token);
                 self.setState({token: res.data.token});
 
             }.bind(this),
@@ -94,6 +93,12 @@ var Login = React.createClass({
     },
     toggleLogin: function () {
         this.setState({login_visible: !this.state.login_visible});
+    },
+    componentDidMount: function(){
+        if(global.localStorage.getItem('token')){
+            AppActions.login(global.localStorage.getItem('token'));
+            this.setState({token: global.localStorage.getItem('token')});
+        }
     },
     render: function () {
         return this.state.token ? ( <Dashboard token={this.state.token} client_id={this.state.client_id} />) :

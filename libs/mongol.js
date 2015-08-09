@@ -107,7 +107,7 @@ module.exports.statics = {
     list: function (schema) {
         schema.statics.list = function (options, cb) {
             var criteria = options.criteria || {};
-            var sort = options.sort || {createdAt: -1};
+            var sort = options.sort || {created: 'descending'};
             var limit = options.limit === 0 ? 0 : (options.limit || 10);
             var page = options.page || 0;
             var populate = options.populate || [];

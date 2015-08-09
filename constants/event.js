@@ -22,5 +22,6 @@ module.exports = {
     invalid_password: 21,
     lock_register_err: 22,
     lock_unregistered: 23,
-    lock_manual: 24
+    lock_manual: 24,
+    bounce: 25
 };
